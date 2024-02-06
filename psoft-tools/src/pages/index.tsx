@@ -1,4 +1,4 @@
-import { Editor } from "@monaco-editor/react";
+import { Editor } from "@monaco-editor/react"; 
 
 //Create Routing File
 export default function Index() {
