@@ -13,10 +13,8 @@ export default function Navbar() {
                         <button>Hi</button>
                     </Link>
                 </div>
-                <div
-                    className = "flex"
-                    style = {{ justifyContent: "flex-end", paddingRight: "40px" }}
-                >
+                <div>
+                    <>Kuzmin</>
                 </div>    
             </div>
         </>

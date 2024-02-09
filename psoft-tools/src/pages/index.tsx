@@ -7,13 +7,17 @@ import Navbar from "../components/Navbar";
 export default function Index() {
   return (
     <div>
-      <Navbar />
+      <div>
+        <Navbar />
+      </div>
+      <div style={{ justifyContent: "left", paddingTop: "5%"}}>
+        <Editor
+        height="100vh"
+        width="50vw"
+        defaultLanguage="javascript"
+        defaultValue="// input code"
+        />
+      </div>
     </div>
-    // <Editor
-    //   height="90vh"
-    //   width="100vw"
-    //   defaultLanguage="javascript"
-    //   defaultValue="// some comment"
-    // />
   );
 }
