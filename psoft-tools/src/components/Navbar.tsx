@@ -4,7 +4,13 @@ export default function Navbar() {
     return (
         <>
             <div className = "navbar">
-                <>logo</>
+                <img
+                src="Logo.png"
+                style={{ paddingLeft: "40%" }}
+                onClick={() => {
+                    window.location.href = "/";
+                }}
+                />
                 <div className = "flex" style = {{ justifyContent: "center", gap: "20px" }}>
                     <Link to="/">
                         <button>Hoare Triples</button>
@@ -14,7 +20,9 @@ export default function Navbar() {
                     </Link>
                 </div>
                 <div>
-                    <>Kuzmin</>
+                    <Link to="https://faculty.rpi.edu/konstantin-kuzmin">
+                        <button>Kuzmin</button>
+                    </Link>
                 </div>    
             </div>
         </>

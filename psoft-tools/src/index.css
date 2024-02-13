@@ -68,6 +68,13 @@ button:focus-visible {
   border-color: black;
 }
 
+.screen{
+  display: flex;
+}
+.flex{
+  flex-grow: 1;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
