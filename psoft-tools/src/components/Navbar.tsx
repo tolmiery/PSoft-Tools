@@ -8,7 +8,7 @@ export default function Navbar() {
                 src="Logo.png"
                 style={{ paddingLeft: "40%" }}
                 onClick={() => {
-                    window.location.href = "/";
+                    window.location.href = "https://www.cs.rpi.edu/academics/courses/spring24/csci2600/";
                 }}
                 />
                 <div className = "flex" style = {{ justifyContent: "center", gap: "20px" }}>
