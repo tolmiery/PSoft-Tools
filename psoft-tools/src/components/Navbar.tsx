@@ -6,22 +6,22 @@ export default function Navbar() {
             <div className = "navbar">
                 <img
                 src="Logo.png"
-                style={{ paddingLeft: "40%" }}
+                style={{ paddingLeft: "50px" }}
                 onClick={() => {
                     window.location.href = "/";
                 }}
                 />
                 <div className = "flex" style = {{ justifyContent: "center", gap: "20px" }}>
                     <Link to="/">
-                        <button>Hoare Triples</button>
+                        <button className="button">Hoare Triples</button>
                     </Link>
                     <Link to="/hi">
-                        <button>Hi</button>
+                        <button className="button">Other Page</button>
                     </Link>
                 </div>
-                <div>
+                <div style = {{ float: "right" }}>
                     <Link to="https://faculty.rpi.edu/konstantin-kuzmin">
-                        <button>Kuzmin</button>
+                        <button className="button">Kuzmin</button>
                     </Link>
                 </div>    
             </div>
