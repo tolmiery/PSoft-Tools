@@ -1,8 +1,20 @@
 import { Editor } from "@monaco-editor/react";
 import Navbar from "../components/Navbar";
+import { useState } from "react";
 import { get } from "../lib/api";
 
 //Create Routing File
+const [id, setId] = useState("");
+const [data, setData] = useState(null);
+
+const handleClick = async () => {
+  try {
+    //const data = push();
+    setData(data);
+  } catch (err) {
+    console.log("mistake");
+  }
+};
 export default function Index() {
   const handleClick = () => {
     const response = get("http://localhost:3000");
@@ -19,14 +31,21 @@ export default function Index() {
       >
         <div style={{ width: "50%", justifyContent: "left" }}>
           <Editor
-            height="100vh"
+            height="92vh"
             width="50vw"
             defaultLanguage="javascript"
             defaultValue="// input code"
           />
         </div>
         <div className="flex" style={{ justifyContent: "center" }}>
-          Output.Output.Output.Output
+          <div style={{ top: 50 }}>data</div>
+          <button
+            className="button"
+            style={{ position: "absolute", right: 10, bottom: 10 }}
+            onClick={handleClick}
+          >
+            Compile
+          </button>
         </div>
         <button onClick={handleClick}>Click me</button>
       </div>
