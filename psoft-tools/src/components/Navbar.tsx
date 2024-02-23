@@ -19,11 +19,15 @@ export default function Navbar() {
                         <button className="button">Other Page</button>
                     </Link>
                 </div>
-                <div style = {{ float: "right" }}>
+                <div 
+                    className="flex"
+                    style = {{ justifyContent: "flex-end", paddingRight: "50px" }}
+                >
                     <Link to="https://faculty.rpi.edu/konstantin-kuzmin">
                         <button className="button">Kuzmin</button>
                     </Link>
                 </div>    
+                
             </div>
         </>
     );

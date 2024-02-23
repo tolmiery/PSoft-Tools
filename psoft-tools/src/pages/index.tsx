@@ -11,14 +11,20 @@ export default function Index() {
       <div className="screen" style={{ paddingTop: "50px", width: "100%", overflow: "hidden" }}>
         <div style = {{ width: "50%", justifyContent: "left" }}>
           <Editor
-            height="100vh"
+            height="92vh"
             width="50vw"
             defaultLanguage="javascript"
             defaultValue="// input code"
           />
         </div>
         <div className="flex" style={{ justifyContent: "center" }}>
-          Output.Output.Output.Output
+          <div style={{top:50}}>Output. Output</div>
+          <button 
+            className="button"
+            style={{ position: "absolute", right: 10, bottom: 10}}
+            >
+              Compile
+            </button>     
         </div>
       </div>
     </div>
