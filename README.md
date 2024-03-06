@@ -14,3 +14,4 @@ Run the dev server
 npm run dev
 
 Note that we plan to have a backend implemented, if you want to run the backend server locally get access to the backend repository.
+Backend repo: https://github.com/aandrepingu/PSoft-Tools-Backend
