@@ -1,11 +1,16 @@
 import { Editor } from "@monaco-editor/react";
 import Navbar from "../components/Navbar";
+<<<<<<< HEAD
 import { useState } from "react";
 import { get } from "../lib/api";
+=======
+import { useEffect, useState } from "react";
+>>>>>>> main
 
 //Create Routing File
 
 export default function Index() {
+<<<<<<< HEAD
   const [data, setData] = useState("hello");
   const handleClick = async () => {
     try {
@@ -25,6 +30,18 @@ export default function Index() {
         console.error("error: ", error);
       })
   };
+=======
+  const [code, setCode] = useState("");
+  const handleEditorChange = (value: string | undefined) => {
+    if (value) {
+      setCode(value);
+    }
+  };
+
+  useEffect(() => {
+    console.log(code);
+  }, [code]);
+>>>>>>> main
   return (
     <div>
       <div>
@@ -40,6 +57,7 @@ export default function Index() {
             width="50vw"
             defaultLanguage="javascript"
             defaultValue="// input code"
+            onChange={handleEditorChange}
           />
         </div>
         <div style={{top: 50, right: 50}}>{data}</div>
