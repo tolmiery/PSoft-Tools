@@ -13,17 +13,24 @@ export default function Index() {
   const handleClick = () => {
     post("http://localhost:3000", code)
       .then(response => {
-        console.log(response);
+        //console.log(response);
         setData(response);
       })  
       .catch(error => {
         console.error("error: ", error);
       })
   };
+
+  const handleClick1 = () => {
+        setData(""); 
+        //setCode("// input code");
+  };
   
   const handleEditorChange = (value: string | undefined) => {
     if (value) {
+      //console.log(value);
       setCode(value);
+      //console.log(code);
     }
   };
 
@@ -44,13 +51,18 @@ export default function Index() {
             defaultLanguage="javascript"
             defaultValue="// input code"
             onChange={handleEditorChange}
+            
           />
         </div>
-        <div style={{top: 50, right: 50}}>{data}</div>
+        <div style={{position: "relative", paddingLeft: 15, whiteSpace: "pre-line", textAlign: "start", tabSize: 5}}>{data}</div>
+        <button 
+          onClick={handleClick1}
+          style={{position: "absolute", right: 150, bottom: 10}}
+          >Clear</button>
         <button 
           onClick={handleClick}
           style={{position: "absolute", right: 10, bottom: 10}}
-          >Click me</button>
+          >Run Dafny</button>
       </div>
     </div>
   );
