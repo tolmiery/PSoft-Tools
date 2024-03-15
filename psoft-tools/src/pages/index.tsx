@@ -1,7 +1,7 @@
 import { Editor } from "@monaco-editor/react";
 import Navbar from "../components/Navbar";
 import { useState } from "react";
-import { get } from "../lib/api";
+import { get, post } from "../lib/api";
 
 
 //Create Routing File
@@ -11,9 +11,10 @@ export default function Index() {
   const [code, setCode] = useState("");
   
   const handleClick = () => {
-    get("http://localhost:3000")
+    post("http://localhost:3000", code)
       .then(response => {
         console.log(response);
+        setData(response);
       })  
       .catch(error => {
         console.error("error: ", error);
