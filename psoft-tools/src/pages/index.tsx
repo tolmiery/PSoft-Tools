@@ -4,12 +4,26 @@ import { useEffect, useState } from "react";
 
 //Create Routing File
 export default function Index() {
+  const [precondition, setPrecondition] = useState("");
   const [code, setCode] = useState("");
+  const [postcondition, setPostcondition] = useState("");
+  
+  const handlePreEditorChange = (value: string | undefined) => {
+    if(value) {
+      setPrecondition(value);
+    }
+  };
   const handleEditorChange = (value: string | undefined) => {
     if (value) {
       setCode(value);
     }
   };
+  const handlePostEditorChange = (value: string | undefined) => {
+    if(value) {
+      setPostcondition(value);
+    }
+  };
+
 
   useEffect(() => {
     console.log(code);
@@ -25,11 +39,25 @@ export default function Index() {
       >
         <div style={{ width: "50%", justifyContent: "left" }}>
           <Editor
-            height="92vh"
+            height="10vh"
+            width="50vw"
+            defaultLanguage="javascript"
+            defaultValue="// input precondition"
+            onChange={handlePreEditorChange}
+          />
+          <Editor
+            height="72vh"
             width="50vw"
             defaultLanguage="javascript"
             defaultValue="// input code"
             onChange={handleEditorChange}
+          />
+          <Editor
+            height="10vh"
+            width="50vw"
+            defaultLanguage="javascript"
+            defaultValue="// input postcondition"
+            onChange={handlePostEditorChange}
           />
         </div>
         <div className="flex" style={{ justifyContent: "center" }}>
