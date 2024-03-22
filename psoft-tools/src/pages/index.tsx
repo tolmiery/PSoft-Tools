@@ -49,7 +49,7 @@ export default function Index() {
             height="92vh"
             width="50vw"
             defaultLanguage="javascript"
-            defaultValue="// input code"
+            defaultValue="// Write your dafny code here"
             onChange={handleEditorChange}
             
           />
