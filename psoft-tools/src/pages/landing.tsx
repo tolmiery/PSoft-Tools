@@ -8,7 +8,7 @@ export default function Landing() {
                 src="logo.png"
                 className="landinglogo"
                 onClick={() => {
-                    window.location.href = "/";
+                    window.location.href = "/index";
                 }}
                 />
             </div>
