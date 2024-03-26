@@ -5,8 +5,9 @@ export default function Landing() {
         <>
             <div className="landing">
                 <img
-                src="logo.png"
+                src="Logo.png"
                 className="landinglogo"
+                style={{display: "inline"}}
                 onClick={() => {
                     window.location.href = "/index";
                 }}
