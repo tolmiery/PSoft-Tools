@@ -27,13 +27,13 @@ export default function Index() {
           <Editor
             height="100vh"
             width="50vw"
-            defaultLanguage="javascript"
+            defaultLanguage="java"
             defaultValue="// input code"
             onChange={handleEditorChange}
           />
         </div>
         <div className="flex" style={{ justifyContent: "center" }}>
-          Output.Output.Output.Output
+          Enter your Dafny code in the editor. Output will appear here.
         </div>
       </div>
     </div>
