@@ -4,9 +4,10 @@ export async function post(url: string, body: string) {
     headers: {
       "Content-Type": "text/plain",
     },
-    body: JSON.stringify(body),
+    body: body,
   });
-  const data = await response.json();
+
+  const data = await response.text();
   return data;
 }
 //add more requests as we go
