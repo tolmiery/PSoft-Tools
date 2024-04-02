@@ -12,7 +12,7 @@ export default function Index() {
   const handleClick = () => {
     post("http://localhost:3000", code)
       .then((response) => {
-        setData(response);
+        setData(response.verify);
       })
       .catch((error) => {
         console.error("error: ", error);

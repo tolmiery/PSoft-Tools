@@ -7,7 +7,7 @@ export async function post(url: string, body: string) {
     body: body,
   });
 
-  const data = await response.text();
+  const data = await response.json();
   return data;
 }
 //add more requests as we go
