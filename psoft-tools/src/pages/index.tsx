@@ -9,10 +9,20 @@ export default function Index() {
   const [data, setData] = useState("hello");
   const [code, setCode] = useState("");
 
-  const handleClick = () => {
-    post("http://localhost:3000", code)
+  const handleVerify = () => {
+    post("http://localhost:3000/verify", code)
       .then((response) => {
-        setData(response.verify);
+        setData(response);
+      })
+      .catch((error) => {
+        console.error("error: ", error);
+      });
+  };
+
+  const handleRun = () => {
+    post("http://localhost:3000/run", code)
+      .then((response) => {
+        setData(response);
       })
       .catch((error) => {
         console.error("error: ", error);
@@ -62,7 +72,13 @@ export default function Index() {
           Clear
         </button>
         <button
-          onClick={handleClick}
+          onClick={handleVerify}
+          style={{ position: "absolute", right: 300, bottom: 10 }}
+        >
+          Verify Dafny
+        </button>
+        <button
+          onClick={handleRun}
           style={{ position: "absolute", right: 10, bottom: 10 }}
         >
           Run Dafny
