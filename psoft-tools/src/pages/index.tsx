@@ -14,7 +14,7 @@ export default function Index() {
   const [code, setCode] = useState(DEFAULT_CODE);
   
   const handleClick = () => {
-    post("http://localhost:3000/Hoars_Tripple", code)
+    post("http://localhost:3000/hoare", code)
       .then(response => {
         //console.log("HI");
         console.log(response);
