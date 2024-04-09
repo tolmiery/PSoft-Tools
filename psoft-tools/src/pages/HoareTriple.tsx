@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import { useState } from "react";
 import { post } from "../lib/api";
 import { ThreeDots } from "react-loader-spinner";
+import dafnyParser from "../lib/DafnyParser";
 
 //Create Routing File
 
@@ -13,6 +14,8 @@ export default function HoareTriple() {
 
   const handleVerify = () => {
     setLoading(true);
+    // parse dafny here and convert to json?
+    const dafnyCode = dafnyParser(code)
     post("http://localhost:3000/verify", code)
       .then((response) => {
         setLoading(false);
