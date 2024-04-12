@@ -1,7 +1,7 @@
 import * as monaco from "monaco-editor";
 
-export default function dafnyLang() {
-  const langDef = {
+export default function useDafny() {
+  const langDef: monaco.languages.IMonarchLanguage = {
     keywords: [
       "class",
       "datatype",
@@ -139,7 +139,7 @@ export default function dafnyLang() {
   };
 
   const suggestions = langDef.keywords
-    .map((keyword) => {
+    .map((keyword: string) => {
       return {
         label: keyword,
         kind: monaco.languages.CompletionItemKind.Keyword,
@@ -147,7 +147,7 @@ export default function dafnyLang() {
       };
     })
     .concat(
-      langDef.verifyKeywords.map((keyword) => {
+      langDef.verifyKeywords.map((keyword: string) => {
         return {
           label: keyword,
           kind: monaco.languages.CompletionItemKind.Keyword,
@@ -156,7 +156,7 @@ export default function dafnyLang() {
       })
     )
     .concat(
-      langDef.types.map((type) => {
+      langDef.types.map((type: string) => {
         return {
           label: type,
           kind: monaco.languages.CompletionItemKind.Keyword,
@@ -171,12 +171,18 @@ export default function dafnyLang() {
     startColumn: number;
     endColumn: number;
   }) => {
-    return suggestions.map((suggestion) => {
-      return {
-        ...suggestion,
-        range,
-      };
-    });
+    return suggestions.map(
+      (suggestion: {
+        label: string;
+        kind: monaco.languages.CompletionItemKind;
+        insertText: string;
+      }) => {
+        return {
+          ...suggestion,
+          range,
+        };
+      }
+    );
   };
   return { langDef, suggestions, suggestionsWithRange };
 }
