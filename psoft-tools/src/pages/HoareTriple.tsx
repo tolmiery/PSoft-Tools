@@ -14,9 +14,8 @@ export default function HoareTriple() {
 
   const handleVerify = () => {
     setLoading(true);
-    // parse dafny here and convert to json?
-    const dafnyCode = dafnyParser(code)
-    console.log(dafnyCode)
+    const dafnyCode = dafnyParser(code.replace(/\r\n/g, "\n"));
+    console.log(dafnyCode);
     post("http://localhost:3000/verify", dafnyCode)
       .then((response) => {
         setLoading(false);
