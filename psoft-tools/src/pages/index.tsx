@@ -17,6 +17,22 @@ export default function Index() {
       .then((response) => {
         setLoading(false);
         setData(response);
+        const errorText = response.slice(response.length-9, response.length-1)
+        const expectedNonErrorText = "0 errors";
+        let errorExists = true;
+        //console.log(error);
+        
+        if(errorText === expectedNonErrorText){
+          //console.log("yes");
+          errorExists = false;
+        }
+
+        if(errorExists){
+          //Get how many errors via a loop
+          //Highlight errors with description
+
+        }
+
       })
       .catch((error) => {
         console.error("error: ", error);
