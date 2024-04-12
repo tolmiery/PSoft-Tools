@@ -6,19 +6,23 @@ import { post } from "../lib/api.ts"
 
 
 //Create Routing File
-const DEFAULT_CODE = "//Input Code(Delete me before running)"
+const DEFAULT_CODE = "//Please delete all comments before compiling code\n" 
+                      + "//Please declare variables as varName:varType\n\n"
+                      + "//Please declare precondition in {}\n\n"
+                      + "//Please declare code here\n\n"
+                      + "//Please declare postcondition in {}"
 const DEFAULT_DATA = "Dafny Confirmed Validity:"
 
 export default function Index() {
   const [data, setData] = useState(DEFAULT_DATA);
   const [code, setCode] = useState(DEFAULT_CODE);
-  
+
   const handleClick = () => {
-    post("http://localhost:3000/Hoars_Tripple", code)
+    post("http://localhost:3000/verify", code)
       .then(response => {
         //console.log("HI");
         console.log(response);
-
+        
         setData(DEFAULT_DATA + response.toString());
       })  
       .catch(error => {
@@ -35,7 +39,7 @@ export default function Index() {
       setCode(value);
     }
   };
-  
+
   return (
     <div>
       <div>
@@ -46,17 +50,8 @@ export default function Index() {
         style={{ paddingTop: "50px", width: "100%", overflow: "hidden" }}
       >
         <div style={{ width: "50%", justifyContent: "left" }}>
-          <div style={{ marginBottom: "10px" }}>
-            <p>Please input code like the following example below:</p>
-            <p>
-              {/* Example code */}
-              <code style = {{ whiteSpace: "pre-wrap"}}>
-                {"{precondition}\ncode\n{postcondition}"}
-              </code>
-            </p>
-          </div>
           <Editor
-            height="75vh"
+            height="90vh"
             width="50vw"
             defaultLanguage="javascript"
             value={code}
@@ -73,7 +68,7 @@ export default function Index() {
         <button 
           onClick={handleClick}
           style={{position: "absolute", right: 10, bottom: 10}}
-          >Run Dafny</button>
+          >Verify Dafny</button>
       </div>
     </div>
   );

@@ -32,9 +32,6 @@ export default function Navbar() {
           <Link to="/">
             <button>Hoare Triples</button>
           </Link>
-          <Link to="/hi">
-            <button>Hi</button>
-          </Link>
         </div>
         <div>
           <Link to="https://faculty.rpi.edu/konstantin-kuzmin">
