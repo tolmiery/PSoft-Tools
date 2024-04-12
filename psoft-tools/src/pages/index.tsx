@@ -13,8 +13,8 @@ const DEFAULT_CODE = "//Please delete all comments before compiling code\n"
 const DEFAULT_DATA = "Dafny Confirmed Validity:"
 
 export default function Index() {
-  const [data, setData] = useState("");
-  const [code, setCode] = useState("");
+  const [data, setData] = useState(DEFAULT_CODE);
+  const [code, setCode] = useState(DEFAULT_DATA);
   const [loading, setLoading] = useState(false);
 
   const handleVerify = () => {
