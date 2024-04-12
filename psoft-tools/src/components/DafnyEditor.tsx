@@ -1,20 +1,25 @@
-import { useMonaco } from "@monaco-editor/react";
-import { useEffect } from "react";
+import { EditorProps, useMonaco } from "@monaco-editor/react";
+import { useEffect, useMemo } from "react";
 import { Editor } from "@monaco-editor/react";
 import lang from "../lib/dafnyLang";
 
-export default function DafnyEditor() {
+export default function DafnyEditor({
+  EditorProps,
+}: {
+  EditorProps: EditorProps;
+}) {
   const monaco = useMonaco();
-  const dafny = lang();
+  const dafny = useMemo(() => lang(), []);
+  const language = dafny.langDef;
   useEffect(() => {
     if (monaco) {
       monaco.languages.register({ id: "dafny" });
       monaco.languages.setMonarchTokensProvider("dafny", {
-        keywords: dafny.keywords,
-        verifyKeywords: dafny.verifyKeywords,
-        types: dafny.types,
-        brackets: dafny.brackets,
-        escapes: dafny.escapes,
+        keywords: language.keywords,
+        verifyKeywords: language.verifyKeywords,
+        types: language.types,
+        brackets: language.brackets,
+        escapes: language.escapes,
         tokenizer: {
           root: [
             // identifiers
@@ -68,10 +73,21 @@ export default function DafnyEditor() {
         },
       });
 
-      // monaco.languages.registerCompletionItemProvider("dafny", {
-      // });
+      monaco.languages.registerCompletionItemProvider("dafny", {
+        provideCompletionItems: (model, position) => {
+          const word = model.getWordUntilPosition(position);
+          const range = {
+            startLineNumber: position.lineNumber,
+            endLineNumber: position.lineNumber,
+            startColumn: word.startColumn,
+            endColumn: word.endColumn,
+          };
+
+          return { suggestions: dafny.suggestionsWithRange(range) };
+        },
+      });
     }
   }, [monaco]);
 
-  return <Editor height="90vh" defaultLanguage="dafny" />;
+  return <Editor {...EditorProps} />;
 }

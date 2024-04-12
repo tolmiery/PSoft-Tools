@@ -1,5 +1,7 @@
-export default function lang() {
-  return {
+import * as monaco from "monaco-editor";
+
+export default function dafnyLang() {
+  const langDef = {
     keywords: [
       "class",
       "datatype",
@@ -135,4 +137,46 @@ export default function lang() {
       ],
     },
   };
+
+  const suggestions = langDef.keywords
+    .map((keyword) => {
+      return {
+        label: keyword,
+        kind: monaco.languages.CompletionItemKind.Keyword,
+        insertText: keyword,
+      };
+    })
+    .concat(
+      langDef.verifyKeywords.map((keyword) => {
+        return {
+          label: keyword,
+          kind: monaco.languages.CompletionItemKind.Keyword,
+          insertText: keyword,
+        };
+      })
+    )
+    .concat(
+      langDef.types.map((type) => {
+        return {
+          label: type,
+          kind: monaco.languages.CompletionItemKind.Keyword,
+          insertText: type,
+        };
+      })
+    );
+
+  const suggestionsWithRange = (range: {
+    startLineNumber: number;
+    endLineNumber: number;
+    startColumn: number;
+    endColumn: number;
+  }) => {
+    return suggestions.map((suggestion) => {
+      return {
+        ...suggestion,
+        range,
+      };
+    });
+  };
+  return { langDef, suggestions, suggestionsWithRange };
 }

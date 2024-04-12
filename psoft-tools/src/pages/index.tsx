@@ -59,7 +59,13 @@ export default function Index() {
       >
         <div style={{ width: "50%", justifyContent: "left" }}>
           {/* <Editor height="92vh" width="50vw" onChange={handleEditorChange} /> */}
-          <DafnyEditor />
+          <DafnyEditor
+            EditorProps={{
+              height: "92vh",
+              width: "50vw",
+              onChange: handleEditorChange,
+            }}
+          />
         </div>
         <div className="flex flex-col justify-center relative pl-8">
           <div className=" flex-grow">
