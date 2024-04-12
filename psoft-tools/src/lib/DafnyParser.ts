@@ -1,6 +1,11 @@
 // requires that the java code be in the form {pre} code {post}
 export default function dafnyParser(triple: String){
-    const hoareTriple = triple.split("/{([^}]*)}/g").filter(Boolean); // [pre, code, post]
+    console.log(`Code: ` + triple);
+    const hoareTriple = triple.split(/\n/g).filter(Boolean); // [pre, code, post]
+    // hoareTriple[0] = hoareTriple[0].split(/{([^}]*)}/g).filter(Boolean)[0];
+    // hoareTriple[2] = hoareTriple[2].split(/{([^}]*)}/g).filter(Boolean)[0];
+    hoareTriple[0] = hoareTriple[0].split(/{([^}]*)}/g).filter(Boolean)[0];
+    hoareTriple[hoareTriple.length-1] = hoareTriple[hoareTriple.length-1].split(/{([^}]*)}/g).filter(Boolean)[0];
     console.log(hoareTriple);
     let resultCode: string = "";
     let methodHeader: string = "method test(";
@@ -12,47 +17,68 @@ export default function dafnyParser(triple: String){
     // the dafny code
 
     // find how many variables exist in the precondition
-    let variables: string[] = [];
+    let preVariables: Set<string> = new Set<string>();
     for(var character of hoareTriple[0]){
-        if((character >= 'a'&& character <= 'z') || (character >= 'A' && character <= 'Z') && variables.indexOf(character) === -1){
-            variables.push(character)
+        if((character >= 'a'&& character <= 'z') || (character >= 'A' && character <= 'Z') && !preVariables.has(character)){
+            preVariables.add(character);
         }
     }
-    for(var variable of variables){
-        methodHeader += variable + ": int,";
+    let counter: number = 0;
+    for(var variable of preVariables){
+        methodHeader += variable + ": int";
+        counter += 1;
+        if(counter !== preVariables.size){
+            methodHeader += ",";
+        }
     }
-    methodHeader += ") "
+    methodHeader += ") ";
 
     // get variables to return from postcondition
-    let postVariables: string[] = [];
+    let postVariables: Set<string> = new Set<string>();
     for(var character of hoareTriple[2]){
-        if((character >= 'a'&& character <= 'z') || (character >= 'A' && character <= 'Z') && variables.indexOf(character) === -1){
-            variables.push(character)
+        if((character >= 'a'&& character <= 'z') || (character >= 'A' && character <= 'Z') && !postVariables.has(character)){
+            postVariables.add(character);
         }
     }
     methodHeader += "returns (";
-    for(var variable of variables){
-        methodHeader += variable + "_post: int,";
+    counter = 0;
+    for(var variable of postVariables){
+        methodHeader += variable + "_post: int";
+        counter += 1;
+        if(counter !== postVariables.size){
+            methodHeader += ",";
+        }
     }
     methodHeader += ")\n";
 
     // put in pre and postcondition
     methodHeader += "requires " + hoareTriple[0] + "\n";
     methodHeader += "ensures ";
-    for(var postCharacter of hoareTriple[2]){
+    for(var postCharacter of hoareTriple[hoareTriple.length - 1]){
         methodHeader += postCharacter;
         // if we have a variable in our postcondition we append _method to it
-        if(postVariables.indexOf(postCharacter) !== -1){
-            methodHeader +="_method";
+        if(postVariables.has(postCharacter)){
+            methodHeader +="_post";
         }
     }
     methodHeader += "{\n";
 
     // add in statements
-    const statements = triple[1].split("\r\n");
+    // const statements = triple[1].split("\n");
     let methodBody = "";
-    for(var statement of statements){
-        methodBody += statement + '\n';
+    for(let i = 1; i < hoareTriple.length-1; ++i){
+        for(let statementCharacter of hoareTriple[i]){
+            if(postVariables.has(statementCharacter)){
+                methodBody += statementCharacter + "_post";
+            }
+            else if(statementCharacter === "="){
+                methodBody +=  ':' +statementCharacter;
+            }
+            else{
+                methodBody += statementCharacter ;
+            }
+        }
+        methodBody += '\n';
     }
     methodBody += "}";
 
