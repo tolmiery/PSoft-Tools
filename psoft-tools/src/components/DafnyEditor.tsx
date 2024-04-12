@@ -10,7 +10,6 @@ export default function DafnyEditor({
 }) {
   const monaco = useMonaco();
   const dafny = useDafny();
-  //cdslkmkl
   const language = dafny.langDef;
   useEffect(() => {
     let cleanup: null | (() => void) = null;
