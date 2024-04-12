@@ -1,8 +1,12 @@
-import { useMonaco } from "@monaco-editor/react";
+import { EditorProps, useMonaco } from "@monaco-editor/react";
 import { useEffect } from "react";
 import { Editor } from "@monaco-editor/react";
 import useDafny from "../hooks/useDafny";
-export default function DafnyEditor() {
+export default function DafnyEditor({
+  EditorProps,
+}: {
+  EditorProps: EditorProps;
+}) {
   const monaco = useMonaco();
   const dafny = useDafny();
   const language = dafny.langDef;
@@ -27,5 +31,5 @@ export default function DafnyEditor() {
     }
   }, [monaco]);
 
-  return <Editor height="90vh" defaultLanguage="dafny" />;
+  return <Editor {...EditorProps} />;
 }
