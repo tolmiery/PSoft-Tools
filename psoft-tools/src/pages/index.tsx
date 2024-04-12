@@ -1,9 +1,8 @@
 import { Editor } from "@monaco-editor/react";
 import Navbar from "../components/Navbar";
-import { useEffect, useState } from "react";
-import { post } from "../lib/api.ts"
-
-
+import { useState } from "react";
+import { post } from "../lib/api";
+import { ThreeDots } from "react-loader-spinner";
 
 //Create Routing File
 const DEFAULT_CODE = "//Please delete all comments before compiling code\n" 
@@ -14,32 +13,46 @@ const DEFAULT_CODE = "//Please delete all comments before compiling code\n"
 const DEFAULT_DATA = "Dafny Confirmed Validity:"
 
 export default function Index() {
-  const [data, setData] = useState(DEFAULT_DATA);
-  const [code, setCode] = useState(DEFAULT_CODE);
+  const [data, setData] = useState("");
+  const [code, setCode] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleClick = () => {
+  const handleVerify = () => {
+    setLoading(true);
     post("http://localhost:3000/verify", code)
-      .then(response => {
-        //console.log("HI");
-        console.log(response);
-        
-        setData(DEFAULT_DATA + response.toString());
-      })  
-      .catch(error => {
-        console.error("error: ", error);
+      .then((response) => {
+        setLoading(false);
+        setData(response);
       })
+      .catch((error) => {
+        console.error("error: ", error);
+      });
+  };
+
+  const handleRun = () => {
+    setLoading(true);
+    post("http://localhost:3000/run", code)
+      .then((response) => {
+        setLoading(false);
+        setData(response);
+      })
+      .catch((error) => {
+        console.error("error: ", error);
+      });
   };
 
   const handleClickClear = () => {
-    setCode(DEFAULT_CODE); 
-    setData(DEFAULT_DATA);
-  };
-  const handleEditorChange = (value: string | undefined) => {
-    if (value) {
-      setCode(value);
-    }
+    setData("");
+    //setCode("// input code");
   };
 
+  const handleEditorChange = (value: string | undefined) => {
+    if (value) {
+      //console.log(value);
+      setCode(value);
+      //console.log(code);
+    }
+  };
   return (
     <div>
       <div>
@@ -50,25 +63,23 @@ export default function Index() {
         style={{ paddingTop: "50px", width: "100%", overflow: "hidden" }}
       >
         <div style={{ width: "50%", justifyContent: "left" }}>
-          <Editor
-            height="90vh"
-            width="50vw"
-            defaultLanguage="javascript"
-            value={code}
-            onChange={handleEditorChange}
-          />
+
+          <Editor height="92vh" width="50vw" onChange={handleEditorChange} />
         </div>
-        <div style={{position: "relative", paddingLeft: 15, whiteSpace: "pre-line", textAlign: "start", tabSize: 5, alignSelf: "center", marginLeft: "25%"}}>
-          {data}
+        <div className="flex flex-col justify-center relative pl-8">
+          <div className=" flex-grow">
+            {loading ? (
+              <ThreeDots color="gray" height={100} width={100} />
+            ) : (
+              data
+            )}
+          </div>
+          <div className="flex flex-row justify-evenly max-h-11 mb-4">
+            <button onClick={handleClickClear}>Clear</button>
+            <button onClick={handleVerify}>Verify Dafny</button>
+            <button onClick={handleRun}>Run Dafny</button>
+          </div>
         </div>
-        <button 
-          onClick={handleClickClear}
-          style={{position: "absolute", right: 150, bottom: 10}}
-          >Clear</button>
-        <button 
-          onClick={handleClick}
-          style={{position: "absolute", right: 10, bottom: 10}}
-          >Verify Dafny</button>
       </div>
     </div>
   );
