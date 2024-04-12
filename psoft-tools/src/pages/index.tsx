@@ -5,6 +5,12 @@ import { post } from "../lib/api";
 import { ThreeDots } from "react-loader-spinner";
 
 //Create Routing File
+interface ErrorObject {
+  fileName: string;
+  line: number;
+  column: number;
+  errorMessage: string;
+}
 
 export default function Index() {
   const [data, setData] = useState("");
@@ -30,8 +36,32 @@ export default function Index() {
         if(errorExists){
           //Get how many errors via a loop
           //Highlight errors with description
+          
+          //For each error
+          //Add to array as error object
+        
+          const errorObjects: ErrorObject[] = [];
+          const regex = /src\/([^:]+):(\d+),(\d+): Error: (.+)/g;
+          let match;
+
+          while ((match = regex.exec(response)) !== null) {
+              console.log("yes");
+              const [, fileName, lineStr, columnStr, errorMessage] = match;
+              const line = parseInt(lineStr, 10);
+              const column = parseInt(columnStr, 10);
+
+              errorObjects.push({
+                  fileName,
+                  line,
+                  column,
+                  errorMessage
+              });
+          }
+
+          console.log(errorObjects);
 
         }
+
 
       })
       .catch((error) => {
