@@ -1,31 +1,45 @@
-import { Editor } from "@monaco-editor/react";
 import Navbar from "../components/Navbar";
 import { useState } from "react";
-import { get, post } from "../lib/api";
-
+import { post } from "../lib/api";
+import { ThreeDots } from "react-loader-spinner";
+import DafnyEditor from "../components/DafnyEditor";
 
 //Create Routing File
 
 export default function Index() {
-  const [data, setData] = useState("hello");
+  const [data, setData] = useState("");
   const [code, setCode] = useState("");
-  
-  const handleClick = () => {
-    post("http://localhost:3000", code)
-      .then(response => {
-        //console.log(response);
+  const [loading, setLoading] = useState(false);
+
+  const handleVerify = () => {
+    setLoading(true);
+    post("http://localhost:3000/verify", code)
+      .then((response) => {
+        setLoading(false);
         setData(response);
-      })  
-      .catch(error => {
-        console.error("error: ", error);
       })
+      .catch((error) => {
+        console.error("error: ", error);
+      });
+  };
+
+  const handleRun = () => {
+    setLoading(true);
+    post("http://localhost:3000/run", code)
+      .then((response) => {
+        setLoading(false);
+        setData(response);
+      })
+      .catch((error) => {
+        console.error("error: ", error);
+      });
   };
 
   const handleClick1 = () => {
-        setData(""); 
-        //setCode("// input code");
+    setData("");
+    //setCode("// input code");
   };
-  
+
   const handleEditorChange = (value: string | undefined) => {
     if (value) {
       //console.log(value);
@@ -34,7 +48,6 @@ export default function Index() {
     }
   };
 
-  
   return (
     <div>
       <div>
@@ -45,24 +58,29 @@ export default function Index() {
         style={{ paddingTop: "50px", width: "100%", overflow: "hidden" }}
       >
         <div style={{ width: "50%", justifyContent: "left" }}>
-          <Editor
-            height="92vh"
-            width="50vw"
-            defaultLanguage="javascript"
-            defaultValue="// Write your dafny code here"
-            onChange={handleEditorChange}
-            
+          <DafnyEditor
+            EditorProps={{
+              height: "92vh",
+              width: "50vw",
+              onChange: handleEditorChange,
+              defaultLanguage: "dafny",
+            }}
           />
         </div>
-        <div style={{position: "relative", paddingLeft: 15, whiteSpace: "pre-line", textAlign: "start", tabSize: 5}}>{data}</div>
-        <button 
-          onClick={handleClick1}
-          style={{position: "absolute", right: 150, bottom: 10}}
-          >Clear</button>
-        <button 
-          onClick={handleClick}
-          style={{position: "absolute", right: 10, bottom: 10}}
-          >Run Dafny</button>
+        <div className="flex flex-col justify-center relative pl-8">
+          <div className=" flex-grow">
+            {loading ? (
+              <ThreeDots color="gray" height={100} width={100} />
+            ) : (
+              data
+            )}
+          </div>
+          <div className="flex flex-row justify-evenly max-h-11 mb-4">
+            <button onClick={handleClick1}>Clear</button>
+            <button onClick={handleVerify}>Verify Dafny</button>
+            <button onClick={handleRun}>Run Dafny</button>
+          </div>
+        </div>
       </div>
     </div>
   );

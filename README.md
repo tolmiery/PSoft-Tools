@@ -3,7 +3,7 @@ Interactive tools for students taking CSCI 2600 Principles of Software.
 
 Change directory into psoft-tools
 
-cd ./psoft
+cd ./psoft-tools
 
 Install the dependencies
 
