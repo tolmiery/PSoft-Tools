@@ -29,6 +29,9 @@ export default function Navbar() {
           />
         </div>
         <div className="flex" style={{ justifyContent: "center", gap: "20px" }}>
+          <Link to="/index">
+            <button>Dafny Verifier</button>
+          </Link>
           <Link to="/HoareTriple">
             <button>Hoare Triples</button>
           </Link>

@@ -5,16 +5,10 @@ import { post } from "../lib/api";
 import { ThreeDots } from "react-loader-spinner";
 
 //Create Routing File
-const DEFAULT_CODE = "//Please delete all comments before compiling code\n" 
-                      + "//Please declare variables as varName:varType\n\n"
-                      + "//Please declare precondition in {}\n\n"
-                      + "//Please declare code here\n\n"
-                      + "//Please declare postcondition in {}"
-const DEFAULT_DATA = "Dafny Confirmed Validity:"
 
 export default function Index() {
-  const [data, setData] = useState(DEFAULT_CODE);
-  const [code, setCode] = useState(DEFAULT_DATA);
+  const [data, setData] = useState("");
+  const [code, setCode] = useState("// Please enter dafny code below and delete this comment!");
   const [loading, setLoading] = useState(false);
 
   const handleVerify = () => {
@@ -64,7 +58,7 @@ export default function Index() {
       >
         <div style={{ width: "50%", justifyContent: "left" }}>
 
-          <Editor height="92vh" width="50vw" onChange={handleEditorChange} />
+          <Editor height="92vh" width="50vw" onChange={handleEditorChange} defaultValue={code} />
         </div>
         <div className="flex flex-col justify-center relative pl-8">
           <div className=" flex-grow">
