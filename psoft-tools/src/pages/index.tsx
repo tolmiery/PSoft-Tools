@@ -5,6 +5,12 @@ import { ThreeDots } from "react-loader-spinner";
 import DafnyEditor from "../components/DafnyEditor";
 
 //Create Routing File
+interface ErrorObject {
+  fileName: string;
+  line: number;
+  column: number;
+  errorMessage: string;
+}
 
 export default function Index() {
   const [data, setData] = useState("");
@@ -17,6 +23,38 @@ export default function Index() {
       .then((response) => {
         setLoading(false);
         setData(response);
+        const errorText = response.slice(
+          response.length - 9,
+          response.length - 1
+        );
+        const expectedNonErrorText = "0 errors";
+        let errorExists = true;
+
+        if (errorText === expectedNonErrorText) {
+          console.log("no error");
+          errorExists = false;
+        }
+
+        if (errorExists) {
+          const errorObjects: ErrorObject[] = [];
+          const regex: RegExp = /(.*?)\((\d+),(\d+)\): Error: (.*)/g;
+
+          let match;
+          while ((match = regex.exec(response)) !== null) {
+            console.log("yes");
+            const fileName: string = match[1];
+            const line: number = parseInt(match[2]);
+            const column: number = parseInt(match[3]);
+            const errorMessage: string = match[4];
+
+            errorObjects.push({
+              fileName,
+              line,
+              column,
+              errorMessage,
+            });
+          }
+        }
       })
       .catch((error) => {
         console.error("error: ", error);
