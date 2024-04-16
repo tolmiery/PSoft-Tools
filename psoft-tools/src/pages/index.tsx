@@ -23,48 +23,38 @@ export default function Index() {
       .then((response) => {
         setLoading(false);
         setData(response);
-        const errorText = response.slice(response.length-9, response.length-1)
+        const errorText = response.slice(
+          response.length - 9,
+          response.length - 1
+        );
         const expectedNonErrorText = "0 errors";
         let errorExists = true;
-        //console.log(error);
-        
-        if(errorText === expectedNonErrorText){
+
+        if (errorText === expectedNonErrorText) {
           console.log("no error");
           errorExists = false;
         }
 
-        if(errorExists){
-          //Get how many errors via a loop
-          //Highlight errors with description
-          
-          //For each error
-          //Add to array as error object
-          console.log("Yes error");
-        
+        if (errorExists) {
           const errorObjects: ErrorObject[] = [];
           const regex: RegExp = /(.*?)\((\d+),(\d+)\): Error: (.*)/g;
 
           let match;
           while ((match = regex.exec(response)) !== null) {
-              console.log("yes");
-              const fileName: string = match[1];
-              const line: number = parseInt(match[2]);
-              const column: number = parseInt(match[3]);
-              const errorMessage: string = match[4];
+            console.log("yes");
+            const fileName: string = match[1];
+            const line: number = parseInt(match[2]);
+            const column: number = parseInt(match[3]);
+            const errorMessage: string = match[4];
 
-              errorObjects.push({
-                  fileName,
-                  line,
-                  column,
-                  errorMessage
-              });
+            errorObjects.push({
+              fileName,
+              line,
+              column,
+              errorMessage,
+            });
           }
-
-          console.log(errorObjects);
-
         }
-
-
       })
       .catch((error) => {
         console.error("error: ", error);
