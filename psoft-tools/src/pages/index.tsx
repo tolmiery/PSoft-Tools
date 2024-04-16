@@ -1,8 +1,8 @@
-import { Editor } from "@monaco-editor/react";
 import Navbar from "../components/Navbar";
 import { useState } from "react";
 import { post } from "../lib/api";
 import { ThreeDots } from "react-loader-spinner";
+import DafnyEditor from "../components/DafnyEditor";
 
 //Create Routing File
 interface ErrorObject {
@@ -96,7 +96,14 @@ export default function Index() {
         style={{ paddingTop: "50px", width: "100%", overflow: "hidden" }}
       >
         <div style={{ width: "50%", justifyContent: "left" }}>
-          <Editor height="92vh" width="50vw" onChange={handleEditorChange} />
+          <DafnyEditor
+            EditorProps={{
+              height: "92vh",
+              width: "50vw",
+              onChange: handleEditorChange,
+              defaultLanguage: "dafny",
+            }}
+          />
         </div>
         <div className="flex flex-col justify-center relative pl-8">
           <div className=" flex-grow">
