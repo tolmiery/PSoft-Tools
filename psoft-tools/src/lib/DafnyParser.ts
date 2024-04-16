@@ -35,11 +35,14 @@ export default function dafnyParser(triple: String){
 
     // get variables to return from postcondition
     let postVariables: Set<string> = new Set<string>();
-    for(var character of hoareTriple[2]){
-        if((character >= 'a'&& character <= 'z') || (character >= 'A' && character <= 'Z') && !postVariables.has(character)){
-            postVariables.add(character);
+    for(let i = 1; i < hoareTriple.length - 1; ++i){
+        for(var character of hoareTriple[i]){
+            if((character >= 'a'&& character <= 'z') || (character >= 'A' && character <= 'Z') && !postVariables.has(character)){
+                postVariables.add(character);
+            }
         }
     }
+    
     methodHeader += "returns (";
     counter = 0;
     for(var variable of postVariables){
