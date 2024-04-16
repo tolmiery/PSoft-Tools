@@ -1,10 +1,16 @@
-import { Editor } from "@monaco-editor/react";
 import Navbar from "../components/Navbar";
 import { useState } from "react";
 import { post } from "../lib/api";
 import { ThreeDots } from "react-loader-spinner";
+import DafnyEditor from "../components/DafnyEditor";
 
 //Create Routing File
+interface ErrorObject {
+  fileName: string;
+  line: number;
+  column: number;
+  errorMessage: string;
+}
 
 export default function Index() {
   const [data, setData] = useState("");
@@ -17,6 +23,38 @@ export default function Index() {
       .then((response) => {
         setLoading(false);
         setData(response);
+        const errorText = response.slice(
+          response.length - 9,
+          response.length - 1
+        );
+        const expectedNonErrorText = "0 errors";
+        let errorExists = true;
+
+        if (errorText === expectedNonErrorText) {
+          console.log("no error");
+          errorExists = false;
+        }
+
+        if (errorExists) {
+          const errorObjects: ErrorObject[] = [];
+          const regex: RegExp = /(.*?)\((\d+),(\d+)\): Error: (.*)/g;
+
+          let match;
+          while ((match = regex.exec(response)) !== null) {
+            console.log("yes");
+            const fileName: string = match[1];
+            const line: number = parseInt(match[2]);
+            const column: number = parseInt(match[3]);
+            const errorMessage: string = match[4];
+
+            errorObjects.push({
+              fileName,
+              line,
+              column,
+              errorMessage,
+            });
+          }
+        }
       })
       .catch((error) => {
         console.error("error: ", error);
@@ -58,7 +96,14 @@ export default function Index() {
       >
         <div style={{ width: "50%", justifyContent: "left" }}>
 
-          <Editor height="92vh" width="50vw" onChange={handleEditorChange} defaultValue={code} />
+          <DafnyEditor
+            EditorProps={{
+              height: "92vh",
+              width: "50vw",
+              onChange: handleEditorChange,
+              defaultLanguage: "dafny",
+            }}
+          />
         </div>
         <div className="flex flex-col justify-center relative pl-8">
           <div className=" flex-grow">
