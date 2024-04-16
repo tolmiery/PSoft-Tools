@@ -29,7 +29,7 @@ export default function Index() {
         //console.log(error);
         
         if(errorText === expectedNonErrorText){
-          //console.log("yes");
+          console.log("no error");
           errorExists = false;
         }
 
@@ -39,16 +39,18 @@ export default function Index() {
           
           //For each error
           //Add to array as error object
+          console.log("Yes error");
         
           const errorObjects: ErrorObject[] = [];
-          const regex = /src\/([^:]+):(\d+),(\d+): Error: (.+)/g;
-          let match;
+          const regex: RegExp = /(.*?)\((\d+),(\d+)\): Error: (.*)/g;
 
+          let match;
           while ((match = regex.exec(response)) !== null) {
               console.log("yes");
-              const [, fileName, lineStr, columnStr, errorMessage] = match;
-              const line = parseInt(lineStr, 10);
-              const column = parseInt(columnStr, 10);
+              const fileName: string = match[1];
+              const line: number = parseInt(match[2]);
+              const column: number = parseInt(match[3]);
+              const errorMessage: string = match[4];
 
               errorObjects.push({
                   fileName,
