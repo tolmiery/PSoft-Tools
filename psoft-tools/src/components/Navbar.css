@@ -16,11 +16,14 @@
     border-color: white;
     border-width: 5px;
   }
+
+  .button {
+    height: 50px;
+  }
   
   .logo {
     width: 30px;
     height: 30px;
     padding: 0px;
     object-fit: contain;
-  
   }

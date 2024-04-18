@@ -14,7 +14,7 @@ interface ErrorObject {
 
 export default function Index() {
   const [data, setData] = useState("");
-  const [code, setCode] = useState("");
+  const [code, setCode] = useState("// Please enter dafny code below and delete this comment!");
   const [loading, setLoading] = useState(false);
 
   const handleVerify = () => {
@@ -73,7 +73,7 @@ export default function Index() {
       });
   };
 
-  const handleClick1 = () => {
+  const handleClickClear = () => {
     setData("");
     //setCode("// input code");
   };
@@ -85,7 +85,6 @@ export default function Index() {
       //console.log(code);
     }
   };
-
   return (
     <div>
       <div>
@@ -96,6 +95,7 @@ export default function Index() {
         style={{ paddingTop: "50px", width: "100%", overflow: "hidden" }}
       >
         <div style={{ width: "50%", justifyContent: "left" }}>
+
           <DafnyEditor
             EditorProps={{
               height: "92vh",
@@ -114,7 +114,7 @@ export default function Index() {
             )}
           </div>
           <div className="flex flex-row justify-evenly max-h-11 mb-4">
-            <button onClick={handleClick1}>Clear</button>
+            <button onClick={handleClickClear}>Clear</button>
             <button onClick={handleVerify}>Verify Dafny</button>
             <button onClick={handleRun}>Run Dafny</button>
           </div>

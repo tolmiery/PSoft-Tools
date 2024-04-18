@@ -33,11 +33,11 @@ export default function Navbar() {
           />
         </div>
         <div className="flex" style={{ justifyContent: "center", gap: "20px" }}>
-          <Link to="/">
-            <button>Hoare Triples</button>
+          <Link to="/index">
+            <button>Dafny Verifier</button>
           </Link>
-          <Link to="/hi">
-            <button>Hi</button>
+          <Link to="/HoareTriple">
+            <button>Hoare Triples</button>
           </Link>
         </div>
         <div>
