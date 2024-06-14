@@ -1,13 +1,15 @@
 // requires that the java code be in the form {pre} code {post}
 export default function dafnyParser(triple: String) {
+    // Regex to find valid variable names
+    const validVarRegex = /[a-zA-Z?'][a-zA-Z_?'0-9]*/g;
+
     console.log(`Code: ` + triple);
     const hoareTriple = triple.split(/\n/g).filter(Boolean); // [pre, code, post]
     console.log(hoareTriple);
-    // hoareTriple[0] = hoareTriple[0].split(/{([^}]*)}/g).filter(Boolean)[0];
-    // hoareTriple[2] = hoareTriple[2].split(/{([^}]*)}/g).filter(Boolean)[0];
-    hoareTriple[0] = hoareTriple[0].split(/{([^}]*)}/g).filter(Boolean)[0];
+    // Remove the brackets from the pre/postcondition
+    hoareTriple[0] = hoareTriple[0].split(/{([^}]*)}/g).filter(Boolean)[0].trim();
     console.log(hoareTriple);
-    hoareTriple[hoareTriple.length - 1] = hoareTriple[hoareTriple.length - 1].split(/{([^}]*)}/g).filter(Boolean)[0];
+    hoareTriple[hoareTriple.length - 1] = hoareTriple[hoareTriple.length - 1].split(/{([^}]*)}/g).filter(Boolean)[0].trim();
     console.log(hoareTriple);
     let resultCode: string = "";
     let methodHeader: string = "method test(";
@@ -19,12 +21,13 @@ export default function dafnyParser(triple: String) {
     // the dafny code
 
     // find how many variables exist in the precondition
-    let preVariables: Set<string> = new Set<string>();
-    for (var character of hoareTriple[0]) {
-        if ((character >= 'a' && character <= 'z') || (character >= 'A' && character <= 'Z') && !preVariables.has(character)) {
-            preVariables.add(character);
-        }
-    }
+    let preVariables: Set<string> = new Set(hoareTriple[0].match(validVarRegex));
+    console.log(preVariables);
+    // for (var character of hoareTriple[0]) {
+    //     if ((character >= 'a' && character <= 'z') || (character >= 'A' && character <= 'Z') && !preVariables.has(character)) {
+    //         preVariables.add(character);
+    //     }
+    // }
     let counter: number = 0;
     for (var variable of preVariables) {
         methodHeader += variable + ": int";
