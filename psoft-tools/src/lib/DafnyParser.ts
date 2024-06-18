@@ -1,7 +1,7 @@
 // requires that the java code be in the form {pre} code {post}
 export default function dafnyParser(triple: String) {
     // Regex to find valid variable names
-    const validVarRegex = /[a-zA-Z?'][a-zA-Z_?'0-9]*/g;
+    const validDafnyVarRegex = /[a-zA-Z?'][a-zA-Z_?'0-9]*/g;
 
     console.log(`Code: ` + triple);
     const hoareTriple = triple.split(/\n/g).filter(Boolean); // [pre, code, post]
@@ -21,7 +21,7 @@ export default function dafnyParser(triple: String) {
     // the dafny code
 
     // find how many variables exist in the precondition
-    let preVariables: Set<string> = new Set(hoareTriple[0].match(validVarRegex));
+    let preVariables: Set<string> = new Set(hoareTriple[0].match(validDafnyVarRegex));
     console.log(preVariables);
     // for (var character of hoareTriple[0]) {
     //     if ((character >= 'a' && character <= 'z') || (character >= 'A' && character <= 'Z') && !preVariables.has(character)) {
@@ -41,17 +41,19 @@ export default function dafnyParser(triple: String) {
     // get variables to return from postcondition
     let postVariables: Set<string> = new Set<string>();
     for (let i = 1; i < hoareTriple.length - 1; ++i) {
-        for (var character of hoareTriple[i]) {
-            if ((character >= 'a' && character <= 'z') || (character >= 'A' && character <= 'Z') && !postVariables.has(character)) {
-                postVariables.add(character);
-            }
-        }
+        postVariables = new Set<string>([...postVariables, ...new Set(hoareTriple[i].match(validDafnyVarRegex))]);
+        // for (var character of hoareTriple[i]) {
+        //     if ((character >= 'a' && character <= 'z') || (character >= 'A' && character <= 'Z') && !postVariables.has(character)) {
+        //         postVariables.add(character);
+        //     }
+        // }
     }
+    console.log(postVariables);
 
     methodHeader += "returns (";
     counter = 0;
-    for (var variable of postVariables) {
-        methodHeader += variable + "_post: int";
+    for (var postVariable of postVariables) {
+        methodHeader += postVariable + "_post: int";
         counter += 1;
         if (counter !== postVariables.size) {
             methodHeader += ",";
@@ -62,14 +64,20 @@ export default function dafnyParser(triple: String) {
     // put in pre and postcondition
     methodHeader += "requires " + hoareTriple[0] + "\n";
     methodHeader += "ensures ";
-    for (var postCharacter of hoareTriple[hoareTriple.length - 1]) {
-        methodHeader += postCharacter;
-        // if we have a variable in our postcondition we append _post to it
-        if (postVariables.has(postCharacter)) {
-            methodHeader += "_post";
+    // find and replace each postVariable
+    for (var postVariable of postVariables) {
+        for (let i = 1; i < hoareTriple.length; i++) {
+            hoareTriple[i] = hoareTriple[i].replace(new RegExp(postVariable, 'g'), postVariable + "_post");
         }
     }
-    methodHeader += "{\n";
+    // for (var postCharacter of hoareTriple[hoareTriple.length - 1]) {
+    //     methodHeader += postCharacter;
+    //     // if we have a variable in our postcondition we append _post to it
+    //     if (postVariables.has(postCharacter)) {
+    //         methodHeader += "_post";
+    //     }
+    // }
+    methodHeader += hoareTriple[hoareTriple.length - 1] + "{\n";
 
     // add in statements
     // const statements = triple[1].split("\n");
@@ -87,10 +95,10 @@ export default function dafnyParser(triple: String) {
 
     for (let i = 1; i < hoareTriple.length - 1; ++i) {
         for (let statementCharacter of hoareTriple[i]) {
-            if (postVariables.has(statementCharacter)) {
-                methodBody += statementCharacter + "_post";
-            }
-            else if (statementCharacter === "=") {
+            // if (postVariables.has(statementCharacter)) {
+            //     methodBody += statementCharacter + "_post";
+            // }
+            /*else*/ if (statementCharacter === "=") {
                 methodBody += ':' + statementCharacter;
             }
             else {
