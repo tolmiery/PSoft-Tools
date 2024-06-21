@@ -42,7 +42,7 @@ export default function Navbar() {
                     <Link to="/ForwardReasoning">
                         <button className="b">Forward Reasoning </button>
                     </Link>
-                    <Link to="/ForwardReasoning">
+                    <Link to="/BackwardReasoning">
                         <button className="b">Backward Reasoning</button>
                     </Link>
                 </div>

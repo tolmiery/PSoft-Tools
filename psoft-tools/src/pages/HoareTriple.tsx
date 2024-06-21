@@ -50,7 +50,7 @@ export default function HoareTriple() {
                 <div style={{ width: "50%", justifyContent: "left" }}>
 
                     <Editor height="92vh" width="50vw" onChange={handleEditorChange} defaultLanguage="java"
-                        defaultValue='// Input triple as {precondition} code {postcondition}' />
+                        defaultValue="// Input triple as '{precondition} code {postcondition}'" />
                 </div>
                 <div className="flex flex-col justify-center relative pl-8">
                     <div className=" flex-grow">
