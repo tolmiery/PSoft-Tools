@@ -2,15 +2,13 @@
 export default function dafnyParser(triple: String) {
     // Regex to find valid variable names
     const validDafnyVarRegex = /[a-zA-Z?'][a-zA-Z_?'0-9]*/g;
-
+    // Realistically, we don't need to account for most keywords, only those that should be present in a hoare triple
+    const keywords = ["if", "else"];
     console.log(`Code: ` + triple);
     const hoareTriple = triple.split(/\n/g).filter(Boolean); // [pre, code, post]
-    console.log(hoareTriple);
     // Remove the brackets from the pre/postcondition
     hoareTriple[0] = hoareTriple[0].split(/{([^}]*)}/g).filter(Boolean)[0].trim();
-    console.log(hoareTriple);
     hoareTriple[hoareTriple.length - 1] = hoareTriple[hoareTriple.length - 1].split(/{([^}]*)}/g).filter(Boolean)[0].trim();
-    console.log(hoareTriple);
     let resultCode: string = "";
     let methodHeader: string = "method test(";
     // each variable in the precondition should be an argument to the Main method.
@@ -22,15 +20,9 @@ export default function dafnyParser(triple: String) {
 
     // find how many variables exist in the precondition
     let preVariables: Set<string> = new Set(hoareTriple[0].match(validDafnyVarRegex));
-    console.log(preVariables);
-    // for (var character of hoareTriple[0]) {
-    //     if ((character >= 'a' && character <= 'z') || (character >= 'A' && character <= 'Z') && !preVariables.has(character)) {
-    //         preVariables.add(character);
-    //     }
-    // }
     let counter: number = 0;
     for (var variable of preVariables) {
-        methodHeader += variable + ": int";
+        methodHeader += variable + "_pre: int";
         counter += 1;
         if (counter !== preVariables.size) {
             methodHeader += ",";
@@ -42,45 +34,33 @@ export default function dafnyParser(triple: String) {
     let postVariables: Set<string> = new Set<string>();
     for (let i = 1; i < hoareTriple.length - 1; ++i) {
         postVariables = new Set<string>([...postVariables, ...new Set(hoareTriple[i].match(validDafnyVarRegex))]);
-        // for (var character of hoareTriple[i]) {
-        //     if ((character >= 'a' && character <= 'z') || (character >= 'A' && character <= 'Z') && !postVariables.has(character)) {
-        //         postVariables.add(character);
-        //     }
-        // }
     }
     console.log(postVariables);
 
     methodHeader += "returns (";
     counter = 0;
     for (var postVariable of postVariables) {
-        methodHeader += postVariable + "_post: int";
         counter += 1;
+        if (keywords.includes(postVariable)) {
+            // postVariables.delete(postVariable);
+            continue;
+        }
+        methodHeader += postVariable + ": int";
         if (counter !== postVariables.size) {
             methodHeader += ",";
         }
     }
     methodHeader += ")\n";
 
+    // find and replace each postVariable
+    for (var preVariable of preVariables) {
+        hoareTriple[0] = hoareTriple[0].replace(new RegExp(preVariable, 'g'), preVariable + "_pre");
+    }
     // put in pre and postcondition
     methodHeader += "requires " + hoareTriple[0] + "\n";
-    methodHeader += "ensures ";
-    // find and replace each postVariable
-    for (var postVariable of postVariables) {
-        for (let i = 1; i < hoareTriple.length; i++) {
-            hoareTriple[i] = hoareTriple[i].replace(new RegExp(postVariable, 'g'), postVariable + "_post");
-        }
-    }
-    // for (var postCharacter of hoareTriple[hoareTriple.length - 1]) {
-    //     methodHeader += postCharacter;
-    //     // if we have a variable in our postcondition we append _post to it
-    //     if (postVariables.has(postCharacter)) {
-    //         methodHeader += "_post";
-    //     }
-    // }
-    methodHeader += hoareTriple[hoareTriple.length - 1] + "{\n";
+    methodHeader += "ensures " + hoareTriple[hoareTriple.length - 1] + "{\n";
 
     // add in statements
-    // const statements = triple[1].split("\n");
     let methodBody = "";
 
     // Set initial value of each postVariable in the method
@@ -89,7 +69,7 @@ export default function dafnyParser(triple: String) {
         if (preVariables.has(postVariable)) {
             // if a postVariable is part of the precondition give it the same value
             // as the corresponding preVariable
-            methodBody += postVariable + "_post := " + postVariable + ";\n";
+            methodBody += postVariable + " := " + postVariable + "_pre;\n";
         }
     }
 
