@@ -74,16 +74,19 @@ export default function dafnyParser(triple: String) {
     }
 
     for (let i = 1; i < hoareTriple.length - 1; ++i) {
-        for (let statementCharacter of hoareTriple[i]) {
-            // if (postVariables.has(statementCharacter)) {
-            //     methodBody += statementCharacter + "_post";
-            // }
-            /*else*/ if (statementCharacter === "=") {
-                methodBody += ':' + statementCharacter;
+        for (let j = 0; j < hoareTriple[i].length; j++) {
+            if (hoareTriple[i][j] === "=") {
+                // Check for '==' or '='
+                if (hoareTriple[i][j + 1] === "=") {
+                    // if this is an 'a == b' statement, print this '=' and increment j
+                    methodBody += hoareTriple[i][j++];
+                }
+                else {
+                    // otherwise, this is an 'a := b' statement
+                    methodBody += ':';
+                }
             }
-            else {
-                methodBody += statementCharacter;
-            }
+            methodBody += hoareTriple[i][j];
         }
         methodBody += '\n';
     }
