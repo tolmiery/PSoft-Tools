@@ -21,11 +21,13 @@ export default function Navbar() {
                 className="navbar"
                 style={{ width: "100%", margin: "0 auto" }}
             >
-                <div style={{ paddingLeft: "40%" }}>
+                <div style={{ paddingLeft: "30%" }}>
                     <img
                         src="Logo.png"
                         style={{
                             border: isImageHighlighted ? "1px solid white" : "none",
+                            width: 50,
+                            height: 50,
                         }}
                         onMouseDown={handleMouseDown}
                         onMouseUp={handleMouseUp}
