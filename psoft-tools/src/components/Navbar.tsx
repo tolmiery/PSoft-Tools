@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 
-export default function Navbar() {
+export default function Navbar_() {
     const [isImageHighlighted, setIsImageHighlighted] = useState(false);
 
     const handleMouseDown = () => {
@@ -21,42 +21,44 @@ export default function Navbar() {
                 className="navbar"
                 style={{ width: "100%", margin: "0 auto" }}
             >
-                <div style={{ paddingLeft: "30%" }}>
+                <div className="logo_" >
+
                     <img
+
                         src="Logo.png"
                         style={{
                             border: isImageHighlighted ? "1px solid white" : "none",
-                            width: 50,
-                            height: 50,
+                            width: 46,
+                            height: 46,
+
                         }}
                         onMouseDown={handleMouseDown}
                         onMouseUp={handleMouseUp}
                         onMouseLeave={() => setIsImageHighlighted(false)}
                     />
                 </div>
-                <div className="flex" style={{ justifyContent: "center", gap: "20px" }}>
-                    <Link to="/index">
-                        <button className="b">Dafny Verifier</button>
+                <div className="options">
+                    <Link to="/index" className="link">
+                        Dafny Verifier
                     </Link>
                     <Link to="/HoareTriple">
-                        <button className="b">Hoare Triples</button>
+                        Hoare Triples
                     </Link>
                     <Link to="/ForwardReasoning">
-                        <button className="b">Forward Reasoning </button>
+                        Forward Reasoning
                     </Link>
                     <Link to="/BackwardReasoning">
-                        <button className="b">Backward Reasoning</button>
+                        Backward Reasoning
                     </Link>
-                </div>
-
-        
-                <div>
+                    <Link to="/DesignPatterns">
+                        Design Patterns
+                    </Link>
                     <Link to="https://faculty.rpi.edu/konstantin-kuzmin">
-                        <button>Kuzmin</button>
+                        Kuzmin
                     </Link>
                 </div>
 
-            </div>
+            </div >
         </>
     );
 }

@@ -1,36 +1,46 @@
 .navbar {
     position: absolute;
-    display: grid;
+    display: flex;
     top: 0;
     left: 0;
     min-width: 100%;
     height: 50px;
-    align-items: center;
-    background-color: #92a6c6;
-    grid-template-rows: 1fr;
-    grid-template-columns: 25% 50% 25% ;
+    justify-content: flex-start;
+    background-color: #158cba;
 
-    border-color: red;
-    
+    border-style: solid;
+    border-width: 0 1px 4px 1px;
+    border-color: #137ea7;
 }
 
 
-button {
+.logo_ {
 
-    width: auto;
-    height: auto;
-    font-size: small;
-    text-align: center;
-    white-space: nowrap;
-}
-
-button:hover {
-    border-color: red;
-    background-color: #6a6a75;
-}
-.logo {
-    width: 30px;
-    height: 30px;
-    padding: 0px;
+    border-style: solid;
+    border-width: 0 0px 4px 0px;
+    border-color: #137ea7;
     object-fit: contain;
+    z-index: 2;
+
+}
+
+.options {
+    display: flex;
+    overflow: hidden;
+    justify-content: left;
+
+}
+
+.options a {
+    display: inline-flex;
+    color: #ced4da;
+    text-align: center;
+    padding: 15px 18px;
+    font-size: small;
+    text-decoration: none;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.options a:hover {
+    color: #f0f0f0;
 }
