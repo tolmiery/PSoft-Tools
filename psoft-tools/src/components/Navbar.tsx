@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 
-export default function Navbar_() {
+export default function Navbar() {
     const [isImageHighlighted, setIsImageHighlighted] = useState(false);
 
     const handleMouseDown = () => {
@@ -19,7 +19,7 @@ export default function Navbar_() {
         <>
             <div
                 className="navbar"
-                style={{ width: "100%", margin: "0 auto" }}
+                style={{ width: "100%", margin: "auto" }}
             >
                 <div className="logo_" >
 
@@ -53,9 +53,7 @@ export default function Navbar_() {
                     <Link to="/DesignPatterns">
                         Design Patterns
                     </Link>
-                    <Link to="https://faculty.rpi.edu/konstantin-kuzmin">
-                        Kuzmin
-                    </Link>
+
                 </div>
 
             </div >

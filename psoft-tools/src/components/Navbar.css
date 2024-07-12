@@ -9,17 +9,13 @@
     background-color: #158cba;
 
     border-style: solid;
-    border-width: 0 1px 4px 1px;
+    border-width: 0 0px 4px 0px;
     border-color: #137ea7;
 }
 
 
 .logo_ {
-
-    border-style: solid;
-    border-width: 0 0px 4px 0px;
-    border-color: #137ea7;
-    object-fit: contain;
+    padding-left: 8px;
     z-index: 2;
 
 }
