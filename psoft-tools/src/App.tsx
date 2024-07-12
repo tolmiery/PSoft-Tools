@@ -5,14 +5,14 @@ import './App.css'
 import { createBrowserRouter, RouterProvider, LoaderFunction, ActionFunction } from "react-router-dom";
 
 interface RouteCommon {
-  loader ?: LoaderFunction;
-  action ?: ActionFunction;
-  ErrorBoundary ?: React.ComponentType<any>;
+  loader?: LoaderFunction;
+  action?: ActionFunction;
+  ErrorBoundary?: React.ComponentType<any>;
 }
 
 interface Routes extends RouteCommon {
-  path:string;
-  Element:React.ComponentType<any>;
+  path: string;
+  Element: React.ComponentType<any>;
 }
 
 interface Pages {
