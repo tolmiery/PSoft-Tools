@@ -84,7 +84,7 @@ export default function dafnyParser(triple: String) {
                     // if this is an 'a == b' or 'a != b' statement, print current char and increment j
                     methodBody += hoareTriple[i][j++];
                 }
-                else {
+                else if (hoareTriple[i][j] === "=") {
                     // otherwise, this is an 'a := b' statement
                     methodBody += ':';
                 }

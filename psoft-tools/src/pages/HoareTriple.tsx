@@ -9,7 +9,7 @@ import dafnyParser from "../lib/DafnyParser";
 
 export default function HoareTriple() {
     const [data, setData] = useState("");
-    const [code, setCode] = useState("");
+    const [code, setCode] = useState("{x == 1}\nx = x + 1;\n{x == 2}");
     const [loading, setLoading] = useState(false);
 
     const handleVerify = () => {
@@ -50,7 +50,7 @@ export default function HoareTriple() {
                 <div style={{ width: "50%", justifyContent: "left" }}>
 
                     <Editor height="92vh" width="50vw" onChange={handleEditorChange} defaultLanguage="java"
-                        defaultValue='// Input triple as {precondition} code {postcondition}' />
+                        defaultValue={`{x == 1}\nx = x + 1;\n{x == 2}`} />
                 </div>
                 <div className="flex flex-col justify-center relative pl-8">
                     <div className=" flex-grow" style={{ whiteSpace: "pre", textAlign: "left" }}>
