@@ -61,7 +61,7 @@ export default function dafnyParser(triple: String) {
     }
     // put in pre and postcondition
     methodHeader += "requires " + precondition + "\n";
-    methodHeader += "ensures " + postcondition   + "\n{\n";
+    methodHeader += "ensures " + postcondition + "\n{\n";
 
     // add in statements
     let methodBody = "";
@@ -78,14 +78,14 @@ export default function dafnyParser(triple: String) {
 
     for (let i = 1; i < hoareTriple.length - 1; ++i) {
         for (let j = 0; j < hoareTriple[i].length; j++) {
-            if (hoareTriple[i][j] === "=" || hoareTriple[i][j] === "!" ) {
+            if (hoareTriple[i][j] === "=" || hoareTriple[i][j] === "!" || hoareTriple[i][j] === "<" || hoareTriple[i][j] === ">") {
                 // Check for '==' or '=' or '!='
                 if (hoareTriple[i][j + 1] === "=") {
                     // if this is an 'a == b' or 'a != b' statement, print current char and increment j
                     methodBody += hoareTriple[i][j++];
                 }
                 else if (hoareTriple[i][j] === "=") {
-                    // otherwise, this is an 'a := b' statement
+                    // this is an 'a = b' statement, convert to Dafny's 'a := b'
                     methodBody += ':';
                 }
             }
