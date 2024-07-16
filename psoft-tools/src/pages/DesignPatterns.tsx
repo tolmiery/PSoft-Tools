@@ -8,8 +8,7 @@ export default function DesignPatterns() {
             <div className="navbar">
                 <Navbar />
             </div>
-            <div className="menuBar"
-                style={{ paddingTop: "50px", width: "100%", overflow: "hidden" }}>
+            <div className="menuBar">
                 <div className="menu">
                     <Menu />
                 </div>

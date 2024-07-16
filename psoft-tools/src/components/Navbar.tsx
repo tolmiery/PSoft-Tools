@@ -25,7 +25,7 @@ export default function Navbar() {
 
                     <img
 
-                        src="Logo.png"
+                        src="../Logo.png"
                         style={{
                             border: isImageHighlighted ? "1px solid white" : "none",
                             width: 46,
