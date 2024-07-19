@@ -1,0 +1,41 @@
+.navbar {
+  width: 100%;
+  height: 50px;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.menuItem {
+  color: #d9d9d9;
+  width: 250px;
+
+}
+
+.menuItem a {
+  font-size: 15px;
+  display: block;
+}
+
+.menuContainer {
+  padding-top: 10px;
+  position: fixed;
+  display: block;
+  background-color: #343131;
+  width: 250px;
+  height: calc(100% - 50px);
+  position: fixed;
+  top: 50px;
+  left: 0;
+}
+
+.menuContainer a {
+  color: #d9d9d9;
+  width: 250px;
+  height: 30px;
+}
+
+.menuContainer a:hover {
+  background-color: #404040;
+  color: #d9d9d9;
+}
