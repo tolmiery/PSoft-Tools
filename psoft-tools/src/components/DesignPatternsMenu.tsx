@@ -8,7 +8,7 @@ export default function DesignPatternsMenu() {
     return (
         <div className="menuContainer">
             <div className="menuItem">
-                <Link to="/Factory">
+                <Link to="/Creational/CreationalPatterns">
                     What are design patterns?
                 </Link>
             </div>
@@ -18,12 +18,12 @@ export default function DesignPatternsMenu() {
                 </Link>
             </div>
             <div className="menuItem">
-                <Link to="/Factory">
+                <Link to="/Creational/CreationalPatterns">
                     Behavioral design patterns
                 </Link>
             </div >
             <div className="menuItem">
-                <Link to="/Factory">
+                <Link to="/Creational/CreationalPatterns">
                     Structural design patterns
                 </Link>
             </div>
