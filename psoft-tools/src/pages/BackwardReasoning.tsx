@@ -49,7 +49,7 @@ export default function BackwardReasoning() {
                         defaultValue="// Input should be in the format 'code {postcondition}'" />
                 </div>
                 <div className="flex flex-col  relative pl-8 ">
-                    <div className=" flex-grow" style={{ whiteSpace: "pre-line", textAlign:"left"}}>
+                    <div className=" flex-grow" style={{ whiteSpace: "pre", textAlign:"left"}}>
                         {loading ? (
                             <ThreeDots color="gray" height={100} width={100} />
                         ) : (
