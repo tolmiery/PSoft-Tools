@@ -30,5 +30,6 @@ Provides examples of the same example Java class implemented using a variety of 
     - Though optional, this step is highly recommended; many features are unavailable without the backend
 ### Contributors
     - Pratheet Joshi (DaCatDude)
+    - Eshan Ilahi (IlahiE)
     - Grace Hui (gracehui123)
     - Caitlin Yau (caitlinyau0717)
