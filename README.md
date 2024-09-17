@@ -31,3 +31,4 @@ Provides examples of the same example Java class implemented using a variety of 
 ### Contributors
     - Pratheet Joshi (DaCatDude)
     - Grace Hui (gracehui123)
+    - Caitlin Yau (caitlinyau0717)
