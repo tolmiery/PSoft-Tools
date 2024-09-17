@@ -28,3 +28,5 @@ Provides examples of the same example Java class implemented using a variety of 
     - `cd /path/to/PSoft-Tools-Backend`
     - `npm run dev`
     - Though optional, this step is highly recommended; many features are unavailable without the backend
+### Contributors
+    - Pratheet Joshi (DaCatDude)
