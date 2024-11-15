@@ -10,7 +10,7 @@ import {
   } from '@xyflow/react';
   import { useCallback, useState } from 'react';
   import Shape from './shape.tsx';
-  import Diamond from './diamond';
+  import Diamond from './diamond.tsx';
   import { type ShapeType } from './shapes.tsx';
   import NodeLabel from './label.tsx';
   export type ShapeNodeData = {

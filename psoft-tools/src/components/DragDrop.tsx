@@ -39,15 +39,15 @@ export default function DragDrop() {
   const reactFlowInstance = useReactFlow();
   const { undo, redo, canUndo, canRedo, takeSnapshot } = useUndoRedo();
   const onConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
+    (params: any) => setEdges((eds) => addEdge(params, eds)),
     [],
   );
-  const onDragOver = useCallback((event) => {
+  const onDragOver = useCallback((event: { preventDefault: () => void; dataTransfer: { dropEffect: string; }; }) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = 'move';
   }, []);
   const onDrop = useCallback(
-    (event) => {
+    (event: { preventDefault: () => void; dataTransfer: { getData: (arg0: string) => any; }; clientX: any; clientY: any; }) => {
       event.preventDefault();
       const type = event.dataTransfer.getData('application/reactflow');
       // check if the dropped element is valid
@@ -114,7 +114,7 @@ export default function DragDrop() {
       ),
     );
   };
-  function downloadImage(dataUrl) {
+  function downloadImage(dataUrl: string) {
     const a = document.createElement('a');
     a.setAttribute('download', 'CFG.png');
     a.setAttribute('href', dataUrl);
