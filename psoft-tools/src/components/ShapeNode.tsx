@@ -9,10 +9,10 @@ import {
     useUpdateNodeInternals,
   } from '@xyflow/react';
   import { useCallback, useState } from 'react';
-  import Shape from './shape';
+  import Shape from './shape.tsx';
   import Diamond from './diamond';
-  import { type ShapeType } from './shapes';
-  import NodeLabel from './label';
+  import { type ShapeType } from './shapes.tsx';
+  import NodeLabel from './label.tsx';
   export type ShapeNodeData = {
     id: string,
     position,

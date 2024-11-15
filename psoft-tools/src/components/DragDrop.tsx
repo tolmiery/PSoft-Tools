@@ -12,10 +12,10 @@ import {
   ConnectionMode,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import Sidebar from './Sidebar';
+import Sidebar from './Sidebar.tsx';
 import './DragDrop.css';
 import type * as CSS from 'csstype';
-import ShapeNode from './ShapeNode';
+import ShapeNode from './ShapeNode.tsx';
 import { toPng } from 'html-to-image';
 import useUndoRedo from './useUndoRedo';
 export default function DragDrop() {
