@@ -1,6 +1,14 @@
 .mainContent {
     display: block;
-    top: 50px;
-    width: calc(100% -250px);
-
+    position: absolute; /* Ensure it's positioned within its container */
+    top: 50px; /* Below the navbar */
+    left: 250px; /* Align content next to the sidebar */
+    width: calc(100% - 250px); /* Leave space for the sidebar */
+    height: calc(100vh - 50px); /* Take up remaining viewport height minus navbar */
+    padding: 20px; /* Add spacing inside the content area */
+    background-color: #1e1e1e; /* Dark theme for consistency */
+    overflow-y: auto; /* Enable scrolling if content overflows */
+    color: white;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2); /* Add a subtle shadow effect */
+    border-radius: 5px; /* Slight rounding to match card style */
 }
