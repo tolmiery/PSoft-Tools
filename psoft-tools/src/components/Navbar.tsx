@@ -15,6 +15,8 @@ export default function Navbar() {
             "https://www.cs.rpi.edu/academics/courses/summer24/csci2600/";
     };
 
+    const isActive = (path: string) => location.pathname === path ? "active" : "";
+    
     return (
         <>
             <div
@@ -38,22 +40,22 @@ export default function Navbar() {
                     />
                 </div>
                 <div className="options">
-                    <Link to="/index" className="link">
+                <Link to="/index" className={`link ${isActive("/index")}`}>
                         Dafny Verifier
                     </Link>
-                    <Link to="/HoareTriple">
+                    <Link to="/HoareTriple" className={`link ${isActive("/HoareTriple")}`}>
                         Hoare Triples
                     </Link>
-                    <Link to="/ForwardReasoning">
+                    <Link to="/ForwardReasoning" className={`link ${isActive("/ForwardReasoning")}`}>
                         Forward Reasoning
                     </Link>
-                    <Link to="/BackwardReasoning">
+                    <Link to="/BackwardReasoning" className={`link ${isActive("/BackwardReasoning")}`}>
                         Backward Reasoning
                     </Link>
-                    <Link to="/DesignPatterns">
+                    <Link to="/DesignPatterns" className={`link ${isActive("/DesignPatterns")}`}>
                         Design Patterns
                     </Link>
-                    <Link to="/CFGCanvas">
+                    <Link to="/CFGCanvas" className={`link ${isActive("/CFGCanvas")}`}>
                         CFG
                     </Link>
 
