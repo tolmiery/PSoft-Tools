@@ -7,17 +7,17 @@ export default function ForwardReasoningMenu() {
     return (
         <div className="menuContainer" style={{ width: "200px" }}>
             <div className="menuItem" style= {{ width: "200px" }}>
-                <Link to="/ForwardReasoning" >
+                <Link to="/BackwardReasoning" >
                     Generate Problems
                 </Link>
             </div>
             <div className="menuItem" style= {{ width: "200px" }} >
-                <Link to="/ForwardReasoning" >
+                <Link to="/BackwardReasoning" >
                     Generate Solutions
                 </Link>
             </div>
             <div className="menuItem" style= {{ width: "200px" }}>
-                <Link to="/ForwardReasoning" className={`link ${isActive("/ForwardReasoning")}`}>
+                <Link to="/BackwardReasoning" className={`link ${isActive("/BackwardReasoning")}`}>
                     Verify Solutions
                 </Link>
             </div >

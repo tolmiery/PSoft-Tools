@@ -16,7 +16,6 @@ export default function Navbar() {
     };
 
     const isActive = (path: string) => location.pathname === path ? "active" : "";
-    
     return (
         <>
             <div
@@ -26,7 +25,6 @@ export default function Navbar() {
                 <div className="logo_" >
 
                     <img
-
                         src="../Logo.png"
                         style={{
                             border: isImageHighlighted ? "1px solid white" : "none",
