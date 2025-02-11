@@ -55,25 +55,17 @@ def get_hoare_parser():
 # Test cases
 def test_hoare_parser():
     parser = get_hoare_parser()
+    #note: code will either end ; and be followed with { or end } and be followed with { ... use this in post grammar?
     test_cases = [
         "{ true } x = 5; y = 2; { x == 5 }",
         "{ x < 10 } while (x < 10) { x = x + 1; } { x >= 10 }",
         "{ y == 0 } if (y == 0) { y = 1; } else { y = 2; } { y > 0 }"
     ]
     
+    result_triples = []
     for test in test_cases:
         try:
-            tree = parser.parse(test)
-            pre_start = test.find('{')
-            pre_end = test.find('}') + 1
-            post_start = test.rfind('{')
-            post_end = test.rfind('}') + 1
-            
-            precondition = test[pre_start:pre_end]
-            postcondition = test[post_start:post_end]
-            code = test[pre_end:post_start].strip()
-            
-            print(f"Precondition: {precondition}\nCode: {code}\nPostcondition: {postcondition}\n")
+            #
         except Exception as e:
             print(f"Test failed: {test}\nError: {e}\n")
 
