@@ -4,6 +4,7 @@ import { useState } from "react";
 import { post } from "../lib/api";
 import { ThreeDots } from "react-loader-spinner";
 import dafnyParser from "../lib/DafnyParser";
+import Menu from "../components/HoareTripleMenu";
 
 //Create Routing File
 
@@ -28,14 +29,12 @@ export default function HoareTriple() {
 
     const handleClickClear = () => {
         setData("");
-        //setCode("// input code");
     };
 
     const handleEditorChange = (value: string | undefined) => {
         if (value) {
-            //console.log(value);
             setCode(value);
-            //console.log(code);
+       
         }
     };
     return (
@@ -43,26 +42,38 @@ export default function HoareTriple() {
             <div>
                 <Navbar />
             </div>
-            <div
-                className="screen"
-                style={{ paddingTop: "50px", width: "100%", overflow: "hidden" }}
-            >
-                <div style={{ width: "50%", justifyContent: "left" }}>
-
-                    <Editor height="92vh" width="50vw" onChange={handleEditorChange} defaultLanguage="java"
-                        defaultValue={`{x == 1}\nx = x + 1;\n{x == 2}`} />
+            
+            {/* Sidebar menu */}
+           <div style={{ display: "flex", flexDirection: "row", height: "100vh" }}>
+                
+                <div className="menuBar">
+                <Menu />
                 </div>
-                <div className="flex flex-col justify-center relative pl-8">
-                    <div className=" flex-grow" style={{ whiteSpace: "pre", textAlign: "left" }}>
-                        {loading ? (
-                            <ThreeDots color="gray" height={100} width={100} />
-                        ) : (
-                            data
-                        )}
+
+            
+                <div
+                
+                    className="screen"
+                    style={{paddingLeft: "200px", paddingTop: "50px", width: "100%", overflow: "hidden" }}
+                >
+                    <div style={{ width: "60%", justifyContent: "left" }}>
+
+                        <Editor height="92vh" width="50vw" onChange={handleEditorChange} defaultLanguage="java"
+                            defaultValue={`{x == 1}\nx = x + 1;\n{x == 2}`} />
                     </div>
-                    <div className="flex flex-row justify-evenly max-h-11 mb-4">
-                        <button onClick={handleClickClear}>Clear</button>
-                        <button onClick={handleVerify}>Verify Triple</button>
+                    <div className="flex flex-col justify-center relative pl-8">
+                        <div className=" flex-grow" style={{ whiteSpace: "pre", textAlign: "left" }}>
+                            {loading ? (
+                                <ThreeDots color="gray" height={100} width={100} />
+                            ) : (
+                                data
+                            )}
+                        </div>
+                
+                        <div className="flex flex-row justify-evenly max-h-11 mb-4">
+                            <button onClick={handleClickClear}>Clear</button>
+                            <button onClick={handleVerify}>Verify Triple</button>
+                        </div>
                     </div>
                 </div>
             </div>

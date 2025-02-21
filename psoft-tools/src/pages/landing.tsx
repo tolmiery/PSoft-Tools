@@ -14,6 +14,5 @@ export default function Landing() {
                 />
             </div>
         </>
-        //console.log("hi")
     )
 }
