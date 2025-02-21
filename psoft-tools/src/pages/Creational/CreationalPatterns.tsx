@@ -1,6 +1,6 @@
 import Navbar from "../../components/Navbar";
 import Menu from "../../components/DesignPatternsMenu";
-import "./CreationalStyles.css";
+import "../../components/DesignStyles.css";
 
 export default function CreationalPatterns() {
     return (

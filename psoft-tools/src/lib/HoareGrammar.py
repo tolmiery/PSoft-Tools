@@ -65,7 +65,10 @@ def test_hoare_parser():
     result_triples = []
     for test in test_cases:
         try:
-            #
+            #first identify the precondition with trivial matching
+            #then try to parse through until hitting an end-of code indicator
+            #assign indexes from end of pre to end of code indicator to code
+            #then find postcondition with trivial matching
         except Exception as e:
             print(f"Test failed: {test}\nError: {e}\n")
 
