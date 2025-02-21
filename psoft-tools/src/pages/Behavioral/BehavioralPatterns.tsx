@@ -1,6 +1,6 @@
 import Navbar from "../../components/Navbar";
 import Menu from "../../components/DesignPatternsMenu";
-import "./BehavioralStyles.css";
+import "../../components/DesignStyles.css";
 
 export default function DesignPatterns() {
     return (
