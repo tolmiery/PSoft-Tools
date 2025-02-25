@@ -1,0 +1,109 @@
+import random
+import string
+import HoareTripleGrammar as htg
+
+# Generating terminal constants
+def genConstant():
+    return random.randint(-10,10)
+
+
+"""# Generate terminal operators for math operations
+def genNumOp():
+    return random.choice(NUM_OPERATORS)"""
+
+# Generate terminal operators for boolean statements
+def genStatementOp():
+    return random.choice(htg.STATEMENT_OPERATORS)
+
+# Generate terminal variable
+def genVariable():
+    return random.choice(htg.GEN_VARIABLES)
+
+def genLesserThan():
+    return random.choice(htg.LESSER_THAN)
+
+def genAndOr():
+    return random.choice(htg.AND_OR)
+
+def genBool():
+    return random.choice(htg.BOOL)
+
+def genFactor():
+    randNum = random.random()
+    if randNum < 0.1:
+        return f"({genExpression()})"
+    elif randNum < .55:
+        return f"{genConstant()}"
+    else:
+        return f"{genVariable()}"
+    
+def genTerm():
+    randNum = random.random()
+    if randNum < 0.15:
+        return f"{genTerm()} * {genFactor()}"
+    elif randNum < 0.3:
+        factor = genFactor()
+        while factor == 0:
+            factor = genFactor()
+        return f"{genTerm()} / {factor}"
+    else:
+        return f"{genFactor()}"
+    
+def genExpression():
+    randNum = random.random()
+    if randNum < 0.25:
+        return f"{genExpression()} + {genTerm()}"
+    elif randNum < 0.5:
+        return f"{genExpression()} - {genTerm()}"
+    else:
+        return f"{genTerm()}"
+
+def genCondition():
+    randNum = random.random()
+    if randNum < 0.25:
+        greater = genConstant()
+        lesser = genConstant()
+        return f"{genConstant()} {genLesserThan()} {genVariable()} {genLesserThan()} {genConstant()}"
+    elif randNum < 0.525:
+        return f"{genVariable()} {genStatementOp()} {genVariable()}"
+    elif randNum < 0.675:
+        return f"{genVariable()} {genStatementOp()} {genConstant()}"
+    elif randNum < 0.775:
+        return f"{genBool()} {genAndOr()} {genCondition()}"
+    else:
+        return f"{genVariable()} {genStatementOp()} {genVariable()} {genAndOr()} {genCondition()}"
+
+def genCode():
+    randNum = random.random()
+    if randNum < 0.4:
+        return f"{genVariable()} = {genExpression()}; {genCode()}"
+    else:
+        return f"{genVariable()} = {genExpression()};"
+    
+def genHoareTriple():
+    return f"{{{genCondition()}}} {genCode()} {{{genCondition()}}}"
+
+
+print(genHoareTriple())
+
+
+"""# Generate an expression
+def genExpression():
+    randNum = random.random()
+    if randNum < 0.33:
+        return genVariable()
+    elif randNum < 0.67:
+        return f"{genExpression()} {genNumOp()} {genExpression()}"
+    else:
+        return f"{}"
+
+def genCondition():
+    ranNum = random.random()
+    if ranNum < 0.33:
+        return f"{genVariable()} {genStatementOp()} {genConstant()}"
+    elif(ranNum < 0.67):
+        return f"{genVariable()} {genStatementOp()} {genExpression()}"
+    else:
+        return f"{}"
+        """
+    
