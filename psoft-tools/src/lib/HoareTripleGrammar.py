@@ -10,14 +10,16 @@ number      ->  -10 | -9 | ... | 9 | 10
 
 condition   ->  number statementOp variable statementOp number | variable statementOp variable | variable statementOp number
 code        ->  variable = expression
+boolean     ->  true | false | condition 
 """
 
 
 
 NUM_OPERATORS = ["+", "-", "*", "/", "%"]
-GREATER_THAN = ["<=", "<"]
-STATEMENT_OPERATORS = [">=", "<=", "<", ">", "==", "%", "!="]
+LESSER_THAN = ["<=", "<"]
+STATEMENT_OPERATORS = [">=", "<=", "<", ">", "==", "!="]
 AND_OR = ["||", "&&"]
+BOOL = ["true", "false"]
 #VARIABLES = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"}
 VARIABLES = ["x", "y", "z"]
 
@@ -38,11 +40,17 @@ def genStatementOp():
 def genVariable():
     return random.choice(VARIABLES)
 
-def genGreaterThan():
-    return random.choice(GREATER_THAN)
+#returns either "<" or "<="
+def genLesserThan():
+    return random.choice(LESSER_THAN)
 
+#returns either "&&" or "||"
 def genAndOr():
     return random.choice(AND_OR)
+
+#returns either "true" or "false"
+def genBool():
+    return random.choice(BOOL)
 
 def genFactor():
     randNum = random.random()
@@ -56,29 +64,60 @@ def genFactor():
 def genTerm():
     randNum = random.random()
     if randNum < 0.15:
-        return f"{genTerm()} * {genFactor()}"
+        if randNum < 0.075:
+            return f"{genTerm()} * {genFactor()}"
+        else:
+            factor = genFactor()
+            while factor == 0:      
+                #make sure we dont divide by 0
+                factor = genFactor()
+            return f"{genTerm()} / {factor}"
     elif randNum < 0.3:
-        return f"{genTerm()} / {genFactor()}"
+        if randNum < 0.225:
+            return f"{genFactor()} * {genFactor()}"
+        else:
+            factor = genFactor()
+            while factor == 0:      
+                #make sure we dont divide by 0
+                factor = genFactor()
+            return f"{genTerm()} / {factor}"
     else:
         return f"{genFactor()}"
     
 def genExpression():
     randNum = random.random()
     if randNum < 0.25:
-        return f"{genExpression()} + {genTerm()}"
+        if randNum < 0.125:
+            return f"{genExpression()} + {genTerm()}"
+        else:
+            return f"{genExpression()} - {genTerm()}"
     elif randNum < 0.5:
-        return f"{genExpression()} - {genTerm()}"
+        if randNum < 0.375:
+            return f"{genTerm()} + {genTerm()}"
+        else:
+            return f"{genTerm()} - {genTerm()}"
     else:
         return f"{genTerm()}"
 
 def genCondition():
     randNum = random.random()
     if randNum < 0.25:
-        return f"{genConstant()} {genGreaterThan()} {genVariable()} {genGreaterThan()} {genConstant()}"
-    elif randNum < 0.625:
+        greater = genConstant()
+        lesser = genConstant()
+        return f"{genConstant()} {genLesserThan()} {genVariable()} {genLesserThan()} {genConstant()}"
+    elif randNum < 0.525:
         return f"{genVariable()} {genStatementOp()} {genVariable()}"
+    elif randNum < 0.775:
+        return f"{genVariable()} {genStatementOp()} {genConstant()}"
     else:
         return f"{genVariable()} {genStatementOp()} {genVariable()} {genAndOr()} {genCondition()}"
+
+def genConditionStart():
+    if random.random() < 0.075:
+        return f"{genBool()}"
+    else:
+        return f"{genCondition()}"
+
 
 def genCode():
     randNum = random.random()
@@ -88,10 +127,13 @@ def genCode():
         return f"{genVariable()} = {genExpression()};"
     
 def genHoareTriple():
-    return f"{{{genCondition()}}} {genCode()} {{{genCondition()}}}"
+    return f"{{{genConditionStart()}}} {genCode()} {{{genConditionStart()}}}"
 
 
-print(genHoareTriple())
+i = 0
+while i <10:
+    print(genHoareTriple()+"\n")
+    i = i+1
 
 
 """# Generate an expression
