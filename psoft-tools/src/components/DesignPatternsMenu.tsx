@@ -7,22 +7,22 @@ export default function DesignPatternsMenu() {
     return (
         <div className="menuContainer">
             <div className="menuItem">
-                <Link to="/WhatPatterns/WhatPatterns">
+                <Link to="/DesignPatterns/WhatPatterns">
                     What are design patterns?
                 </Link>
             </div>
             <div className="menuItem">
-                <Link to="/Creational/CreationalPatterns">
+                <Link to="/DesignPatterns/CreationalPatterns">
                     Creational design patterns
                 </Link>
             </div>
             <div className="menuItem">
-                <Link to="/Behavioral/BehavioralPatterns">
+                <Link to="/DesignPatterns/BehavioralPatterns">
                     Behavioral design patterns
                 </Link>
             </div >
             <div className="menuItem">
-                <Link to="/Structural/StructuralPatterns">
+                <Link to="/DesignPatterns/StructuralPatterns">
                     Structural design patterns
                 </Link>
             </div>

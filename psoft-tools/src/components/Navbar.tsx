@@ -50,6 +50,9 @@ export default function Navbar() {
                     <Link to="/BackwardReasoning" className={`link ${isActive("/BackwardReasoning")}`}>
                         Backward Reasoning
                     </Link>
+                    <Link to="/ConditionStrength" className={`link ${isActive("/ConditionStrength")}`}>
+                        Condition Strength
+                    </Link>
                     <Link to="/DesignPatterns" className={`link ${isActive("/DesignPatterns")}`}>
                         Design Patterns
                     </Link>
