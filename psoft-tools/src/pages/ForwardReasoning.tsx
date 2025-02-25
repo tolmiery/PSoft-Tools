@@ -14,7 +14,7 @@ export default function ForwardReasoning() {
         setData("");
         setCode("// input code");
     };
-
+    {/* Sends Forward Reasoning Code to Dafny */ }
     const handleReasoning = () => {
         setLoading(true);
         console.log(code);
@@ -38,9 +38,8 @@ export default function ForwardReasoning() {
             <div>
                 <Navbar />
             </div>
-            
+            {/*Sidebar Menu */}
             <div style={{ display: "flex", flexDirection: "row", height: "100vh" }}>
-                            {/* Sidebar menu */}
                             <div className="menuBar">
                                 <Menu />
                             </div>
@@ -48,12 +47,13 @@ export default function ForwardReasoning() {
                 <div
                     className="screen"
                     style={{paddingLeft: "200px", paddingTop: "50px", width: "100%", overflow: "hidden" }}
-                >
+                >   {/* Input Screen */}
                     <div style={{ width: "60%", justifyContent: "left" }}>
 
                         <Editor height="92vh" width="100%" onChange={handleEditorChange} defaultLanguage="dafny"
                             defaultValue="// Input should be in the format '{precondition} code'" />
-                    </div>
+                    </div>                    
+                    {/* Output Screen */}
                     <div className="flex flex-col  relative pl-8 ">
                         <div className=" flex-grow" style={{ whiteSpace: "pre-line", textAlign:"left"}}>
                             {loading ? (

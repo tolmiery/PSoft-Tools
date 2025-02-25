@@ -1,5 +1,6 @@
 import "./landing.css";
 
+{/* Logo Page */}
 export default function Landing() {
     return(
         <>

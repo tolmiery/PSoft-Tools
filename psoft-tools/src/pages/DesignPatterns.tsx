@@ -1,7 +1,7 @@
 import Navbar from "../components/Navbar";
 import Menu from "../components/DesignPatternsMenu";
 
-
+{/* Design Patterns page*/}
 export default function DesignPatterns() {
     return (
         <div >

@@ -7,12 +7,12 @@ import dafnyParser from "../lib/DafnyParser";
 import Menu from "../components/HoareTripleMenu";
 
 //Create Routing File
-
 export default function HoareTriple() {
     const [data, setData] = useState("");
     const [code, setCode] = useState("{x == 1}\nx = x + 1;\n{x == 2}");
     const [loading, setLoading] = useState(false);
 
+    {/* Sends code to dafny for verification */}
     const handleVerify = () => {
         setLoading(true);
         const dafnyCode = dafnyParser(code.replace(/\r\n/g, "\n"));
@@ -49,18 +49,17 @@ export default function HoareTriple() {
                 <div className="menuBar">
                 <Menu />
                 </div>
-
-            
                 <div
                 
                     className="screen"
                     style={{paddingLeft: "200px", paddingTop: "50px", width: "100%", overflow: "hidden" }}
-                >
+                >   {/* Input Screen */}
                     <div style={{ width: "60%", justifyContent: "left" }}>
 
                         <Editor height="92vh" width="50vw" onChange={handleEditorChange} defaultLanguage="java"
                             defaultValue={`{x == 1}\nx = x + 1;\n{x == 2}`} />
                     </div>
+                    {/* Output Screen */}
                     <div className="flex flex-col justify-center relative pl-8">
                         <div className=" flex-grow" style={{ whiteSpace: "pre", textAlign: "left" }}>
                             {loading ? (

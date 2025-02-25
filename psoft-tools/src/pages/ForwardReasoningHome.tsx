@@ -1,7 +1,7 @@
 import Navbar from "../components/Navbar";
 import Menu from "../components/ForwardReasoningMenu";
 
-
+{/* Forward Reasoning Design Page*/}
 export default function ForwardReasoningHome() {
     return (
         <div >

@@ -1,3 +1,4 @@
+//Backwards reasoning Page
 import Navbar from "../components/Navbar";
 import Menu from "../components/BackwardReasoningMenu";
 import { Editor } from "@monaco-editor/react";
@@ -14,7 +15,7 @@ export default function BackwardReasoning() {
         setData("");
         setCode("// input code");
     };
-
+    {/*Sends input to Dafny*/}
     const handleReasoning = () => {
         setLoading(true);
         console.log(code);
@@ -30,9 +31,7 @@ export default function BackwardReasoning() {
     }
     const handleEditorChange = (value: string | undefined) => {
         if (value) {
-            //console.log(value);
             setCode(value);
-            //console.log(code);
         }
     };
     return (
@@ -40,22 +39,24 @@ export default function BackwardReasoning() {
             <div>
                 <Navbar />
             </div>
-
+            
+            {/*Sidebar Menu */} 
             <div style={{ display: "flex", flexDirection: "row", height: "100vh" }}>
-                                        {/* Sidebar menu */}
-                                        <div className="menuBar">
-                                            <Menu />
-                                        </div>
-
+                <div className="menuBar">
+                    <Menu />
+                </div>
+                
                 <div
                     className="screen"
                     style={{ paddingLeft: "200px", paddingTop: "50px", width: "100%", overflow: "hidden" }}
                 >
+                    {/* Input Screen */}
                     <div style={{ width: "60%", justifyContent: "left" }}>
 
                         <Editor height="92vh" width="100%" onChange={handleEditorChange} defaultLanguage="dafny"
                             defaultValue="// Input should be in the format 'code {postcondition}'" />
                     </div>
+                    {/* Output Screen */}
                     <div className="flex flex-col  relative pl-8 ">
                         <div className=" flex-grow" style={{ whiteSpace: "pre", textAlign:"left"}}>
                             {loading ? (

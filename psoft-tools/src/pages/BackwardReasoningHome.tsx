@@ -1,8 +1,8 @@
 import Navbar from "../components/Navbar";
 import Menu from "../components/BackwardReasoningMenu";
 
-
-export default function ForwardReasoningHome() {
+{/* Backward Reasoning Design Page */}
+export default function BackwardsReasoningHome() {
     return (
         <div >
             <div className="navbar">

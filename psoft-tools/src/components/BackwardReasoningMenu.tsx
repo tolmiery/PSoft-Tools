@@ -1,8 +1,8 @@
 
 import { Link } from "react-router-dom";
 import "./MenuStyles.css"
-
-export default function ForwardReasoningMenu() {
+/* Main layout for backwards reasoning*/
+export default function BackwardsReasoningMenu() {
     const isActive = (path: string) => location.pathname === path ? "active" : "";
     return (
         <div className="menuContainer" style={{ width: "200px" }}>

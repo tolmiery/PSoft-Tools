@@ -12,17 +12,20 @@ interface ErrorObject {
    errorMessage: string;
 }
 
+{/* Dafny Verification Page */}
 export default function Index() {
    const [data, setData] = useState("");
    const [code, setCode] = useState("// Please enter dafny code below and delete this comment!");
    const [loading, setLoading] = useState(false);
 
+   {/* Sends code to Dafny for verification */}
    const handleVerify = () => {
       setLoading(true);
       post("http://localhost:3000/verify", code)
          .then((response) => {
             setLoading(false);
             setData(response);
+            {/*Review to see if this is needed, where is this being printed out in ???*/}
             const errorText = response.slice(
                response.length - 9,
                response.length - 1
@@ -61,6 +64,7 @@ export default function Index() {
          });
    };
 
+   {/*Currently redundant function does the same thing as verification*/}
    const handleRun = () => {
       setLoading(true);
       post("http://localhost:3000/run", code)
@@ -75,14 +79,11 @@ export default function Index() {
 
    const handleClickClear = () => {
       setData("");
-      //setCode("// input code");
    };
 
    const handleEditorChange = (value: string | undefined) => {
       if (value) {
-         //console.log(value);
          setCode(value);
-         //console.log(code);
       }
    };
    return (
@@ -94,6 +95,7 @@ export default function Index() {
             className="screen"
             style={{ paddingTop: "50px", width: "100%", overflow: "hidden" }}
          >
+            {/*Input Screen */}
             <div style={{ width: "50%", justifyContent: "left" }}>
 
                <DafnyEditor
@@ -102,9 +104,11 @@ export default function Index() {
                      width: "50vw",
                      onChange: handleEditorChange,
                      defaultLanguage: "dafny",
+                     defaultValue: "// Input should be in the format of dafny code",
                   }}
                />
             </div>
+            {/*Output Screen*/}
             <div className="flex flex-col justify-center relative pl-8">
                <div className=" flex-grow" style={{ whiteSpace: "pre", textAlign: "left" }}>
                   {loading ? (
