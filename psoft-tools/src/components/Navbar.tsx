@@ -15,7 +15,12 @@ export default function Navbar() {
             "https://www.cs.rpi.edu/academics/courses/summer24/csci2600/";
     };
 
-    const isActive = (path: string) => location.pathname === path ? "active" : "";
+    const isActive = (path: string | string[]) => {
+        if (Array.isArray(path)) {
+            return path.includes(location.pathname) ? "active" : "";
+        }
+        return location.pathname === path ? "active" : "";
+    };
     return (
         <>
             <div
@@ -41,7 +46,7 @@ export default function Navbar() {
                 <Link to="/index" className={`link ${isActive("/index")}`}>
                         Dafny Verifier
                     </Link>
-                    <Link to="/HoareTriple" className={`link ${isActive("/HoareTriple")}`}>
+                    <Link to="/HoareTriple" className={`link ${isActive(["/HoareTriple", "/GenTriple"])}`}>
                         Hoare Triples
                     </Link>
                     <Link to="/ForwardReasoning" className={`link ${isActive("/ForwardReasoning")}`}>
