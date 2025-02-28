@@ -1,7 +1,10 @@
 import random
 import string
+import HoareTripleTemplate
 
 """ 
+Grammar rules:
+
 expression  ->  expression + term | numExpression - term | term
 term        ->  term * factor | term / factor | factor 
 factor      ->  (expression) | number | variable
@@ -13,146 +16,185 @@ code        ->  variable = expression
 boolean     ->  true | false | condition 
 """
 
-
-
-NUM_OPERATORS = ["+", "-", "*", "/", "%"]
-LESSER_THAN = ["<=", "<"]
-STATEMENT_OPERATORS = [">=", "<=", "<", ">", "==", "!="]
-AND_OR = ["||", "&&"]
-BOOL = ["true", "false"]
-#VARIABLES = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"}
-VARIABLES = ["x", "y", "z"]
-
-# Generating terminal constants
+# Generating terminal constants, return as a string
 def genConstant():
     return random.randint(-10,10)
 
-
-"""# Generate terminal operators for math operations
-def genNumOp():
-    return random.choice(NUM_OPERATORS)"""
-
-# Generate terminal operators for boolean statements
+# Generate terminal operators for boolean statements, return as a string
 def genStatementOp():
-    return random.choice(STATEMENT_OPERATORS)
+    return random.choice(HoareTripleTemplate.getStatementOp())
 
-# Generate terminal variable
+# Generate terminal variable, return as a string
 def genVariable():
-    return random.choice(VARIABLES)
+    return random.choice(HoareTripleTemplate.getVariables())
 
-#returns either "<" or "<="
+#returns either "<" or "<=", return as a string
 def genLesserThan():
-    return random.choice(LESSER_THAN)
+    return random.choice(HoareTripleTemplate.getLesserThan())
 
-#returns either "&&" or "||"
+#returns either "&&" or "||", return as a string
 def genAndOr():
-    return random.choice(AND_OR)
+    return random.choice(HoareTripleTemplate.getAndOr())
 
-#returns either "true" or "false"
+#returns either "true" or "false", return as a string
 def genBool():
-    return random.choice(BOOL)
+    return random.choice(HoareTripleTemplate.getBool())
+"""
+Factors are where we stop adding operations to our grammar.
+Factors are either variables (x,y,z), constants (-10 to 10), or expressions within parenthases
+10% of the time, a factor will generate an expression in paraenthases
+45% of the time a factor will be a constant, and the other 45% of the time it will be a variable
 
+All values returned will be strings
+"""
 def genFactor():
     randNum = random.random()
     if randNum < 0.1:
-        return f"({genExpression()})"
+        return f"({genExpression(2)})"
     elif randNum < .55:
         return f"{genConstant()}"
     else:
         return f"{genVariable()}"
-    
-def genTerm():
-    randNum = random.random()
-    if randNum < 0.15:
-        if randNum < 0.075:
-            return f"{genTerm()} * {genFactor()}"
-        else:
-            factor = genFactor()
-            while factor == 0:      
-                #make sure we dont divide by 0
-                factor = genFactor()
-            return f"{genTerm()} / {factor}"
-    elif randNum < 0.3:
-        if randNum < 0.225:
-            return f"{genFactor()} * {genFactor()}"
-        else:
-            factor = genFactor()
-            while factor == 0:      
-                #make sure we dont divide by 0
-                factor = genFactor()
-            return f"{genTerm()} / {factor}"
-    else:
-        return f"{genFactor()}"
-    
-def genExpression():
-    randNum = random.random()
-    if randNum < 0.25:
-        if randNum < 0.125:
-            return f"{genExpression()} + {genTerm()}"
-        else:
-            return f"{genExpression()} - {genTerm()}"
-    elif randNum < 0.5:
-        if randNum < 0.375:
-            return f"{genTerm()} + {genTerm()}"
-        else:
-            return f"{genTerm()} - {genTerm()}"
-    else:
-        return f"{genTerm()}"
 
-def genCondition():
-    randNum = random.random()
-    if randNum < 0.25:
-        greater = genConstant()
-        lesser = genConstant()
-        return f"{genConstant()} {genLesserThan()} {genVariable()} {genLesserThan()} {genConstant()}"
-    elif randNum < 0.525:
-        return f"{genVariable()} {genStatementOp()} {genVariable()}"
-    elif randNum < 0.775:
-        return f"{genVariable()} {genStatementOp()} {genConstant()}"
-    else:
-        return f"{genVariable()} {genStatementOp()} {genVariable()} {genAndOr()} {genCondition()}"
+"""
+Terms are used to add either multiplication or division to our expression
+Since terms are generated at least two times per genExpression() call, the percent change for term to recur is low
+Input i is an int used to keep track of recursive depth.
+genTerm() will return a string
 
+if the recursive depth is less than 5:
+7.5% of the time, term will produce a recursive call * a factor.
+7.5% of the time, term will produce a recursive call / a factor.
+7.5% of the time, term wont recur and will produce a factor * a factor.
+7.5% of the time, term wont recur and will produce a factor / a factor.
+the other 70% of the time, term will just produce a factor.
+
+if the recursive depth is at 5, term will always produce a factor
+"""
+def genTerm(i):
+    i = i+1
+    if i < 5:
+        randNum = random.random()
+        if randNum < 0.15:
+            if randNum < 0.075:
+                return f"{genTerm(i)} * {genFactor()}"
+            else:
+                factor = genFactor()
+                while factor == 0:      
+                    #make sure we dont divide by 0
+                    factor = genFactor()
+                return f"{genTerm(i)} / {factor}"
+        elif randNum < 0.3:
+            if randNum < 0.225:
+                return f"{genFactor()} * {genFactor()}"
+            else:
+                factor = genFactor()
+                while factor == 0:      
+                    #make sure we dont divide by 0
+                    factor = genFactor()
+                return f"{genTerm(i)} / {factor}"
+    
+    return f"{genFactor()}"
+
+"""
+Expressions are used in this grammar to include either addition or subtraction to our expression.
+Input i is an int used to keep track of recursive depth.
+Recursive will stop at 4 in genExpression(), and will let genTerm() execute one more time.
+genExpression() will return a string.
+
+if the recursive depth is less than 4:
+12.5% of the time, genExpression() will produce a recursive call + a term.
+12.5% of the time, genExpression() will produce a recursive call - a term.
+12.5% of the time, genExpression() wont recur and will produce a term + a term.
+12.5% of the time, genExpression() wont recur and will produce a term - a term.
+the other 50% of the time, genExpression() will just produce a term.
+
+if the recursive depth is at least 4, genExpression() will always produce a term
+"""
+def genExpression(i):
+    i = i+1
+    #stop at recursion depth of 4 if not already finished
+    if i < 4:
+        randNum = random.random()
+        if randNum < 0.25:
+            #branch to recurr genExpression again
+            if randNum < 0.125:
+                return f"{genExpression(i)} + {genTerm(i)}"
+            else:
+                return f"{genExpression(i)} - {genTerm(i)}"
+        elif randNum < 0.5:
+            #branch to not recur genExpression again, and only do addition with terms.
+            if randNum < 0.375:
+                return f"{genTerm(i)} + {genTerm(i)}"
+            else:
+                return f"{genTerm(i)} - {genTerm(i)}"
+    return f"{genTerm(i)}"
+
+"""
+genConditionStart() starts the recursive call for pre and post conditions.
+This function is used to include booleans as conditions.
+A seperate function is optimal as it prevents conditions like "true <= x" from being generated
+
+7.5% of the time, a boolean is the condition. This is returned as a string, ie: "true" or "false"
+Otherwise genCondition() is called.
+"""
 def genConditionStart():
     if random.random() < 0.075:
         return f"{genBool()}"
     else:
-        return f"{genCondition()}"
+        return f"{genCondition()}" 
+
+"""
+genCondition() will return a string that will be a complete boolean expression that may or may not be valid. 
+
+25% of the time, a condition bounding a variable between two numbers is generated.
+25% of the time, genCondition() creates a condition bounding a variable by another variable, either with <, <=, >, >=, or ==.
+25% of the time, genCondition() creates a condition bounding a variable by a constant, either with <, <=, >, >=, or ==.
+The other 25% of the time, genCondition() creates a variable bounded by another variable, "&&" or "||", and a recursive call of genCondition()
 
 
+"""
+def genCondition():
+    randNum = random.random()
+    if randNum < 0.25:
+        return f"{genConstant()} {genLesserThan()} {genVariable()} {genLesserThan()} {genConstant()}"
+    elif randNum < 0.50:
+        return f"{genVariable()} {genStatementOp()} {genVariable()}"
+    elif randNum < 0.75:
+        return f"{genVariable()} {genStatementOp()} {genConstant()}"
+    else:
+        return f"{genVariable()} {genStatementOp()} {genVariable()} {genAndOr()} {genCondition()}"
+
+
+"""
+Start of recursion for creating expressions.
+Creates expressions in java language.
+Lines of code in the format of "variable = expression;"
+40% of the time genCode() will create a line of code followed by a recurssive call to genCode()
+60% of the time, genCode() will create a single line of code.
+
+genCode() declares and initalizes i=0, and uses it as input for genExpression() to keep track of recursive depth for each expression.
+
+Will return one string that will include at least one line of java code.
+"""
 def genCode():
+    i = 0   #keep track of recurssion depth with i
     randNum = random.random()
     if randNum < 0.4:
-        return f"{genVariable()} = {genExpression()}; {genCode()}"
+        return f"{genVariable()} = {genExpression(i)}; {genCode()}"
     else:
-        return f"{genVariable()} = {genExpression()};"
+        return f"{genVariable()} = {genExpression(i)};"
     
+"""
+Start of recursion for Hoare Triples.
+Returns a string in the format "{P} code; {Q}", where P and Q are pre and post condtions respectively.
+"""
 def genHoareTriple():
     return f"{{{genConditionStart()}}} {genCode()} {{{genConditionStart()}}}"
 
 
+#used for testing.
 i = 0
 while i <10:
     print(genHoareTriple()+"\n")
     i = i+1
-
-
-"""# Generate an expression
-def genExpression():
-    randNum = random.random()
-    if randNum < 0.33:
-        return genVariable()
-    elif randNum < 0.67:
-        return f"{genExpression()} {genNumOp()} {genExpression()}"
-    else:
-        return f"{}"
-
-def genCondition():
-    ranNum = random.random()
-    if ranNum < 0.33:
-        return f"{genVariable()} {genStatementOp()} {genConstant()}"
-    elif(ranNum < 0.67):
-        return f"{genVariable()} {genStatementOp()} {genExpression()}"
-    else:
-        return f"{}"
-        """
-    
