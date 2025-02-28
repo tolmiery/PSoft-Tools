@@ -58,7 +58,8 @@ export default function Navbar() {
                     <Link to="/ConditionStrength" className={`link ${isActive("/ConditionStrength")}`}>
                         Condition Strength
                     </Link>
-                    <Link to="/DesignPatterns" className={`link ${isActive("/DesignPatterns")}`}>
+                    <Link to="/DesignPatterns/WhatPatterns" className={`link ${isActive(["/DesignPatterns/WhatPatterns", "/DesignPatterns/CreationalPatterns", 
+                        "/DesignPatterns/BehavioralPatterns", "/DesignPatterns/StructuralPatterns"])}`}>
                         Design Patterns
                     </Link>
                     <Link to="/CFGCanvas" className={`link ${isActive("/CFGCanvas")}`}>
