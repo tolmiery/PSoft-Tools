@@ -181,7 +181,7 @@ def genCode():
     i = 0   #keep track of recurssion depth with i
     randNum = random.random()
     if randNum < 0.4:
-        return f"{genVariable()} = {genExpression(i)}; {genCode()}"
+        return f"{genVariable()} = {genExpression(i)};\n{genCode()}"
     else:
         return f"{genVariable()} = {genExpression(i)};"
     
@@ -190,11 +190,7 @@ Start of recursion for Hoare Triples.
 Returns a string in the format "{P} code; {Q}", where P and Q are pre and post condtions respectively.
 """
 def genHoareTriple():
-    return f"{{{genConditionStart()}}} {genCode()} {{{genConditionStart()}}}"
+    return f"{{{genConditionStart()}}}\n{genCode()}\n{{{genConditionStart()}}}\n"
 
 
-#used for testing.
-i = 0
-while i <10:
-    print(genHoareTriple()+"\n")
-    i = i+1
+print(genHoareTriple())
