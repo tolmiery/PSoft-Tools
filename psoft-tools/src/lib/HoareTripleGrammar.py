@@ -1,6 +1,7 @@
 import random
 import string
 import HoareTripleTemplate
+import sys
 
 """ 
 Grammar rules:
@@ -184,13 +185,27 @@ def genCode():
         return f"{genVariable()} = {genExpression(i)};\n{genCode()}"
     else:
         return f"{genVariable()} = {genExpression(i)};"
-    
-"""
-Start of recursion for Hoare Triples.
-Returns a string in the format "{P} code; {Q}", where P and Q are pre and post condtions respectively.
-"""
+
+
+
+#Start of recursion for Hoare Triples.
+#Returns a string in the format "{P} code; {Q}", where P and Q are pre and post condtions respectively.
 def genHoareTriple():
     return f"{{{genConditionStart()}}}\n{genCode()}\n{{{genConditionStart()}}}\n"
 
+def genForwardReasoning():
+    return f"{{{genConditionStart()}}}\n{genCode()}\n"
 
-print(genHoareTriple())
+def genBackwardReasoning():
+    return f"{genCode()}\n{{{genConditionStart()}}}\n"
+
+
+if(sys.argv[1]==0):
+    print(genHoareTriple())
+        
+if(sys.argv[1]==1):
+    print(genForwardReasoning())
+
+if(sys.argv[1]==2):
+    print(genBackwardReasoning())
+
