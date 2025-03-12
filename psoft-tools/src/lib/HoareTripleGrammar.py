@@ -42,8 +42,8 @@ def genBool():
     return random.choice(HoareTripleTemplate.getBool())
 """
 Factors are where we stop adding operations to our grammar.
-Factors are either variables (x,y,z), constants (-10 to 10), or expressions within parenthases
-10% of the time, a factor will generate an expression in paraenthases
+Factors are either variables (x,y,z), constants (-10 to 10), or expressions
+10% of the time, a factor will generate an expression
 45% of the time a factor will be a constant, and the other 45% of the time it will be a variable
 
 All values returned will be strings
@@ -51,7 +51,7 @@ All values returned will be strings
 def genFactor():
     randNum = random.random()
     if randNum < 0.1:
-        return f"({genExpression(2)})"
+        return f"{genExpression(2)}"
     elif randNum < .55:
         return f"{genConstant()}"
     else:
@@ -64,10 +64,8 @@ Input i is an int used to keep track of recursive depth.
 genTerm() will return a string
 
 if the recursive depth is less than 5:
-7.5% of the time, term will produce a recursive call * a factor.
-7.5% of the time, term will produce a recursive call / a factor.
-7.5% of the time, term wont recur and will produce a factor * a factor.
-7.5% of the time, term wont recur and will produce a factor / a factor.
+15% of the time, term will produce a recursive call * a factor.
+15% of the time, term will produce a recursive call / a factor.
 the other 70% of the time, term will just produce a factor.
 
 if the recursive depth is at 5, term will always produce a factor
@@ -76,24 +74,20 @@ def genTerm(i):
     i = i+1
     if i < 5:
         randNum = random.random()
-        if randNum < 0.15:
-            if randNum < 0.075:
-                return f"{genTerm(i)} * {genFactor()}"
+        if randNum < 0.3:
+            #make sure we don't divide by 0 + multiplication by 0 is not interesting
+            second = genFactor()
+            while second == "0":      
+                second = genFactor()
+            first = genTerm(i)
+            if randNum < 0.15:
+                while first == "0":
+                    first = genTerm(i)
+                return f"{first} * {second}"
             else:
-                factor = genFactor()
-                while factor == 0:      
-                    #make sure we dont divide by 0
-                    factor = genFactor()
-                return f"{genTerm(i)} / {factor}"
-        elif randNum < 0.3:
-            if randNum < 0.225:
-                return f"{genFactor()} * {genFactor()}"
-            else:
-                factor = genFactor()
-                while factor == 0:      
-                    #make sure we dont divide by 0
-                    factor = genFactor()
-                return f"{genTerm(i)} / {factor}"
+                while first == second or first == "0":
+                    first = genTerm(i)
+                return f"({first} / {second})"
     
     return f"{genFactor()}"
 
@@ -117,18 +111,30 @@ def genExpression(i):
     #stop at recursion depth of 4 if not already finished
     if i < 4:
         randNum = random.random()
+        second = genTerm(i)
+        while second == "0":
+            #additions and subtractions with 0 are not interesting
+            second = genTerm(i)
         if randNum < 0.25:
             #branch to recurr genExpression again
+            first = genExpression(i)
+            while first == "0":
+                #additions and subtractions with 0 are not interesting
+                first = genExpression(i)
             if randNum < 0.125:
-                return f"{genExpression(i)} + {genTerm(i)}"
+                return f"{first} + {second}"
             else:
-                return f"{genExpression(i)} - {genTerm(i)}"
+                return f"{first} - {second}"
         elif randNum < 0.5:
+            first = genTerm(i)
+            while first == "0":
+                #additions and subtractions with 0 are not interesting
+                first = genTerm(i)
             #branch to not recur genExpression again, and only do addition with terms.
             if randNum < 0.375:
-                return f"{genTerm(i)} + {genTerm(i)}"
+                return f"{first} + {second}"
             else:
-                return f"{genTerm(i)} - {genTerm(i)}"
+                return f"{first} - {second}"
     return f"{genTerm(i)}"
 
 """
@@ -158,13 +164,26 @@ The other 25% of the time, genCondition() creates a variable bounded by another 
 def genCondition():
     randNum = random.random()
     if randNum < 0.25:
-        return f"{genConstant()} {genLesserThan()} {genVariable()} {genLesserThan()} {genConstant()}"
+        first = genConstant()
+        second = genConstant()
+        while first >= second:
+            first = genConstant()
+            second = genConstant()
+        return f"{first} {genLesserThan()} {genVariable()} {genLesserThan()} {second}"
     elif randNum < 0.50:
-        return f"{genVariable()} {genStatementOp()} {genVariable()}"
+        first = genVariable()
+        second = genVariable()
+        while first == second:
+            second = genVariable()
+        return f"{first} {genStatementOp()} {second}"
     elif randNum < 0.75:
         return f"{genVariable()} {genStatementOp()} {genConstant()}"
     else:
-        return f"{genVariable()} {genStatementOp()} {genVariable()} {genAndOr()} {genCondition()}"
+        first = genVariable()
+        second = genVariable()
+        while first == second:
+            second = genVariable()
+        return f"{first} {genStatementOp()} {second} {genAndOr()} {genCondition()}"
 
 
 """
@@ -179,12 +198,15 @@ genCode() declares and initalizes i=0, and uses it as input for genExpression() 
 Will return one string that will include at least one line of java code.
 """
 def genCode():
-    i = 0   #keep track of recurssion depth with i
     randNum = random.random()
+    var = genVariable()
+    expression = genExpression(0)
+    while var == expression:
+        expression = genExpression(0)
     if randNum < 0.4:
-        return f"{genVariable()} = {genExpression(i)};\n{genCode()}"
+        return f"{var} = {expression};\n{genCode()}"
     else:
-        return f"{genVariable()} = {genExpression(i)};"
+        return f"{var} = {expression};"
 
 
 
