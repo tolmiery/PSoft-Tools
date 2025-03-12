@@ -194,18 +194,33 @@ def genHoareTriple():
     return f"{{{genConditionStart()}}}\n{genCode()}\n{{{genConditionStart()}}}\n"
 
 def genForwardReasoning():
-    return f"{{{genConditionStart()}}}\n{genCode()}\n"
+    start=genConditionStart()
+    output = f"{{{start}}}\n"
+    length = random.randint(1, 4)
+    i = 0
+    while i < length:
+        output += f"{genCode()}\n{{{'-' * len(start)}}}\n"
+        i += 1
+    return output
 
 def genBackwardReasoning():
-    return f"{genCode()}\n{{{genConditionStart()}}}\n"
-
-
-if(sys.argv[1]==0):
-    print(genHoareTriple())
+    end = start=genConditionStart()
+    output = f""
+    length = random.randint(1, 4)
+    i = 0
+    while i < length:
+        output += f"{{{'-' * len(end)}}}\n{genCode()}\n"
+        i += 1
+    output += f"{{{end}}}"
+    return output
         
-if(sys.argv[1]==1):
-    print(genForwardReasoning())
 
-if(sys.argv[1]==2):
-    print(genBackwardReasoning())
+if __name__ == "__main__":
+    if(int(sys.argv[1])==1):
+        print(genHoareTriple())
+            
+    if(int(sys.argv[1])==2):
+        print(genForwardReasoning())
 
+    if(int(sys.argv[1])==3):
+        print(genBackwardReasoning())

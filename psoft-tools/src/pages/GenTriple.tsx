@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import Navbar from "../components/Navbar";
 import Menu from "../components/HoareTripleMenu";
-import { post } from "../lib/api"; // Your custom post function
+import { post } from "../lib/api";
 
 export default function GenTriple() {
     const [data, setData] = useState(""); // To store Python result
@@ -11,7 +11,7 @@ export default function GenTriple() {
     // Handle Python code execution
     const handleGenerateTriple = () => {
         setLoading(true); // Start loading
-        post("http://localhost:3000/gentriple", "") // Send empty string as body (Python script doesn't require input)
+        post("http://localhost:3000/gentriple", "") // Send empty string as body, input handled elsewhere
             .then((response) => {
                 setLoading(false); // Stop loading
                 setData(response); // Set the Python script output
