@@ -71,13 +71,13 @@ the other 70% of the time, term will just produce a factor.
 if the recursive depth is at 5, term will always produce a factor
 """
 
-def is_negative(expression):
+def isNegative(expression):
     # If the expression starts with parentheses, skip them and check inside
     i = 0
     while expression[i] == "(": i += 1
     return expression[i] == "-"
 
-def pseudo_absolute_value(expression):
+def pseudoAbsolute(expression):
     i = 0
     while expression[i] == "(": i += 1
     if expression[i] == "-":
@@ -106,10 +106,10 @@ def genTerm(i):
             else:
                 while first == second or first == "0":
                     first = genTerm(i)
-                if is_negative(first) and is_negative(second):
+                if isNegative(first) and isNegative(second):
                     #if both are negative, return positive
-                    first = pseudo_absolute_value(first)
-                    second = pseudo_absolute_value(second)
+                    first = pseudoAbsolute(first)
+                    second = pseudoAbsolute(second)
                 return f"{first} / {second}"
     
     return f"{genFactor()}"
@@ -152,9 +152,9 @@ def genExpression(i):
                     #additions and subtractions with 0 are not interesting
                     first = genTerm(i)
             if randNum < 0.375:
-                return f"{first} + {pseudo_absolute_value(second)}"
+                return f"{first} + {pseudoAbsolute(second)}"
             else:
-                return f"{first} - {pseudo_absolute_value(second)}"
+                return f"{first} - {pseudoAbsolute(second)}"
     return f"{genTerm(i)}"
 
 """
