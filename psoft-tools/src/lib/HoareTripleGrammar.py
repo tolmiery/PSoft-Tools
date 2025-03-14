@@ -228,18 +228,18 @@ def genCode():
     else:
         return f"{var} = {expression};"
 
-def genHelper(condition, code_segments):
+def genHelper(condition, codeSegments):
     length = random.randint(1, 4)
     for _ in range(length):
         # Generate a code segment and store it in the list
-        code_segment = genCode()
-        code_segments.append(code_segment)
+        codeSegment = genCode()
+        codeSegments.append(codeSegment)
     # Find the longest line (for separator width)
-    max_code_length = len(condition) +2
-    for code_segment in code_segments:
+    maxCodeLength = len(condition) +2
+    for codeSegment in codeSegments:
         # Split each code segment into lines and find the longest line in each segment
-        max_code_length = max(max_code_length, max(len(line) for line in code_segment.split("\n")))
-    return max_code_length
+        maxCodeLength = max(maxCodeLength, max(len(line) for line in codeSegment.split("\n")))
+    return maxCodeLength
 
 #Start of recursion for Hoare Triples.
 #Returns a string in the format "{P} code; {Q}", where P and Q are pre and post condtions respectively.
@@ -249,22 +249,22 @@ def genHoareTriple():
 def genForwardReasoning():
     start = genConditionStart()
     output = f"{{{start}}}\n"
-    code_segments = []  # List to store all generated code segments
-    max_code_length = genHelper(start, code_segments)  # Find the longest line (for separator width) while generating code segments
+    codeSegments = []  # List to store all generated code segments
+    maxCodeLength = genHelper(start, codeSegments)  # Find the longest line (for separator width) while generating code segments
     # Build the output with separators of the appropriate length
-    for code_segment in code_segments:
-        output += f"{code_segment}\n{{{'-' * (max_code_length-2)}}}\n"
+    for codeSegment in codeSegments:
+        output += f"{codeSegment}\n{{{'-' * (maxCodeLength-2)}}}\n"
     return output
 
 def genBackwardReasoning():
     end = genConditionStart()
     output = f""
     length = random.randint(1, 4)
-    code_segments = []  # List to store all generated code segments
-    max_code_length = genHelper(end, code_segments)  # Find the longest line (for separator width) while generating code segments
+    codeSegments = []  # List to store all generated code segments
+    maxCodeLength = genHelper(end, codeSegments)  # Find the longest line (for separator width) while generating code segments
     # Build the output with separators of the appropriate length
-    for code_segment in code_segments:
-        output += f"{{{'-' * (max_code_length-2)}}}\n{code_segment}\n"
+    for codeSegment in codeSegments:
+        output += f"{{{'-' * (maxCodeLength-2)}}}\n{codeSegment}\n"
     output += f"{{{end}}}"
     return output
         
