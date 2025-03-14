@@ -70,6 +70,21 @@ the other 70% of the time, term will just produce a factor.
 
 if the recursive depth is at 5, term will always produce a factor
 """
+
+def is_negative(expression):
+    # If the expression starts with parentheses, skip them and check inside
+    i = 0
+    while expression[i] == "(": i += 1
+    return expression[i] == "-"
+
+def pseudo_absolute_value(expression):
+    i = 0
+    while expression[i] == "(": i += 1
+    if expression[i] == "-":
+        # Remove the negative sign
+        expression = expression[0:i] + expression[i+1:]
+    return expression
+
 def genTerm(i):
     i = i+1
     if i < 5:
@@ -80,6 +95,10 @@ def genTerm(i):
             while second == "0":      
                 second = genFactor()
             first = genTerm(i)
+            if len(first) > 3 and first[0] != "(":
+                    first = f"({first})"
+            if len(second) > 3 and second[0] != "(":
+                second = f"({second})"
             if randNum < 0.15:
                 while first == "0":
                     first = genTerm(i)
@@ -87,7 +106,11 @@ def genTerm(i):
             else:
                 while first == second or first == "0":
                     first = genTerm(i)
-                return f"({first} / {second})"
+                if is_negative(first) and is_negative(second):
+                    #if both are negative, return positive
+                    first = pseudo_absolute_value(first)
+                    second = pseudo_absolute_value(second)
+                return f"{first} / {second}"
     
     return f"{genFactor()}"
 
@@ -115,26 +138,23 @@ def genExpression(i):
         while second == "0":
             #additions and subtractions with 0 are not interesting
             second = genTerm(i)
-        if randNum < 0.25:
-            #branch to recurr genExpression again
-            first = genExpression(i)
-            while first == "0":
-                #additions and subtractions with 0 are not interesting
+        if randNum < 0.5:
+            if randNum < 0.25:
+                #branch to recurr genExpression again
                 first = genExpression(i)
-            if randNum < 0.125:
-                return f"{first} + {second}"
+                while first == "0":
+                    #additions and subtractions with 0 are not interesting
+                    first = genExpression(i)
             else:
-                return f"{first} - {second}"
-        elif randNum < 0.5:
-            first = genTerm(i)
-            while first == "0":
-                #additions and subtractions with 0 are not interesting
+                #branch to not recur genExpression again, and only do addition with terms.
                 first = genTerm(i)
-            #branch to not recur genExpression again, and only do addition with terms.
+                while first == "0":
+                    #additions and subtractions with 0 are not interesting
+                    first = genTerm(i)
             if randNum < 0.375:
-                return f"{first} + {second}"
+                return f"{first} + {pseudo_absolute_value(second)}"
             else:
-                return f"{first} - {second}"
+                return f"{first} - {pseudo_absolute_value(second)}"
     return f"{genTerm(i)}"
 
 """
@@ -208,7 +228,18 @@ def genCode():
     else:
         return f"{var} = {expression};"
 
-
+def genHelper(condition, code_segments):
+    length = random.randint(1, 4)
+    for _ in range(length):
+        # Generate a code segment and store it in the list
+        code_segment = genCode()
+        code_segments.append(code_segment)
+    # Find the longest line (for separator width)
+    max_code_length = len(condition) +2
+    for code_segment in code_segments:
+        # Split each code segment into lines and find the longest line in each segment
+        max_code_length = max(max_code_length, max(len(line) for line in code_segment.split("\n")))
+    return max_code_length
 
 #Start of recursion for Hoare Triples.
 #Returns a string in the format "{P} code; {Q}", where P and Q are pre and post condtions respectively.
@@ -216,23 +247,24 @@ def genHoareTriple():
     return f"{{{genConditionStart()}}}\n{genCode()}\n{{{genConditionStart()}}}\n"
 
 def genForwardReasoning():
-    start=genConditionStart()
+    start = genConditionStart()
     output = f"{{{start}}}\n"
-    length = random.randint(1, 4)
-    i = 0
-    while i < length:
-        output += f"{genCode()}\n{{{'-' * len(start)}}}\n"
-        i += 1
+    code_segments = []  # List to store all generated code segments
+    max_code_length = genHelper(start, code_segments)  # Find the longest line (for separator width) while generating code segments
+    # Build the output with separators of the appropriate length
+    for code_segment in code_segments:
+        output += f"{code_segment}\n{{{'-' * (max_code_length-2)}}}\n"
     return output
 
 def genBackwardReasoning():
-    end = start=genConditionStart()
+    end = genConditionStart()
     output = f""
     length = random.randint(1, 4)
-    i = 0
-    while i < length:
-        output += f"{{{'-' * len(end)}}}\n{genCode()}\n"
-        i += 1
+    code_segments = []  # List to store all generated code segments
+    max_code_length = genHelper(end, code_segments)  # Find the longest line (for separator width) while generating code segments
+    # Build the output with separators of the appropriate length
+    for code_segment in code_segments:
+        output += f"{{{'-' * (max_code_length-2)}}}\n{code_segment}\n"
     output += f"{{{end}}}"
     return output
         
