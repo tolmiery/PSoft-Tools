@@ -20,10 +20,17 @@ export default function DesignPatterns() {
                     {/* Structural Design Patterns */}
                     <h1>Structural Design Patterns</h1>
 
+                    <p>
+                        Structural design patterns deal with the composition of classes and objects. They help to organize different classes or objects into larger structures while ensuring that these structures remain flexible and efficient. These patterns focus on how to build complex structures from simpler objects.
+                    </p>
+
                     <div className="designPatternCard">
                         <h2>Adapter Pattern</h2>
                         <p>
-                            Allows incompatible interfaces to work together by providing a wrapper that adapts one interface to another.
+                            The adapter pattern <b>updates the interface</b> used to access a class <b>without changing the class's functionality</b>. This is useful when attempting to use two incompatible interfaces together.
+                        </p>
+                        <p>
+                            This pattern is especially helpful when needing to convert output, whether it be 
                         </p>
                         <span className="example">
                             Example: A plug adapter that allows a device to use a different power plug standard.
@@ -33,7 +40,10 @@ export default function DesignPatterns() {
                     <div className="designPatternCard">
                         <h2>Facade Pattern</h2>
                         <p>
-                            Provides a simplified interface to a complex subsystem, making it easier to use.
+                            When working with a powerful and extensive library, the Facade pattern can provide a simpler interface that <b>hides irrelevant complexity</b> from the client.
+                        </p>
+                        <p>
+                            This pattern <b>decreases interactions between the client and the complex subsystem</b>, providing an easier and consistent interface for the client to interact with.
                         </p>
                         <span className="example">
                             Example: A home theater system where the user interacts with one interface to control multiple devices like the TV, speakers, and DVD player.
@@ -73,7 +83,7 @@ export default function DesignPatterns() {
                     <div className="designPatternCard">
                         <h2>Proxy Pattern</h2>
                         <p>
-                            Provides an object representing another object, typically to control access, or add functionality.
+                            A class encloses another class object, having the same interface and functionality while controlling all outside access to the enclosed object.
                         </p>
                         <span className="example">
                             Example: A virtual proxy used to load large image files only when needed.

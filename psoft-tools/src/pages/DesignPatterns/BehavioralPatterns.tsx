@@ -1,6 +1,8 @@
 import Navbar from "../../components/Navbar";
 import Menu from "../../components/DesignPatternsMenu";
 import "../../components/DesignStyles.css";
+import observer_uml from '../../assets/observer_pattern_uml_diagram.jpg';
+
 
 export default function DesignPatterns() {
     return (
@@ -20,30 +22,55 @@ export default function DesignPatterns() {
                     {/* Behavioral Design Patterns */}
                     <h1>Behavioral Design Patterns</h1>
 
+                    <p>
+                        Behavioral design patterns focus on communication between objects, what happens between objects when a particular action is executed, and the patterns for object interactions. These patterns help to define how objects communicate, how responsibilities are assigned, and how messages are passed.
+                    </p>
+
                     <div className="designPatternCard">
                         <h2>Observer Pattern</h2>
+                        
                         <p>
-                            Defines a dependency between objects so that when one object changes its state, all its dependents are notified and updated automatically.
+                            This pattern defines a dependency between objects so that when one object <b>changes its state</b>, all its dependents (or "viewers") are <b>notified and updated</b> automatically.
+                        </p>
+                        <p>
+                            <b>Push Model:</b> The object sends info directly to the observers
+                        </p>
+                        <p>
+                            <b>Pull Model:</b> The object gives the observers access to its data, and the observers extract what they need.
                         </p>
                         <span className="example">
                             Example: A weather app where multiple widgets are updated when the weather data changes.
                         </span>
+                        <p>
+                            Sample UML diagram 
+                        </p>
+                        <img src={observer_uml} alt="UML diagram for an Observer pattern" width="400" height="300"></img>
+
                     </div>
 
                     <div className="designPatternCard">
                         <h2>Strategy Pattern</h2>
                         <p>
-                            Allows a family of algorithms to be defined and makes them interchangeable at runtime.
+                            This pattern <b>defines a family of algorithms</b> and allows the client to <b>select which one to use</b> at runtime.
+                        </p>
+                        <p>
+                            Useful when there are multiple algorithms that can be applied to solve the same task.
                         </p>
                         <span className="example">
-                            Example: A payment system that supports multiple payment methods like credit card or PayPal.
+                            Example: Collections.sort() takes a 'Comparator' parameter which determines how the elements will be sorted.
+                        </span>
+                        <span className="example">
+                            Example: A payment system can take in an argument describing which payment method to use, such as credit card or PayPal.
                         </span>
                     </div>
 
                     <div className="designPatternCard">
                         <h2>Command Pattern</h2>
                         <p>
-                            Encapsulates a request as an object, allowing users to parameterize objects with different requests, queue them, or log them.
+                            This pattern first wraps a request in an object, then passes it to an invoker object which then searches for another object that is suitable for handling the request.
+                        </p>
+                        <p>
+                            Once found, the object receives the request from the invoker and executes the appropriate command.
                         </p>
                         <span className="example">
                             Example: Undo/Redo functionality in a text editor.
