@@ -205,28 +205,47 @@ def genCondition():
             second = genVariable()
         return f"{first} {genStatementOp()} {second} {genAndOr()} {genCondition()}"
 
-
+""" 
+Will return one string consisting of one line of java code in the format of "variable = expression;"
+genLine() sets i=0 as input for genExpression() to keep track of recursive depth for each expression.
 """
-Start of recursion for creating expressions.
-Creates expressions in java language.
-Lines of code in the format of "variable = expression;"
-40% of the time genCode() will create a line of code followed by a recurssive call to genCode()
-60% of the time, genCode() will create a single line of code.
-
-genCode() declares and initalizes i=0, and uses it as input for genExpression() to keep track of recursive depth for each expression.
-
-Will return one string that will include at least one line of java code.
-"""
-def genCode():
-    randNum = random.random()
+def genLine():
     var = genVariable()
     expression = genExpression(0)
     while var == expression:
         expression = genExpression(0)
-    if randNum < 0.4:
-        return f"{var} = {expression};\n{genCode()}"
-    else:
-        return f"{var} = {expression};"
+    return f"{var} = {expression};"
+
+"""
+Will return one string that will include at least one line of java code.
+
+40% of the time genCode() will create a line of code followed by further generation of code. Maximum of 4 lines are generated.
+60% of the time, genCode() will create a single line of code and stop.
+"""
+
+def genCode():
+    lines = []
+    nextLine = genLine()
+    #make sure no more than 4 lines generated
+    while len(lines) < 4:
+        # If the variable of the current code segment is the same as the previous one, generate a new one
+        # If we had code segments which assigned values to the same variable immediately after each other, first code segment would be meaningless
+        if len(lines) > 0:
+            while lines[len(lines)-1][0] == nextLine[0]:
+                nextLine = genLine()
+        lines.append(nextLine)
+        randNum = random.random()
+        # 60% of the time, stop generating code
+        if randNum < 0.6:
+            break
+    return "\n".join(lines)
+
+"""
+Helper function for genForwardReasoning() and genBackwardReasoning().
+This function generates 1-4 code segments with genCode, and finds the longest line in each segment to use for the separator width.
+Returns the longest line length as an int.
+
+"""
 
 def genHelper(condition, codeSegments):
     length = random.randint(1, 4)
@@ -245,6 +264,14 @@ def genHelper(condition, codeSegments):
 #Returns a string in the format "{P} code; {Q}", where P and Q are pre and post condtions respectively.
 def genHoareTriple():
     return f"{{{genConditionStart()}}}\n{genCode()}\n{{{genConditionStart()}}}\n"
+
+
+"""
+genForwardReasoning() and genBackwardReasoning() are used to generate forward and backward reasoning respectively.
+genForwardReasoning() will return a string in the format of "{P}\ncode;\n{-}\ncode; ... \n{-}"
+genBackwardReasoning() will return a string in the format of "{-}\ncode;\n{-}\ncode; ... \n{Q}"
+
+"""
 
 def genForwardReasoning():
     start = genConditionStart()
