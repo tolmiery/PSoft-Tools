@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import Navbar from "../components/Navbar";
-import Menu from "../components/HoareTripleMenu";
+import Menu from "../components/BackwardReasoningMenu";
 import { post } from "../lib/api";
 
 export default function GenTriple() {
@@ -11,7 +11,7 @@ export default function GenTriple() {
     // Handle Python code execution
     const handleGenerateTriple = () => {
         setLoading(true); // Start loading
-        post("http://localhost:3000/gentriple", "") // Send empty string as body, input handled elsewhere
+        post("http://localhost:3000/backwardsgen", "") // Send empty string as body, input handled elsewhere
             .then((response) => {
                 setLoading(false); // Stop loading
                 setData(response); // Set the Python script output
@@ -48,7 +48,7 @@ export default function GenTriple() {
                         <div style={{ marginTop: "20px" }}>
                             {/* Button to trigger Python script execution */}
                             <button onClick={handleGenerateTriple} style={{ marginTop: "10px" }}>
-                                {loading ? "Running..." : "Generate Triple"}
+                                {loading ? "Running..." : "Generate Problem"}
                             </button>
                         </div>
 

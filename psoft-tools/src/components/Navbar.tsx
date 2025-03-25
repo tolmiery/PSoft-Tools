@@ -49,10 +49,10 @@ export default function Navbar() {
                     <Link to="/HoareTriple" className={`link ${isActive(["/HoareTriple", "/GenTriple", "/SolveTriple"])}`}>
                         Hoare Triples
                     </Link>
-                    <Link to="/ForwardReasoning" className={`link ${isActive("/ForwardReasoning")}`}>
+                    <Link to="/ForwardReasoning" className={`link ${isActive(["/ForwardReasoning", "/ForwardsGen"])}`}>
                         Forward Reasoning
                     </Link>
-                    <Link to="/BackwardReasoning" className={`link ${isActive("/BackwardReasoning")}`}>
+                    <Link to="/BackwardReasoning" className={`link ${isActive(["/BackwardReasoning", "/BackwardsGen"])}`}>
                         Backward Reasoning
                     </Link>
                     <Link to="/ConditionStrength" className={`link ${isActive("/ConditionStrength")}`}>

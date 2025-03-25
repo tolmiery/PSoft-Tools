@@ -7,7 +7,7 @@ export default function ForwardReasoningMenu() {
     return (
         <div className="menuContainer" style={{ width: "200px" }}>
             <div className="menuItem" style= {{ width: "200px" }}>
-                <Link to="/ForwardReasoning" >
+                <Link to="/ForwardsGen" className={`link ${isActive("/ForwardsGen")}`}>
                     Generate Problems
                 </Link>
             </div>
