@@ -173,6 +173,8 @@ def genConditionStart():
 
 """
 genCondition() will return a string that will be a complete boolean expression that may or may not be valid. 
+ifElse parameter defaulted to False, unless passed True by genIfElse. Used to know when to prevent recurrsion for if statement conditions.
+
 
 25% of the time, a condition bounding a variable between two numbers is generated.
 25% of the time, genCondition() creates a condition bounding a variable by another variable, either with <, <=, >, >=, or ==.
@@ -181,8 +183,13 @@ The other 25% of the time, genCondition() creates a variable bounded by another 
 
 
 """
-def genCondition():
+def genCondition(ifElse = False):
     randNum = random.random()
+    if ifElse:
+        #ifElse boolean used to check if this is to generate a condition to enter an if else statement
+        while randNum >= 0.75:
+            #force randNum to be less than .75, preventing recurrsion so we dont have long conditions.
+            randNum = random.random()
     if randNum < 0.25:
         first = genConstant()
         second = genConstant()
@@ -205,6 +212,17 @@ def genCondition():
             second = genVariable()
         return f"{first} {genStatementOp()} {second} {genAndOr()} {genCondition()}"
 
+"""
+Will return an if else block with exactly one condition in the if statement, and at least one line of code inside each indented block.
+True paramaters are given to other generators so they know to handle them differently.
+"""
+def genIfElse():
+    randNum = random.random()
+    if randNum <.667:
+        return f"if({genCondition(True)}){{\n\t{genCode(True)}\n}}"
+    else:
+        return f"if ({genCondition(True)}) {{\n\t{genCode(True)}\n}} else {{\n\t{genCode(True)}\n}}"
+
 """ 
 Will return one string consisting of one line of java code in the format of "variable = expression;"
 genLine() sets i=0 as input for genExpression() to keep track of recursive depth for each expression.
@@ -218,26 +236,35 @@ def genLine():
 
 """
 Will return one string that will include at least one line of java code.
+ifElse parameter defaulted to False, unless passed True by genIfElse. Used to know when to indent lines or when to generate if else blocks.
 
 40% of the time genCode() will create a line of code followed by further generation of code. Maximum of 4 lines are generated.
 60% of the time, genCode() will create a single line of code and stop.
 """
 
-def genCode():
+def genCode(ifElse = False):
     lines = []
     nextLine = genLine()
     #make sure no more than 4 lines generated
     while len(lines) < 4:
-        # If the variable of the current code segment is the same as the previous one, generate a new one
-        # If we had code segments which assigned values to the same variable immediately after each other, first code segment would be meaningless
-        if len(lines) > 0:
-            while lines[len(lines)-1][0] == nextLine[0]:
-                nextLine = genLine()
-        lines.append(nextLine)
         randNum = random.random()
+        # 27.5% of the time, generate an if statement, unless already in one. > 0.875 or < 0.15, so we get if else blocks with and without code after.
+        if (randNum > 0.875 or randNum < 0.15) and (not ifElse):
+                nextLine = genIfElse()
+        else:
+            # Dont need to check this if last line was an if else block
+            # If the variable of the current code segment is the same as the previous one, generate a new one
+            # If we had code segments which assigned values to the same variable immediately after each other, first code segment would be meaningless
+            if len(lines) > 0:
+                while lines[len(lines)-1][0] == nextLine[0]:
+                    nextLine = genLine()
+        lines.append(nextLine)
         # 60% of the time, stop generating code
         if randNum < 0.6:
             break
+    if ifElse:
+        # If code generated is in an if else block, indent each line
+        return "\n\t".join(lines)
     return "\n".join(lines)
 
 """
@@ -295,7 +322,7 @@ def genBackwardReasoning():
     output += f"{{{end}}}"
     return output
         
-
+"""
 if __name__ == "__main__":
     if(int(sys.argv[1])==1):
         print(genHoareTriple())
@@ -305,3 +332,9 @@ if __name__ == "__main__":
 
     if(int(sys.argv[1])==3):
         print(genBackwardReasoning())
+"""
+i = 0
+while i <25:
+    print(i)
+    print(genHoareTriple())
+    i+=1
