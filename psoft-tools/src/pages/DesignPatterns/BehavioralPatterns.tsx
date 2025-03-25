@@ -2,6 +2,10 @@ import Navbar from "../../components/Navbar";
 import Menu from "../../components/DesignPatternsMenu";
 import "../../components/DesignStyles.css";
 import observer_uml from '../../assets/observer_pattern_uml_diagram.jpg';
+import strategy_uml from '../../assets/strategy_uml.png';
+import strategy_code from '../../assets/strategy_code.png';
+
+
 
 
 export default function DesignPatterns() {
@@ -38,9 +42,9 @@ export default function DesignPatterns() {
                         <p>
                             <b>Pull Model:</b> The object gives the observers access to its data, and the observers extract what they need.
                         </p>
-                        <span className="example">
+                        <p className="example">
                             Example: A weather app where multiple widgets are updated when the weather data changes.
-                        </span>
+                        </p>
                         <p>
                             Sample UML diagram 
                         </p>
@@ -56,12 +60,22 @@ export default function DesignPatterns() {
                         <p>
                             Useful when there are multiple algorithms that can be applied to solve the same task.
                         </p>
-                        <span className="example">
+                        <p className="example">
                             Example: Collections.sort() takes a 'Comparator' parameter which determines how the elements will be sorted.
-                        </span>
-                        <span className="example">
+                        </p>
+                        <p className="example">
                             Example: A payment system can take in an argument describing which payment method to use, such as credit card or PayPal.
-                        </span>
+                        </p>
+                        <p className="example">
+                            Sample UML Diagram
+                        </p>
+                        <img src={strategy_uml} alt="UML diagram for a Strategy pattern" width="500" height="400"></img>
+                        <p className="example">
+                            Code example using mathematical functions as strategies
+                        </p>
+                        <img src={strategy_code} alt="Sample code for a strategy pattern using math functions" width="500" height="400"></img>
+
+
                     </div>
 
                     <div className="designPatternCard">

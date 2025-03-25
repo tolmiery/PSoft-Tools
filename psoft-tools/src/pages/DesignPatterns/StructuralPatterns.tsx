@@ -53,7 +53,7 @@ export default function DesignPatterns() {
                     <div className="designPatternCard">
                         <h2>Composite Pattern</h2>
                         <p>
-                            Allows individual objects and compositions of objects to be treated uniformly.
+                            Allows individual objects and compositions of objects to be treated uniformly by organizing them into a tree structure
                         </p>
                         <span className="example">
                             Example: A file system where files and directories are treated uniformly.
