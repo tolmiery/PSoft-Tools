@@ -131,6 +131,13 @@ def genExpression(i):
                 return f"{genTerm(i)} - {genTerm(i)}"
     return f"{genTerm(i)}"
 
+
+def genIfElse():
+    randNum = random.random()
+    if randNum < 0.25:
+        return f"if({genCondition(True)})\n\t{genCode(True)}"
+
+
 """
 genConditionStart() starts the recursive call for pre and post conditions.
 This function is used to include booleans as conditions.
@@ -155,13 +162,13 @@ The other 25% of the time, genCondition() creates a variable bounded by another 
 
 
 """
-def genCondition():
+def genCondition(ifElse=False): #ifElse boolean used to prevent recursion for if statement conditions
     randNum = random.random()
     if randNum < 0.25:
         return f"{genConstant()} {genLesserThan()} {genVariable()} {genLesserThan()} {genConstant()}"
     elif randNum < 0.50:
         return f"{genVariable()} {genStatementOp()} {genVariable()}"
-    elif randNum < 0.75:
+    elif randNum < 0.75 or ifElse:
         return f"{genVariable()} {genStatementOp()} {genConstant()}"
     else:
         return f"{genVariable()} {genStatementOp()} {genVariable()} {genAndOr()} {genCondition()}"
@@ -178,15 +185,22 @@ genCode() declares and initalizes i=0, and uses it as input for genExpression() 
 
 Will return one string that will include at least one line of java code.
 """
-def genCode():
+def genCode(ifElse=False): #ifElse used to keep track of if the code being generated needs to be indented while inside an if/else statement
     i = 0   #keep track of recurssion depth with i
     randNum = random.random()
     if randNum < 0.4:
-        return f"{genVariable()} = {genExpression(i)};\n{genCode()}"
+        if(not ifElse):
+            return f"{genVariable()} = {genExpression(i)};\n{genCode()}"
+        else:
+            return f"\t{genVariable()} = {genExpression(i)};\n{genCode()}"
     else:
-        return f"{genVariable()} = {genExpression(i)};"
+        if(not ifElse):
+            return f"{genVariable()} = {genExpression(i)};"
+        else:
+            return f"\t{genVariable()} = {genExpression(i)};"
 
-
+#TODO: implement genIfElse(), include into genCode
+#      include a check for ifElse bool to prevent imbedded if else
 
 #Start of recursion for Hoare Triples.
 #Returns a string in the format "{P} code; {Q}", where P and Q are pre and post condtions respectively.
