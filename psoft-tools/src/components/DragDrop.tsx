@@ -96,7 +96,7 @@ export default function DragDrop() {
   );
   const divStyle: CSS.Properties = {
     width: '1500px',
-    height: '1000px',
+    height: '95vh',
     marginTop: "50px"
   };
   const onEdgeClick = (event: MouseEvent, edge: Edge) => {
