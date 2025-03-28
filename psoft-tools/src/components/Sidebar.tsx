@@ -1,9 +1,14 @@
 import React from 'react';
+
 export default () => {
+
+  // Begin tracking movement once the user begins dragging from one of the node buttons
   const onDragStart = (event: React.DragEvent<HTMLDivElement>, nodeType: string) => {
     event.dataTransfer.setData('application/reactflow', nodeType);
     event.dataTransfer.effectAllowed = 'move';
   };
+
+  // Update global branch value if the user clicks on the True Branch or False branch buttons
   const onClick = (bType: string) => {
     if (bType === 'trueBranch') {
       globalThis.branchVal = "trueBranch";
@@ -11,6 +16,7 @@ export default () => {
       globalThis.branchVal = "falseBranch";
     }
   }
+  
   return (
   <aside>
       <div className="description">You can drag these nodes into the canvas.</div>
