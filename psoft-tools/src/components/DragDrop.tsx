@@ -18,6 +18,8 @@ import type * as CSS from 'csstype';
 import ShapeNode from './ShapeNode.tsx';
 import { toPng } from 'html-to-image';
 import useUndoRedo from './useUndoRedo';
+
+
 export default function DragDrop() {
   const initialNodes = [
     {
@@ -149,7 +151,7 @@ export default function DragDrop() {
   };
   const conMode : ConnectionMode = ConnectionMode.Loose;
   return (
-    <div className="dndflow">
+    <div className="dndflow" style={{width: "100%"}}>
       <div className="reactflow-wrapper" ref={reactFlowWrapper} style={divStyle}>
       <button className="download-btn" onClick={onClick}>Download Image</button>
       <button className="undo-btn" onClick={undo}>Undo</button>
