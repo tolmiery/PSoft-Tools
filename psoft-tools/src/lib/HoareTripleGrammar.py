@@ -322,7 +322,7 @@ def genBackwardReasoning():
     output += f"{{{end}}}"
     return output
         
-"""
+
 if __name__ == "__main__":
     if(int(sys.argv[1])==1):
         print(genHoareTriple())
@@ -332,9 +332,4 @@ if __name__ == "__main__":
 
     if(int(sys.argv[1])==3):
         print(genBackwardReasoning())
-"""
-i = 0
-while i <25:
-    print(i)
-    print(genHoareTriple())
-    i+=1
+
