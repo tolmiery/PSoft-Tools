@@ -306,8 +306,18 @@ def genForwardReasoning():
     codeSegments = []  # List to store all generated code segments
     maxCodeLength = genHelper(start, codeSegments)  # Find the longest line (for separator width) while generating code segments
     # Build the output with separators of the appropriate length
+
     for codeSegment in codeSegments:
-        output += f"{codeSegment}\n{{{'-' * (maxCodeLength-2)}}}\n"
+        if(codeSegment[-1]!="\n"):
+            codeSegment+= f"\n" # Some code segments dont end in a newline, this checks and fixes so the following loop works
+        i=0
+        while(i<len(codeSegment)):  
+            i=codeSegment.find("\n", i)+1
+            if(i==0): 
+                break
+            codeSegment = f"{codeSegment[:i]}{{{'-' * (maxCodeLength-2)}}}\n{codeSegment[i:]}" # Add separator after index of "\n"
+            i+=maxCodeLength+1 # Update i to index after "\n" in new seperator
+        output += f"{codeSegment}"
     return output
 
 def genBackwardReasoning():
@@ -317,8 +327,20 @@ def genBackwardReasoning():
     codeSegments = []  # List to store all generated code segments
     maxCodeLength = genHelper(end, codeSegments)  # Find the longest line (for separator width) while generating code segments
     # Build the output with separators of the appropriate length
+
     for codeSegment in codeSegments:
-        output += f"{{{'-' * (maxCodeLength-2)}}}\n{codeSegment}\n"
+        codeSegment = f"{{{'-' * (maxCodeLength-2)}}}\n{codeSegment}" # Add separator at start
+        if(codeSegment[-1]!="\n"):
+            codeSegment+= f"\n" # Some code segments dont end in a newline, this checks and fixes so the following loop works
+        i = codeSegment.find("\n")+1 # Start after first separator
+        while(i<len(codeSegment)):  
+            i=codeSegment.find("\n", i)+1
+            if(i==0 or i>=len(codeSegment)): 
+                break
+            codeSegment = f"{codeSegment[:i]}{{{'-' * (maxCodeLength-2)}}}\n{codeSegment[i:]}" # Add separator after index of "\n"
+            i+=maxCodeLength+1 # Update i to index after "\n" in new seperator
+        output += f"{codeSegment}"
+        #output += f"{{{'-' * (maxCodeLength-2)}}}\n{codeSegment}\n"
     output += f"{{{end}}}"
     return output
         
