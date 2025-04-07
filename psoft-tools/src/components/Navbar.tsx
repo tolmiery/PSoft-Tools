@@ -12,7 +12,7 @@ export default function Navbar() {
     const handleMouseUp = () => {
         setIsImageHighlighted(false);
         window.location.href =
-            "https://www.cs.rpi.edu/academics/courses/summer24/csci2600/";
+            "https://www.cs.rpi.edu/academics/courses/spring25/csci2600/";
     };
 
     const isActive = (path: string | string[]) => {
