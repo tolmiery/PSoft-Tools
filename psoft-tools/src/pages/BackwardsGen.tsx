@@ -42,7 +42,7 @@ export default function GenTriple() {
 
                 <div
                     className="screen"
-                    style={{ paddingLeft: "200px", paddingTop: "50px", width: "100%", overflow: "hidden" }}
+                    style={{ paddingLeft: "200px", paddingTop: "50px", width: "100%"}}
                 >
                     <div className="flex flex-col justify-center relative pl-8">
                         <div style={{ marginTop: "20px" }}>
@@ -53,7 +53,7 @@ export default function GenTriple() {
                         </div>
 
                         {/* Display the result */}
-                        <div className="flex items-center justify-center w-full" style={{ whiteSpace: "pre", textAlign: "left" }}>
+                        <div className="flex items-center justify-center w-full" style={{ whiteSpace: "pre", textAlign: "left", overflow: "auto" }}>
                             {loading ? (
                                 <ThreeDots color="gray" height={100} width={100} />
                             ) : (

@@ -218,8 +218,8 @@ True paramaters are given to other generators so they know to handle them differ
 """
 def genIfElse():
     randNum = random.random()
-    if randNum <.667:
-        return f"if({genCondition(True)}){{\n\t{genCode(True)}\n}}"
+    if randNum < .667:
+        return f"if ({genCondition(True)}) {{\n\t{genCode(True)}\n}}"
     else:
         return f"if ({genCondition(True)}) {{\n\t{genCode(True)}\n}} else {{\n\t{genCode(True)}\n}}"
 
@@ -269,13 +269,13 @@ def genCode(ifElse = False):
 
 """
 Helper function for genForwardReasoning() and genBackwardReasoning().
-This function generates 1-4 code segments with genCode, and finds the longest line in each segment to use for the separator width.
+This function generates 1-2 code segments with genCode, and finds the longest line in each segment to use for the separator width.
 Returns the longest line length as an int.
 
 """
 
 def genHelper(condition, codeSegments):
-    length = random.randint(1, 4)
+    length = random.randint(1, 2)
     for _ in range(length):
         # Generate a code segment and store it in the list
         codeSegment = genCode()
@@ -306,7 +306,6 @@ def genForwardReasoning():
     codeSegments = []  # List to store all generated code segments
     maxCodeLength = genHelper(start, codeSegments)  # Find the longest line (for separator width) while generating code segments
     # Build the output with separators of the appropriate length
-
     for codeSegment in codeSegments:
         if(codeSegment[-1]!="\n"):
             codeSegment+= f"\n" # Some code segments dont end in a newline, this checks and fixes so the following loop works
@@ -323,7 +322,6 @@ def genForwardReasoning():
 def genBackwardReasoning():
     end = genConditionStart()
     output = f""
-    length = random.randint(1, 4)
     codeSegments = []  # List to store all generated code segments
     maxCodeLength = genHelper(end, codeSegments)  # Find the longest line (for separator width) while generating code segments
     # Build the output with separators of the appropriate length
@@ -344,14 +342,41 @@ def genBackwardReasoning():
     output += f"{{{end}}}"
     return output
         
+#post process indentation issues with the generated code
+def adjustIndentation(code):
+    adjusted_lines = []
+    in_block = False
+    for line in code.splitlines():
+        stripped = line.strip()
+        # First handle separators 
+        if stripped.startswith('{') and stripped.endswith('}') and len(stripped) > 2:
+            dash_part = stripped[1:-1]
+            if all(c == '-' for c in dash_part):
+                new_dash_count = len(dash_part) - 4 if in_block else len(dash_part)
+                new_dash_count = max(0, new_dash_count)  # avoid negative dashes
+                new_separator = '{' + ('-' * new_dash_count) + '}'
+                if in_block:
+                    adjusted_lines.append('\t' + new_separator)
+                else:
+                    adjusted_lines.append(new_separator)
+                continue
+
+        # Detect if/else block entry
+        if ('if' in stripped or 'else' in stripped) and '{' in stripped:
+            in_block = True
+        elif stripped == '}':
+            in_block = False
+        adjusted_lines.append(line)
+    return '\n'.join(adjusted_lines)
+
 
 if __name__ == "__main__":
     if(int(sys.argv[1])==1):
-        print(genHoareTriple())
+        print(adjustIndentation(genHoareTriple()))
             
     if(int(sys.argv[1])==2):
-        print(genForwardReasoning())
+        print(adjustIndentation(genForwardReasoning()))
 
     if(int(sys.argv[1])==3):
-        print(genBackwardReasoning())
+        print(adjustIndentation(genBackwardReasoning()))
 
