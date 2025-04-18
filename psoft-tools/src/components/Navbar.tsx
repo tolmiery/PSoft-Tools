@@ -12,7 +12,7 @@ export default function Navbar() {
     const handleMouseUp = () => {
         setIsImageHighlighted(false);
         window.location.href =
-            "https://www.cs.rpi.edu/academics/courses/summer24/csci2600/";
+            "https://www.cs.rpi.edu/academics/courses/spring25/csci2600/";
     };
 
     const isActive = (path: string | string[]) => {
@@ -21,22 +21,22 @@ export default function Navbar() {
         }
         return location.pathname === path ? "active" : "";
     };
+    
     return (
-        <>
-            <div
-                className="navbar"
-                style={{ width: "100%", margin: "auto" }}
-            >
-                <div className="logo_" >
+        
+        <div
+            className="navbar"
+            style={{ width: "100%", margin: "auto" }}
+        >
+            <div className="logo_" >
 
-                    <img
-                        src="../Logo.png"
-                        style={{
-                            border: isImageHighlighted ? "1px solid white" : "none",
-                            width: 46,
-                            height: 46,
-
-                        }}
+                <img
+                    src="../Logo.png"
+                    style={{
+                        border: isImageHighlighted ? "1px solid white" : "none",
+                        width: 46,
+                        height: 46,
+                          }}
                         onMouseDown={handleMouseDown}
                         onMouseUp={handleMouseUp}
                         onMouseLeave={() => setIsImageHighlighted(false)}
@@ -46,29 +46,29 @@ export default function Navbar() {
                 <Link to="/index" className={`link ${isActive("/index")}`}>
                         Dafny Verifier
                     </Link>
-                    <Link to="/HoareTriple" className={`link ${isActive(["/HoareTriple", "/GenTriple"])}`}>
+                    <Link to="/HoareTriple" className={`link ${isActive(["/HoareTriple", "/GenTriple", "/SolveTriple"])}`}>
                         Hoare Triples
                     </Link>
-                    <Link to="/ForwardReasoning" className={`link ${isActive("/ForwardReasoning")}`}>
+                    <Link to="/ForwardReasoning" className={`link ${isActive(["/ForwardReasoning", "/ForwardsGen"])}`}>
                         Forward Reasoning
                     </Link>
-                    <Link to="/BackwardReasoning" className={`link ${isActive("/BackwardReasoning")}`}>
+                    <Link to="/BackwardReasoning" className={`link ${isActive(["/BackwardReasoning", "/BackwardsGen"])}`}>
                         Backward Reasoning
                     </Link>
                     <Link to="/ConditionStrength" className={`link ${isActive("/ConditionStrength")}`}>
                         Condition Strength
                     </Link>
-                    <Link to="/DesignPatterns/WhatPatterns" className={`link ${isActive(["/DesignPatterns/WhatPatterns", "/DesignPatterns/CreationalPatterns", 
-                        "/DesignPatterns/BehavioralPatterns", "/DesignPatterns/StructuralPatterns"])}`}>
-                        Design Patterns
-                    </Link>
-                    <Link to="/CFGCanvas" className={`link ${isActive("/CFGCanvas")}`}>
-                        CFG
-                    </Link>
+                <Link to="/DesignPatterns/WhatPatterns" className={`link ${isActive(["/DesignPatterns/WhatPatterns", "/DesignPatterns/CreationalPatterns", 
+                    "/DesignPatterns/BehavioralPatterns", "/DesignPatterns/StructuralPatterns"])}`}>
+                    Design Patterns
+                </Link>
+                <Link to="/CFGCanvas" className={`link ${isActive("/CFGCanvas")}`}>
+                    CFG
+                </Link>
 
-                </div>
+            </div>
 
-            </div >
-        </>
+        </div >
+        
     );
 }

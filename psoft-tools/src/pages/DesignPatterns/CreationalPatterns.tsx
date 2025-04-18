@@ -1,6 +1,11 @@
 import Navbar from "../../components/Navbar";
 import Menu from "../../components/DesignPatternsMenu";
 import "../../components/DesignStyles.css";
+import factory_uml from '../../assets/factory_pattern_uml_diagram.jpg';
+import factory_code from '../../assets/factory_code_example.png';
+import singleton_uml from '../../assets/singleton_uml.png';
+import singleton_code from '../../assets/singleton_example.png';
+
 
 export default function CreationalPatterns() {
     return (
@@ -19,24 +24,54 @@ export default function CreationalPatterns() {
                 <div className="mainContent">
                     <h1>Creational Design Patterns</h1>
 
+                    <p>
+                        A common problem in Java and other Object-Oriented languages is that constructors are <b>inflexible.</b>
+                    </p>
+                    <p>
+                        For example, they can't create a subtype of the type which they belong to, and they always return a new object while being unable to reuse the same object.
+                    </p>
+                    
+                    <p>
+                        Creational design patterns deal with alternative object creation mechanisms in a manner suitable to each situation. These patterns abstract the instantiation process, making the system more flexible in the types of objects it creates.
+                    </p>
+
                     <div className="designPatternCard">
                         <h2>Singleton Pattern</h2>
                         <p>
-                            Ensures that a class has only one instance and provides a global point of access to it.
+                            Ensures <b>only one instance</b> of a class exists at any given time and provides a global point of access to that instance.
+                        </p>
+                        <p>
+                            Class constructor is made private so that it is only called when the object is loaded, and cannot be called from the outside.
                         </p>
                         <span className="example">
                             Example: Database connection manager ensuring only one connection is used across the app.
                         </span>
+                        <p>
+                            Sample UML Diagram of a Singleton pattern:
+                        </p>
+                        <img src={singleton_uml} alt="UML diagram for a Singleton object" width="300" height="200"></img>
+                        <span className="example">
+                            Example: Singleton 'Bank' class with a public method that returns its instance.
+                        </span>
+                        <img src={singleton_code} alt="Code for the Singleton 'Bank' class" width="500" height="600"></img>
                     </div>
 
                     <div className="designPatternCard">
                         <h2>Factory Pattern</h2>
                         <p>
-                            Defines an interface for creating objects, but lets subclasses alter the type of objects that will be created.
+                            When the client wants <b>more control over object creation</b>, the Factory Pattern could be a good fit.
+                        </p>
+                        <p>
+                            This pattern defines an interface for creating objects, but lets subclasses alter the type of objects that will be created by using inheritance. The logic and decisions behind object creation are hidden from the client.
                         </p>
                         <span className="example">
                             Example: ShapeFactory that returns different shapes like Circle, Square, or Rectangle.
                         </span>
+                        <img src={factory_uml} alt="UML diagram for ShapeFactory" width="500" height="600"></img>
+                        <span className="example">
+                            Example: MatrixFactory returns new objects of differing classes based on conditional statements
+                        </span>
+                        <img src={factory_code} alt="Example code for Matrix Factory" width="500" height="600"></img>
                     </div>
 
                     <div className="designPatternCard">
