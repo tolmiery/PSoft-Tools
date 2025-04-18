@@ -6,7 +6,7 @@ export default function ForwardReasoningMenu() {
     return (
         <div className="menuContainer" style={{ width: "200px" }}>
             <div className="menuItem" style= {{ width: "200px" }}>
-                <Link to="/BackwardReasoning" >
+                <Link to="/BackwardsGen" className={`link ${isActive("/BackwardsGen")}`}>
                     Generate Problems
                 </Link>
             </div>
