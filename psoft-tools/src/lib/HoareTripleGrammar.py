@@ -248,8 +248,8 @@ def genCode(ifElse = False):
     #make sure no more than 4 lines generated
     while len(lines) < 4:
         randNum = random.random()
-        # 27.5% of the time, generate an if statement, unless already in one. > 0.875 or < 0.15, so we get if else blocks with and without code after.
-        if (randNum > 0.875 or randNum < 0.15) and (not ifElse):
+        # 25% of the time, generate an if statement, unless already in one. > 0.9 or < 0.15, so we get if else blocks with and without code after.
+        if (randNum > 0.9 or randNum < 0.15) and (not ifElse):
                 nextLine = genIfElse()
         else:
             # Dont need to check this if last line was an if else block
@@ -321,7 +321,7 @@ def genForwardReasoning():
             i=codeSegment.find("\n", i)+1
             if(i==0): 
                 break
-            codeSegment = f"{codeSegment[:i]}{{{'-' * (maxCodeLength-2)}}}\n{codeSegment[i:]}" # Add separator after index of "\n"
+            codeSegment = f"{codeSegment[:i]}{{{'_' * (maxCodeLength-2)}}}\n{codeSegment[i:]}" # Add separator after index of "\n"
             i+=maxCodeLength+1 # Update i to index after "\n" in new seperator
         output += f"{codeSegment}"
     return output
@@ -334,7 +334,7 @@ def genBackwardReasoning():
     # Build the output with separators of the appropriate length
 
     for codeSegment in codeSegments:
-        codeSegment = f"{{{'-' * (maxCodeLength-2)}}}\n{codeSegment}" # Add separator at start
+        codeSegment = f"{{{'_' * (maxCodeLength-2)}}}\n{codeSegment}" # Add separator at start
         if(codeSegment[-1]!="\n"):
             codeSegment+= f"\n" # Some code segments dont end in a newline, this checks and fixes so the following loop works
         i = codeSegment.find("\n")+1 # Start after first separator
@@ -342,10 +342,10 @@ def genBackwardReasoning():
             i=codeSegment.find("\n", i)+1
             if(i==0 or i>=len(codeSegment)): 
                 break
-            codeSegment = f"{codeSegment[:i]}{{{'-' * (maxCodeLength-2)}}}\n{codeSegment[i:]}" # Add separator after index of "\n"
+            codeSegment = f"{codeSegment[:i]}{{{'_' * (maxCodeLength-2)}}}\n{codeSegment[i:]}" # Add separator after index of "\n"
             i+=maxCodeLength+1 # Update i to index after "\n" in new seperator
         output += f"{codeSegment}"
-        #output += f"{{{'-' * (maxCodeLength-2)}}}\n{codeSegment}\n"
+        #output += f"{{{'_' * (maxCodeLength-2)}}}\n{codeSegment}\n"
     output += f"{{{end}}}"
     return output
         
@@ -358,10 +358,10 @@ def adjustIndentation(code):
         # First handle separators 
         if stripped.startswith('{') and stripped.endswith('}') and len(stripped) > 2:
             dash_part = stripped[1:-1]
-            if all(c == '-' for c in dash_part):
+            if all(c == '_' for c in dash_part):
                 new_dash_count = len(dash_part) - 4 if in_block else len(dash_part)
                 new_dash_count = max(0, new_dash_count)  # avoid negative dashes
-                new_separator = '{' + ('-' * new_dash_count) + '}'
+                new_separator = '{' + ('_' * new_dash_count) + '}'
                 if in_block:
                     adjusted_lines.append('\t' + new_separator)
                 else:
