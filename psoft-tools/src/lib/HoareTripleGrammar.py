@@ -276,15 +276,22 @@ Returns the longest line length as an int.
 
 def genHelper(condition, codeSegments):
     length = random.randint(1, 2)
+    ifElse = False
     for _ in range(length):
         # Generate a code segment and store it in the list
         codeSegment = genCode()
+        if ('if' in codeSegment or 'else' in codeSegment) and '{' in codeSegment:
+            ifElse = True
         codeSegments.append(codeSegment)
     # Find the longest line (for separator width)
     maxCodeLength = len(condition) +2
     for codeSegment in codeSegments:
         # Split each code segment into lines and find the longest line in each segment
-        maxCodeLength = max(maxCodeLength, max(len(line) for line in codeSegment.split("\n")))
+        if ifElse:
+            # If the code segment contains an if statement, add 3 to the maxCodeLength for indentation
+            maxCodeLength = max(maxCodeLength, max(len(line) + 3 for line in codeSegment.split("\n")))
+        else:
+            maxCodeLength = max(maxCodeLength, max(len(line) for line in codeSegment.split("\n")))
     return maxCodeLength
 
 #Start of recursion for Hoare Triples.
