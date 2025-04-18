@@ -21,22 +21,22 @@ export default function Navbar() {
         }
         return location.pathname === path ? "active" : "";
     };
+    
     return (
-        <>
-            <div
-                className="navbar"
-                style={{ width: "100%", margin: "auto" }}
-            >
-                <div className="logo_" >
+        
+        <div
+            className="navbar"
+            style={{ width: "100%", margin: "auto" }}
+        >
+            <div className="logo_" >
 
-                    <img
-                        src="../Logo.png"
-                        style={{
-                            border: isImageHighlighted ? "1px solid white" : "none",
-                            width: 46,
-                            height: 46,
-
-                        }}
+                <img
+                    src="../Logo.png"
+                    style={{
+                        border: isImageHighlighted ? "1px solid white" : "none",
+                        width: 46,
+                        height: 46,
+                          }}
                         onMouseDown={handleMouseDown}
                         onMouseUp={handleMouseUp}
                         onMouseLeave={() => setIsImageHighlighted(false)}
@@ -58,16 +58,17 @@ export default function Navbar() {
                     <Link to="/ConditionStrength" className={`link ${isActive("/ConditionStrength")}`}>
                         Condition Strength
                     </Link>
-                    <Link to="/DesignPatterns" className={`link ${isActive("/DesignPatterns")}`}>
-                        Design Patterns
-                    </Link>
-                    <Link to="/CFGCanvas" className={`link ${isActive("/CFGCanvas")}`}>
-                        CFG
-                    </Link>
+                <Link to="/DesignPatterns/WhatPatterns" className={`link ${isActive(["/DesignPatterns/WhatPatterns", "/DesignPatterns/CreationalPatterns", 
+                    "/DesignPatterns/BehavioralPatterns", "/DesignPatterns/StructuralPatterns"])}`}>
+                    Design Patterns
+                </Link>
+                <Link to="/CFGCanvas" className={`link ${isActive("/CFGCanvas")}`}>
+                    CFG
+                </Link>
 
-                </div>
+            </div>
 
-            </div >
-        </>
+        </div >
+        
     );
 }

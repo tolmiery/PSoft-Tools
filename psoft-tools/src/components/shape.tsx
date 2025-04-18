@@ -1,4 +1,6 @@
 import { ShapeComponents, type ShapeComponentProps } from './shapes.tsx';
+
+
 function Shape({ type, width, height, ...svgAttributes }: ShapeComponentProps) {
   const ShapeComponent = ShapeComponents[type];
   if (!ShapeComponent || !width || !height) {

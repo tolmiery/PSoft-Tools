@@ -5,14 +5,14 @@ import { ReactFlow, ReactFlowProvider, getViewportForBounds, useReactFlow } from
 import '@xyflow/react/dist/style.css';
 import DragDrop from "../components/DragDrop";
 // import { Helmet } from 'react-helmet';
+
 export default function CFGCanvas() {
 	return (
-	<div>
+	<div className="screen" style={{width: "100%", overflow: "hidden" }}> 
 		<Navbar/>
 		<ReactFlowProvider>
     		<DragDrop/>
   		</ReactFlowProvider>
-  		
   	</div>
 	);
 }
