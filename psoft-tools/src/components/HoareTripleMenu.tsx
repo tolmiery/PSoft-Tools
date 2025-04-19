@@ -11,7 +11,7 @@ export default function ForwardReasoningMenu() {
                 </Link>
             </div>
             <div className="menuItem" style= {{ width: "200px" }} >
-                <Link to="/HoareTriple" >
+                <Link to="/HoareTriple" className={`link ${isActive("/SolveTriple")}`}>
                     Generate Solutions
                 </Link>
             </div>
