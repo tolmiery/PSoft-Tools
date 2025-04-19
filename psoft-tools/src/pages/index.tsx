@@ -32,7 +32,7 @@ export default function Index() {
             );
             const expectedNonErrorText = "0 errors";
             let errorExists = true;
-
+            {/*Error Catching*/}
             if (errorText === expectedNonErrorText) {
                console.log("no error");
                errorExists = false;
@@ -67,7 +67,7 @@ export default function Index() {
    {/*Currently redundant function does the same thing as verification*/}
    const handleRun = () => {
       setLoading(true);
-      post("http://localhost:3000/run", code)
+      post("http://localhost:3000/verify", code)
          .then((response) => {
             setLoading(false);
             setData(response);
@@ -76,7 +76,7 @@ export default function Index() {
             console.error("error: ", error);
          });
    };
-
+   {/*Clears Data*/}
    const handleClickClear = () => {
       setData("");
    };
@@ -117,6 +117,7 @@ export default function Index() {
                      data
                   )}
                </div>
+               {/*buttons*/}
                <div className="flex flex-row justify-evenly max-h-11 mb-4">
                   <button onClick={handleClickClear}>Clear</button>
                   <button onClick={handleVerify}>Verify Dafny</button>

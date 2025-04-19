@@ -62,6 +62,7 @@ export default function ForwardReasoning() {
                                 data
                             )}
                         </div>
+                        {/*buttons*/}
                         <div className="flex flex-row justify-evenly max-h-11 mb-4">
                             <button onClick={handleClickClear}>Clear</button>
                             <button onClick={handleReasoning}>Forward Reasoning</button>
