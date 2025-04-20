@@ -1,20 +1,21 @@
-//import { useState } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
+
 import './App.css'
 import { createBrowserRouter, RouterProvider, LoaderFunction, ActionFunction } from "react-router-dom";
 
+// loader and action 
 interface RouteCommon {
   loader?: LoaderFunction;
   action?: ActionFunction;
   ErrorBoundary?: React.ComponentType<any>;
 }
 
+// path and element
 interface Routes extends RouteCommon {
   path: string;
   Element: React.ComponentType<any>;
 }
 
+// Pages
 interface Pages {
   [key: string]: {
     default: React.ComponentType<any>;
@@ -23,6 +24,7 @@ interface Pages {
 
 const pages: Pages = import.meta.glob("./pages/**/*.tsx", { eager: true });
 
+// actual route using  fileName
 const routes: Routes[] = [];
 for (const path of Object.keys(pages)) {
   const fileName = path.match(/\.\/pages\/(.*)\.tsx/)?.[1];
@@ -30,10 +32,12 @@ for (const path of Object.keys(pages)) {
     continue;
   }
 
+  // pathName with symbols
   const normalizedPathName = fileName.includes("$")
     ? fileName.replace("$", ":")
     : fileName.replace(/\/index/, "");
 
+  // pushes element, loader, and action
   routes.push({
     path: fileName === "landing" ? "/" : `/${normalizedPathName.toLowerCase()}`,
     Element: pages[path].default,
@@ -43,6 +47,7 @@ for (const path of Object.keys(pages)) {
   });
 }
 
+// maps the route
 const router = createBrowserRouter(
   routes.map(({ Element, ErrorBoundary, ...rest }) => ({
     ...rest,

@@ -78,14 +78,11 @@ export default function Index() {
 
    const handleClickClear = () => {
       setData("");
-      //setCode("// input code");
    };
 
    const handleEditorChange = (value: string | undefined) => {
       if (value) {
-         //console.log(value);
          setCode(value);
-         //console.log(code);
       }
    };
    return (
