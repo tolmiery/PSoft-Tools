@@ -15,19 +15,6 @@ export default function ConditionStrength() {
     };
 
     const handleStrength = () => {
-        /* Leftover code from copying the backward reasoning file
-
-        setLoading(true);
-        console.log(code);
-        post("http://localhost:3000/backward-reasoning", code)
-            .then((response) => {
-                setLoading(false);
-                console.log(response);
-                setData(response);
-            })
-            .catch((error) => {
-                console.error("error: ", error);
-            });*/
         setData("Not implemented yet");
     }
     const handleEditorChange = (value: string | undefined) => {

@@ -9,10 +9,11 @@ import Menu from "../components/HoareTripleMenu";
 //Create Routing File
 
 export default function HoareTriple() {
+    // Parses Hoare Triple
     const [data, setData] = useState("");
     const [code, setCode] = useState("{x == 1}\nx = x + 1;\n{x == 2}");
     const [loading, setLoading] = useState(false);
-
+    // Verifies code using dafny
     const handleVerify = () => {
         setLoading(true);
         const dafnyCode = dafnyParser(code.replace(/\r\n/g, "\n"));
@@ -26,7 +27,7 @@ export default function HoareTriple() {
                 console.error("error: ", error);
             });
     };
-
+    // clears data
     const handleClickClear = () => {
         setData("");
     };
@@ -69,7 +70,7 @@ export default function HoareTriple() {
                                 data
                             )}
                         </div>
-                
+                        {/* button*/}
                         <div className="flex flex-row justify-evenly max-h-11 mb-4">
                             <button onClick={handleClickClear}>Clear</button>
                             <button onClick={handleVerify}>Verify Triple</button>
