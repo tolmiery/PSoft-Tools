@@ -2,7 +2,12 @@ import Navbar from "../../components/Navbar";
 import Menu from "../../components/DesignPatternsMenu";
 import "../../components/DesignStyles.css";
 
-export default function DesignPatterns() {
+
+//NOTE: Structural Patterns are incomplete. TODO: Add pictures (ideally of Class diagrams) for each pattern
+
+//Provides a brief explanation of Structural Patterns, then lists and describes the individual
+// patterns with some examples.
+export default function StructuralPatterns() {
     return (
         <div>
             {/* Navbar at the top */}

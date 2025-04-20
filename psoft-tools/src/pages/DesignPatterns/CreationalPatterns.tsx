@@ -7,6 +7,8 @@ import singleton_uml from '../../assets/singleton_uml.png';
 import singleton_code from '../../assets/singleton_example.png';
 
 
+//Provides a brief explanation of Creational Patterns, then lists and describes the individual
+// patterns with some examples.
 export default function CreationalPatterns() {
     return (
         <div>
@@ -74,6 +76,7 @@ export default function CreationalPatterns() {
                         <img src={factory_code} alt="Example code for Matrix Factory" width="500" height="600"></img>
                     </div>
 
+                    {/*Builder pattern needs more detail and a picture example of a class diagram*/}
                     <div className="designPatternCard">
                         <h2>Builder Pattern</h2>
                         <p>

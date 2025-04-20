@@ -6,9 +6,9 @@ import strategy_uml from '../../assets/strategy_uml.png';
 import strategy_code from '../../assets/strategy_code.png';
 
 
-
-
-export default function DesignPatterns() {
+//Provides a brief explanation of Behavioral Patterns, then lists and describes the individual
+// patterns with examples and some pictures.
+export default function BehavioralPatterns() {
     return (
         <div>
             {/* Navbar at the top */}

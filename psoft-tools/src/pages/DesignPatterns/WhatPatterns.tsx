@@ -3,7 +3,7 @@ import Menu from "../../components/DesignPatternsMenu";
 import "../../components/DesignStyles.css";
 import { Link } from "react-router-dom";
 
-
+//Main page with a description of Design Patterns and links to the other Design Patterns pages
 export default function DesignPatterns() {
     const isActive = (path: string | string[]) => {
         if (Array.isArray(path)) {
