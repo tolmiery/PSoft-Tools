@@ -5,10 +5,11 @@ import factory_uml from '../../assets/factory_pattern_uml_diagram.jpg';
 import factory_code from '../../assets/factory_code_example.png';
 import singleton_uml from '../../assets/singleton_uml.png';
 import singleton_code from '../../assets/singleton_example.png';
+import builder_uml from '../../assets/builder_uml.png';
 
 
 //Provides a brief explanation of Creational Patterns, then lists and describes the individual
-// patterns with some examples.
+// patterns with some examples and UML diagrams.
 export default function CreationalPatterns() {
     return (
         <div>
@@ -82,9 +83,14 @@ export default function CreationalPatterns() {
                         <p>
                             Separates the construction of a complex object from its representation, allowing the same construction process to create various representations.
                         </p>
+                        <p>
+                            Depending on the desired object to be constructed, the Builder Pattern can adjust the creation process to accommodate for any required changes.
+                        </p>
                         <span className="example">
                             Example: Building a house with customizable properties like roof type, floor type, etc.
                         </span>
+                        <img src={builder_uml} alt="UML diagram for Builder Pattern" width="500" height="600"></img>
+
                     </div>
                 </div>
             </div>

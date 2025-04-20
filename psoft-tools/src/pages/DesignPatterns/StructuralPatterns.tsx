@@ -1,12 +1,16 @@
 import Navbar from "../../components/Navbar";
 import Menu from "../../components/DesignPatternsMenu";
 import "../../components/DesignStyles.css";
+import adapter_uml from '../../assets/adapter_uml.png';
+import facade_uml from '../../assets/facade_pattern_uml_diagram.jpg';
+import composite_uml from '../../assets/composite_uml.png';
+import decorator_uml from '../../assets/decorator_uml.png';
+import bridge_uml from '../../assets/bridge_uml.png';
+import proxy_uml from '../../assets/proxy_uml.png';
 
-
-//NOTE: Structural Patterns are incomplete. TODO: Add pictures (ideally of Class diagrams) for each pattern
 
 //Provides a brief explanation of Structural Patterns, then lists and describes the individual
-// patterns with some examples.
+// patterns with some examples and UML diagrams.
 export default function StructuralPatterns() {
     return (
         <div>
@@ -40,6 +44,8 @@ export default function StructuralPatterns() {
                         <span className="example">
                             Example: A plug adapter that allows a device to use a different power plug standard.
                         </span>
+                        <img src={adapter_uml} alt="UML diagram for Adapter Pattern" width="500" height="600"></img>
+
                     </div>
 
                     <div className="designPatternCard">
@@ -53,6 +59,7 @@ export default function StructuralPatterns() {
                         <span className="example">
                             Example: A home theater system where the user interacts with one interface to control multiple devices like the TV, speakers, and DVD player.
                         </span>
+                        <img src={facade_uml} alt="UML diagram for Facade Pattern" width="500" height="600"></img>
                     </div>
 
                     <div className="designPatternCard">
@@ -63,6 +70,7 @@ export default function StructuralPatterns() {
                         <span className="example">
                             Example: A file system where files and directories are treated uniformly.
                         </span>
+                        <img src={composite_uml} alt="UML diagram for Composite Pattern" width="500" height="600"></img>
                     </div>
 
                     <div className="designPatternCard">
@@ -73,16 +81,19 @@ export default function StructuralPatterns() {
                         <span className="example">
                             Example: A coffee shop where you can customize your coffee by adding extra options like milk, sugar, etc.
                         </span>
+                        <img src={decorator_uml} alt="UML diagram for Decorator Pattern" width="500" height="600"></img>
+
                     </div>
 
                     <div className="designPatternCard">
                         <h2>Bridge Pattern</h2>
                         <p>
-                            Decouples an abstraction from its implementation, allowing the two to vary independently.
+                            Decouples an abstraction from its implementation, allowing the two to be developed independently. Additionally, a client can interact with the abstraction without being concerned with the implementation.
                         </p>
                         <span className="example">
                             Example: A remote control that can work with various devices like a TV, fan, or light without knowing their internal workings.
                         </span>
+                        <img src={bridge_uml} alt="UML diagram for Bridge Pattern" width="500" height="600"></img>
                     </div>
 
                     <div className="designPatternCard">
@@ -93,6 +104,8 @@ export default function StructuralPatterns() {
                         <span className="example">
                             Example: A virtual proxy used to load large image files only when needed.
                         </span>
+                        <img src={proxy_uml} alt="UML diagram for Proxy Pattern" width="500" height="600"></img>
+
                     </div>
                 </div>
             </div>

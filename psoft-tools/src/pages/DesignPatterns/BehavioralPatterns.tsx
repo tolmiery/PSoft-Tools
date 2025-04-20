@@ -4,10 +4,13 @@ import "../../components/DesignStyles.css";
 import observer_uml from '../../assets/observer_pattern_uml_diagram.jpg';
 import strategy_uml from '../../assets/strategy_uml.png';
 import strategy_code from '../../assets/strategy_code.png';
+import command_uml from '../../assets/command_uml.png';
+import state_uml from '../../assets/state_uml.png';
+import cor_uml from '../../assets/chain_of_responsibility_uml.png';
 
 
 //Provides a brief explanation of Behavioral Patterns, then lists and describes the individual
-// patterns with examples and some pictures.
+// patterns with examples and UML diagrams .
 export default function BehavioralPatterns() {
     return (
         <div>
@@ -89,26 +92,32 @@ export default function BehavioralPatterns() {
                         <span className="example">
                             Example: Undo/Redo functionality in a text editor.
                         </span>
+                        <img src={command_uml} alt="UML diagram for Command Pattern" width="500" height="600"></img>
+
                     </div>
 
                     <div className="designPatternCard">
                         <h2>State Pattern</h2>
                         <p>
-                            Allows an object to change its behavior when its internal state changes.
+                            This pattern describes object which changes its behavior according to its internal state. There are often separate objects to represent each state that are switched to in order to bring about the desired behavior.
                         </p>
                         <span className="example">
                             Example: A vending machine that behaves differently based on its current state (e.g., waiting for money, dispensing a product).
                         </span>
+                        <img src={state_uml} alt="UML diagram for State Pattern" width="500" height="600"></img>
+
                     </div>
 
                     <div className="designPatternCard">
                         <h2>Chain of Responsibility Pattern</h2>
                         <p>
-                            Passes requests along a chain of handlers where each handler decides whether to process the request or pass it along the chain.
+                            Passes requests along a chain of handlers where each handler decides whether to process the request or pass it along the chain to a handler with a different function.
                         </p>
                         <span className="example">
                             Example: Logging systems with different levels like INFO, DEBUG, or ERROR.
                         </span>
+                        <img src={cor_uml} alt="UML diagram for Chain of Responsibility Pattern" width="500" height="600"></img>
+
                     </div>
                 </div>
             </div>
