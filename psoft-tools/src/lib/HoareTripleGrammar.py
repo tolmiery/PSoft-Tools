@@ -57,6 +57,22 @@ def genFactor():
     else:
         return f"{genVariable()}"
 
+#genTerm() helper function
+def isNegative(expression):
+    # If the expression starts with parentheses, skip them and check inside
+    i = 0
+    while expression[i] == "(": i += 1
+    return expression[i] == "-"
+
+#genTerm() helper function
+def pseudoAbsolute(expression):
+    i = 0
+    while expression[i] == "(": i += 1
+    if expression[i] == "-":
+        # Remove the negative sign
+        expression = expression[0:i] + expression[i+1:]
+    return expression
+
 """
 Terms are used to add either multiplication or division to our expression
 Since terms are generated at least two times per genExpression() call, the percent change for term to recur is low
@@ -70,21 +86,6 @@ the other 70% of the time, term will just produce a factor.
 
 if the recursive depth is at 5, term will always produce a factor
 """
-
-def isNegative(expression):
-    # If the expression starts with parentheses, skip them and check inside
-    i = 0
-    while expression[i] == "(": i += 1
-    return expression[i] == "-"
-
-def pseudoAbsolute(expression):
-    i = 0
-    while expression[i] == "(": i += 1
-    if expression[i] == "-":
-        # Remove the negative sign
-        expression = expression[0:i] + expression[i+1:]
-    return expression
-
 def genTerm(i):
     i = i+1
     if i < 5:
@@ -102,7 +103,10 @@ def genTerm(i):
             if randNum < 0.15:
                 while first == "0":
                     first = genTerm(i)
-                return f"{first} * {second}"
+                if((pseudoAbsolute(first).isdigit()) and (pseudoAbsolute(second).isdigit())):
+                    return f"{int(first) * int(second)}"
+                else:
+                    return f"{first} * {second}"
             else:
                 while first == second or first == "0":
                     first = genTerm(i)
@@ -110,7 +114,10 @@ def genTerm(i):
                     #if both are negative, return positive
                     first = pseudoAbsolute(first)
                     second = pseudoAbsolute(second)
-                return f"{first} / {second}"
+                if((pseudoAbsolute(first).isdigit()) and (pseudoAbsolute(second).isdigit())):
+                    return f"{int(first) // int(second)}"
+                else:
+                    return f"{first} / {second}"
     
     return f"{genFactor()}"
 
@@ -151,9 +158,17 @@ def genExpression(i):
                 while first == "0":
                     #additions and subtractions with 0 are not interesting
                     first = genTerm(i)
+            second = pseudoAbsolute(second)
             if randNum < 0.375:
+                if((pseudoAbsolute(first).isdigit()) and (pseudoAbsolute(second).isdigit())):
+                    return f"{int(first) + int(second)}"
+                elif(first==second):
+                    return f"2{first}"
                 return f"{first} + {pseudoAbsolute(second)}"
             else:
+                if((pseudoAbsolute(first).isdigit()) and (pseudoAbsolute(second).isdigit())):
+                    return f"{int(first) - int(second)}"
+                
                 return f"{first} - {pseudoAbsolute(second)}"
     return f"{genTerm(i)}"
 
@@ -386,4 +401,3 @@ if __name__ == "__main__":
 
     if(int(sys.argv[1])==3):
         print(adjustIndentation(genBackwardReasoning()))
-
