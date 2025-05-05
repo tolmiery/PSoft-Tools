@@ -11,6 +11,7 @@ export default function ForwardReasoningMenu() {
                     Generate Problems
                 </Link>
             </div>
+            {/*TODO: Generate Solutions to the problems*/}
             <div className="menuItem" style= {{ width: "200px" }} >
                 <Link to="/ForwardReasoning" >
                     Generate Solutions

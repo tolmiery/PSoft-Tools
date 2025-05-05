@@ -30,9 +30,7 @@ export default function BackwardReasoning() {
     }
     const handleEditorChange = (value: string | undefined) => {
         if (value) {
-            //console.log(value);
             setCode(value);
-            //console.log(code);
         }
     };
     return (

@@ -12,11 +12,13 @@ interface ErrorObject {
    errorMessage: string;
 }
 
+//Dafny code verification takes place on this page.
 export default function Index() {
    const [data, setData] = useState("");
    const [code, setCode] = useState("// Please enter dafny code below and delete this comment!");
    const [loading, setLoading] = useState(false);
 
+   //Send the input Dafny code to the backend for verification, then return the response from the Dafny verifier
    const handleVerify = () => {
       setLoading(true);
       post("http://localhost:3000/verify", code)
@@ -61,6 +63,7 @@ export default function Index() {
          });
    };
 
+   //Run the Dafny code through the backend and display the resulting message from Dafny
    const handleRun = () => {
       setLoading(true);
       post("http://localhost:3000/run", code)
@@ -75,14 +78,11 @@ export default function Index() {
 
    const handleClickClear = () => {
       setData("");
-      //setCode("// input code");
    };
 
    const handleEditorChange = (value: string | undefined) => {
       if (value) {
-         //console.log(value);
          setCode(value);
-         //console.log(code);
       }
    };
    return (

@@ -3,17 +3,19 @@ Interactive tools for students taking CSCI 2600 Principles of Software at RPI.
 
 https://psoft-tools.pages.dev/
 ## Features
-### Dafny Code Verification/Running *(Under Development)*
+### Dafny Code Verification/Running
 Provides an environment to verify and run Dafny code.
-### Hoare Triple Verification *(Under Development)*
+### Hoare Triple Verification
 Provides an environment to verify Hoare Triples given Java-formatted code.
 ### Forward Reasoning *(Under Development)*
 Provides an environment to carry out Forward Reasoning from a given precondition and block of Java-formatted code.
 ### Backwards Reasoning *(Under Development)*
 Provides an environment to carry out Backward Reasoning from a given postcondition and block of Java-formatted code.
+### Hoare Triple, Forwards and Backwards Reasoning Problem Generation
+Provides a resource to generate problems for hoare triples as well as fowards and backwards reasoning.
 ### Control Flow Graphs *(Under Development)*
 Provides a tool that generates a control-flow graph from given Java code.
-### Design Patterns *(Under Development)*
+### Design Patterns
 Provides examples of the same example Java class implemented using a variety of design patterns.
 ## Local Hosting/Development
 ### Setup

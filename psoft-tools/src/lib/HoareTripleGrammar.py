@@ -43,40 +43,28 @@ def genBool():
 """
 Factors are where we stop adding operations to our grammar.
 Factors are either variables (x,y,z), constants (-10 to 10), or expressions
-10% of the time, a factor will generate an expression
-45% of the time a factor will be a constant, and the other 45% of the time it will be a variable
+5% of the time, a factor will generate an expression
+47.5% of the time a factor will be a constant, and the other 47.5% of the time it will be a variable
 
 All values returned will be strings
 """
 def genFactor():
     randNum = random.random()
-    if randNum < 0.1:
-        return f"{genExpression(2)}"
+    if randNum < 0.05:
+        return f"{genExpression(1)}"
     elif randNum < .55:
         return f"{genConstant()}"
     else:
         return f"{genVariable()}"
 
-"""
-Terms are used to add either multiplication or division to our expression
-Since terms are generated at least two times per genExpression() call, the percent change for term to recur is low
-Input i is an int used to keep track of recursive depth.
-genTerm() will return a string
-
-if the recursive depth is less than 5:
-15% of the time, term will produce a recursive call * a factor.
-15% of the time, term will produce a recursive call / a factor.
-the other 70% of the time, term will just produce a factor.
-
-if the recursive depth is at 5, term will always produce a factor
-"""
-
+#genTerm() helper function
 def isNegative(expression):
     # If the expression starts with parentheses, skip them and check inside
     i = 0
     while expression[i] == "(": i += 1
     return expression[i] == "-"
 
+#genTerm() helper function
 def pseudoAbsolute(expression):
     i = 0
     while expression[i] == "(": i += 1
@@ -85,9 +73,22 @@ def pseudoAbsolute(expression):
         expression = expression[0:i] + expression[i+1:]
     return expression
 
+"""
+Terms are used to add either multiplication or division to our expression
+Since terms are generated at least two times per genExpression() call, the percent change for term to recur is low
+Input i is an int used to keep track of recursive depth.
+genTerm() will return a string
+
+if the recursive depth is less than 4:
+15% of the time, term will produce a recursive call * a factor.
+15% of the time, term will produce a recursive call / a factor.
+the other 70% of the time, term will just produce a factor.
+
+if the recursive depth is at 4, term will always produce a factor
+"""
 def genTerm(i):
     i = i+1
-    if i < 5:
+    if i < 4:
         randNum = random.random()
         if randNum < 0.3:
             #make sure we don't divide by 0 + multiplication by 0 is not interesting
@@ -102,7 +103,11 @@ def genTerm(i):
             if randNum < 0.15:
                 while first == "0":
                     first = genTerm(i)
-                return f"{first} * {second}"
+                if((pseudoAbsolute(first).isdigit()) and (pseudoAbsolute(second).isdigit())):
+                    #if both are ints, do integer multiplication to simplify expression
+                    return f"{int(first) * int(second)}"
+                else:
+                    return f"{first} * {second}"
             else:
                 while first == second or first == "0":
                     first = genTerm(i)
@@ -110,29 +115,33 @@ def genTerm(i):
                     #if both are negative, return positive
                     first = pseudoAbsolute(first)
                     second = pseudoAbsolute(second)
-                return f"{first} / {second}"
+                if((pseudoAbsolute(first).isdigit()) and (pseudoAbsolute(second).isdigit())):
+                    #if both are ints, do integer division to simplify expression
+                    return f"{int(first) // int(second)}"
+                else:
+                    return f"{first} / {second}"
     
     return f"{genFactor()}"
 
 """
 Expressions are used in this grammar to include either addition or subtraction to our expression.
 Input i is an int used to keep track of recursive depth.
-Recursive will stop at 4 in genExpression(), and will let genTerm() execute one more time.
+Recursive will stop at 3 in genExpression(), and will let genTerm() execute one more time.
 genExpression() will return a string.
 
-if the recursive depth is less than 4:
+if the recursive depth is less than 3:
 12.5% of the time, genExpression() will produce a recursive call + a term.
 12.5% of the time, genExpression() will produce a recursive call - a term.
 12.5% of the time, genExpression() wont recur and will produce a term + a term.
 12.5% of the time, genExpression() wont recur and will produce a term - a term.
 the other 50% of the time, genExpression() will just produce a term.
 
-if the recursive depth is at least 4, genExpression() will always produce a term
+if the recursive depth is at least 3, genExpression() will always produce a term
 """
 def genExpression(i):
     i = i+1
     #stop at recursion depth of 4 if not already finished
-    if i < 4:
+    if i < 3:
         randNum = random.random()
         second = genTerm(i)
         while second == "0":
@@ -151,9 +160,21 @@ def genExpression(i):
                 while first == "0":
                     #additions and subtractions with 0 are not interesting
                     first = genTerm(i)
+
+            second = pseudoAbsolute(second)
+            #if not reccuring, these branches choose + or -
             if randNum < 0.375:
+                if((pseudoAbsolute(first).isdigit()) and (pseudoAbsolute(second).isdigit())):
+                    #if both are ints, do integer addition to simplify expression
+                    return f"{int(first) + int(second)}"
+                elif(first==second):
+                    #if both are the same variable, it will look cleaner as 2x instead of x + x
+                    return f"2{first}"
                 return f"{first} + {pseudoAbsolute(second)}"
             else:
+                if((pseudoAbsolute(first).isdigit()) and (pseudoAbsolute(second).isdigit())):
+                    #if both are ints, do integer subtraction to simplify expression
+                    return f"{int(first) - int(second)}"
                 return f"{first} - {pseudoAbsolute(second)}"
     return f"{genTerm(i)}"
 
@@ -180,8 +201,6 @@ ifElse parameter defaulted to False, unless passed True by genIfElse. Used to kn
 25% of the time, genCondition() creates a condition bounding a variable by another variable, either with <, <=, >, >=, or ==.
 25% of the time, genCondition() creates a condition bounding a variable by a constant, either with <, <=, >, >=, or ==.
 The other 25% of the time, genCondition() creates a variable bounded by another variable, "&&" or "||", and a recursive call of genCondition()
-
-
 """
 def genCondition(ifElse = False):
     randNum = random.random()
@@ -238,10 +257,10 @@ def genLine():
 Will return one string that will include at least one line of java code.
 ifElse parameter defaulted to False, unless passed True by genIfElse. Used to know when to indent lines or when to generate if else blocks.
 
-40% of the time genCode() will create a line of code followed by further generation of code. Maximum of 4 lines are generated.
-60% of the time, genCode() will create a single line of code and stop.
+genCode will always create a new line of code.
+60% of the time, genCode() will stop after the current line.
+25% of the time, genCode() will generate an if statement.
 """
-
 def genCode(ifElse = False):
     lines = []
     nextLine = genLine()
@@ -271,9 +290,7 @@ def genCode(ifElse = False):
 Helper function for genForwardReasoning() and genBackwardReasoning().
 This function generates 1-2 code segments with genCode, and finds the longest line in each segment to use for the separator width.
 Returns the longest line length as an int.
-
 """
-
 def genHelper(condition, codeSegments):
     length = random.randint(1, 2)
     ifElse = False
@@ -302,8 +319,8 @@ def genHoareTriple():
 
 """
 genForwardReasoning() and genBackwardReasoning() are used to generate forward and backward reasoning respectively.
-genForwardReasoning() will return a string in the format of "{P}\ncode;\n{-}\ncode; ... \n{-}"
-genBackwardReasoning() will return a string in the format of "{-}\ncode;\n{-}\ncode; ... \n{Q}"
+genForwardReasoning() will return a string in the format of "{P}\ncode;\n{_}\ncode; ... \n{_}"
+genBackwardReasoning() will return a string in the format of "{_}\ncode;\n{_}\ncode; ... \n{Q}"
 
 """
 
@@ -386,4 +403,4 @@ if __name__ == "__main__":
 
     if(int(sys.argv[1])==3):
         print(adjustIndentation(genBackwardReasoning()))
-
+        
