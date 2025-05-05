@@ -1,21 +1,6 @@
-# **Plans, Updates, & Research**
-
-This is a living document to track status updates throughout the semester, as well as any pertinent research into useful ideas and tools. Through this doc, we should be able to get a better idea of team progress and (hopefully) have improved end-of semester documentation for the project.
-
-## **Currently needs to be done**
-
-* **Grammar research.** Being done by:  
-  * Cal Hiffa  
-  * Kevin Lukash  
-* **Comment code.** Being done by:  
-  * Nathaniel Viana  
-  * Tyler Hunt  
-* **Clean up front-end display.** Being done by:  
-  * Tyler Hunt
-
 ## **Weekly Updates**
 
-Just copy/paste whatever you put in your status update as far as the week’s progress so that we know what everyone has done. No problem if nothing happened that week.
+This is a document to track status updates throughout the semester.
 
 |  | Cal Hiffa | Nathaniel Viana | Kevin Lukash | Tyler Hunt |
 | :---- | :---- | :---- | :---- | :---- |
@@ -28,13 +13,3 @@ Just copy/paste whatever you put in your status update as far as the week’s pr
 | **Update 7 3/28/25** | N/A | I completed back end documentation this week. I also finished a design plan for our output. I also started cleaning up repetitive programming that was what i'm assuming copy and pasted without being checked. | I added generation of if/else statements into our hoare triple generator. It only does if statements, or if-else statements, and not if-ifelse-else statements, as we decided it would be too complex examples based off of the PSoft course content. I also fixed our forward and backward reasoning generation, as it wasn't putting spaces between every line of code for the current strongest post condition or weakest pre conditions, but now it is. | While waiting for other group members to continue working on the grammar for processing and generating problems for Hoare Triples and Forward/Backward Reasoning (which I will need to use for developing the Condition Strength tool), I continued working on some Design Patterns and then looked into the CFG creation tool. There were some strange and wonky-looking UI issues, so I fixed those and made sure the canvas for the CFG was always contained within the user's display while adhering to the bounds set by the navbar at the top of the page. Lastly, I took a look at all of the associated code with the CFG tool before commenting and reformatting the code as best I could so that the files are as readable and comprehensible as possible. |
 | **Update 8 4/04/25** | This week, I have been extremely busy with an extracurricular and haven't had much time to code or plan. I've been considering how we might implement our parser for hoare triples to work with our grammar. Ideally, we should be able to take advantage of the existing dafny interpreter for original hoare triples. | I worked on documenting the backend repository of our code. I specifically wanted to clean up the dafny portion which was the main part of the backend and was left very unorganized. I also came up with a few ideas to clean the look of the frontend since it isn't aesthetically pleasing |  | Since our project lead was busy this week, the merging of the generation branch into main, which I expected to happen, did not take place, and due to my own business with extracurriculars, I was not able to accomplish much either. I decided to make a pull request for the ui-changes branch of our frontend, and I will wait for our project lead to review and accept that request. Additionally, I took a look at some other portions of the UI and codebase that might need touching up in terms of visuals and documentation, respectively, but nothing concrete was accomplished on that end. |
 | **Update 9 4/11/25** | N/A | I am in the processing of documenting the entire backend. I was having an issue where I wouldn't be able to get the proper response from the backend due to me storing my files within onedrive so I fixed that. I also am working on another issue where I have all the working code but my formatting is different than my groupmates outputs. | Worked on brain storming how to verify forward and backward reasoning. Implemented an outline of it with most logic correct. Only thing holding it back is sending strings between files in the program, which I don't know how to do. (Sending from forwardVerifier to hoare verifier). | I created a new webpage and tab in the top navbar for the new Condition Strength tool, both for the code verifying portion as well as the practice problem generation portion. However, I have not committed the changes yet due to the main branch still not being merged with the problem generation branch which has the Python Hoare Triple grammar. I was not able to create much more documentation in the codebase due to continued mental health issues, even though that was the backup plan for this week. (I might have forgotten that I made the strength page earlier, but I saw it was untracked in my local grammar branch. So ignore that). |
-
-## **Ideas**
-
-* Grammar: use as basis of Hoare-triple identifying/generating  
-  * Probably in python  
-    * What libraries are we thinking?  
-      * Trying lark
-
-## **Research Links**
-
